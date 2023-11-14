@@ -10,7 +10,7 @@ export const useRemoteCall = () => {
     const [status, setStatus] = useState<statusTypes>("idle");
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-    const post = async (url: string, options: {
+    const post = async (url: string, options?: {
         formdata?: FormData;
         successCallBack?: () => void;
         failCallBack?: () => void;
@@ -21,7 +21,7 @@ export const useRemoteCall = () => {
     }) => {
         setStatus("pending");
         try {
-            const res = await axios.post(url, options.formdata, options.requestConfig);
+            const res = await axios.post(url, options?.formdata, options?.requestConfig);
             setStatus("idle");
             if (res.data.success === 1) {
                 if(options?.successCallBack) options?.successCallBack
@@ -69,7 +69,7 @@ export const useRemoteCall = () => {
 
     }
 
-    const get = async (url: string, options: {
+    const get = async (url: string, options?: {
         successCallBack?: () => void;
         failCallBack?: () => void;
         successMessage?: string;
@@ -79,7 +79,7 @@ export const useRemoteCall = () => {
     }) => {
         setStatus("pending");
         try {
-            const res = await axios.get(url, options.requestConfig);
+            const res = await axios.get(url, options?.requestConfig);
             setStatus("idle");
             if (res.data.success === 1) {
                 if(options?.successCallBack) options?.successCallBack

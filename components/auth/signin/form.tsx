@@ -1,24 +1,40 @@
 "use client";
 
+import { useRemoteCall } from "@/hooks/remote-call";
+import { rulesAndMessagedType, useValidator } from "@malda/react-validator";
 import { Box, Button, Checkbox, FormControlLabel, Grid, TextField } from "@mui/material";
 import Link from "next/link";
 import { FunctionComponent } from "react";
+
+const rules: rulesAndMessagedType = {
+  rules: {
+    email: ['required', 'email'],
+    password: ['required']
+  }
+}
 
 interface SigninFormProps {
   modal?: boolean
 }
  
 const SigninForm: FunctionComponent<SigninFormProps> = ({modal}) => {
+  const {validate} = useValidator("login", rules);
+  const {axios, status} = useRemoteCall();
+  
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-          email: data.get('email'),
-          password: data.get('password'),
+        validate(async () => {
+          const formdata = new FormData(event.currentTarget);
+          const res = await axios.post("/signin", {
+            formdata,
+            successMessage: "SignedIn Success!",
+            failMessage: "SignIn Fail"
+          })
         });
       };
     return (
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }} id="login">
+          <div id="input-email">
               <TextField
                 margin="normal"
                 required
@@ -29,6 +45,8 @@ const SigninForm: FunctionComponent<SigninFormProps> = ({modal}) => {
                 autoComplete="email"
                 autoFocus
               />
+          </div>
+          <div id="input-password">
               <TextField
                 margin="normal"
                 required
@@ -39,6 +57,7 @@ const SigninForm: FunctionComponent<SigninFormProps> = ({modal}) => {
                 id="password"
                 autoComplete="current-password"
               />
+          </div>
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
@@ -48,8 +67,12 @@ const SigninForm: FunctionComponent<SigninFormProps> = ({modal}) => {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                disabled={status === "pending"}
               >
-                Sign In
+                {
+                  status === "pending" ? "Signing In...":
+                  "Sign In"
+                }
               </Button>
               <Grid container>
                 <Grid item xs>
