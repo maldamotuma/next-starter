@@ -15,11 +15,16 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import AuthModal from '../auth/authModal';
+import { ChevronRight } from '@mui/icons-material';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function ResponsiveAppBar() {
+interface ResponsiveAppBar {
+    handleOpen(): void;
+    open: boolean;
+}
+function ResponsiveAppBar({handleOpen, open}: ResponsiveAppBar) {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -39,9 +44,17 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
+    <AppBar position="static" elevation={0}>
+      <Container maxWidth="xl" sx={{
+        maxWidth: "9000px !important"
+      }}>
         <Toolbar disableGutters>
+        {
+            !open &&
+        <IconButton  onClick={handleOpen}>
+            <ChevronRight sx={{color: "#ffffff"}}/>
+        </IconButton>
+        }
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
