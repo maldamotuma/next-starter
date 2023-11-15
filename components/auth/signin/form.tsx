@@ -2,6 +2,8 @@
 
 import { baseURL } from "@/config/axios";
 import { useRemoteCall } from "@/hooks/remote-call";
+import { setAuthUser } from "@/redux/slices/auth";
+import { useAppDispatch } from "@/redux/store";
 import { rulesAndMessagedType, useValidator } from "@malda/react-validator";
 import { Box, Button, Checkbox, FormControlLabel, Grid, TextField } from "@mui/material";
 import Link from "next/link";
@@ -21,6 +23,7 @@ interface SigninFormProps {
 const SigninForm: FunctionComponent<SigninFormProps> = ({ modal }) => {
   const { validate } = useValidator("login", rules);
   const { axios, status } = useRemoteCall();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -31,7 +34,8 @@ const SigninForm: FunctionComponent<SigninFormProps> = ({ modal }) => {
         formdata,
         successMessage: "SignedIn Success!",
         failMessage: "SignIn Fail"
-      })
+      });
+      if(res?.data.success === 1) dispatch(setAuthUser(res.data.result));
     });
   };
   return (

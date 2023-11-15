@@ -9,8 +9,8 @@ interface HeroProps {
 
 const Hero: FunctionComponent<HeroProps> = () => {
     return (
-        <Container maxWidth="xl" sx={{py: 5}}>
-            <Stack direction="row" alignItems="center">
+        <Container maxWidth="xl" sx={{py: 15}}>
+            <Stack direction="row" alignItems="center" spacing={10}>
                 <Box sx={{ flex: 1 }}>
                     <HeroTitle />
                 </Box>

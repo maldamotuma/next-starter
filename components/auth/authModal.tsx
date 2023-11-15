@@ -28,6 +28,12 @@ const AuthModal: FunctionComponent<AuthModalProps> = ({btn}) => {
         {...bindDialog(pps)}
         fullWidth
         maxWidth="sm"
+        PaperProps={{
+            sx: {
+                position: "absolute",
+                top: "100px"
+            }
+        }}
         >
             <Stack>
                 <Tabs

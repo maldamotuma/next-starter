@@ -1,7 +1,7 @@
 "use client"
 
 import React, { FC } from 'react'
-import { Box, Chip, IconButton, Stack } from '@mui/material'
+import { Box, Chip, Container, IconButton, Stack } from '@mui/material'
 import { indigo } from '@mui/material/colors'
 import { Facebook, LinkedIn, LocationOnOutlined, LockClock, MailOutline, Twitter } from '@mui/icons-material'
 
@@ -10,11 +10,15 @@ const Header: FC = () => {
     <Box
       sx={{
         bgcolor: indigo[50],
-        display: "flex",
-        alignItems: "center",
         px: 2
       }}
     >
+      <Container maxWidth="xl"
+      sx={{
+        display: "flex",
+        alignItems: "center",
+      }}
+      >
       <Stack direction="row" spacing={1}>
         <Chip
           size={"small"}
@@ -60,6 +64,7 @@ const Header: FC = () => {
           <LinkedIn />
         </IconButton>
       </Stack>
+      </Container>
     </Box>
   )
 }
