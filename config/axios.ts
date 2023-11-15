@@ -2,7 +2,7 @@ import axios from "axios";
 import { server_url } from "./variables";
 
 export default axios.create({
-    baseURL: `${server_url}/api`,
+    baseURL: `${server_url}/api/usr`,
     withCredentials: true
 });
 
