@@ -7,6 +7,7 @@ import { useAppDispatch } from "@/redux/store";
 import { rulesAndMessagedType, useValidator } from "@malda/react-validator";
 import { Box, Button, Checkbox, FormControlLabel, Grid, TextField } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FunctionComponent } from "react";
 
 const rules: rulesAndMessagedType = {
@@ -24,18 +25,24 @@ const SigninForm: FunctionComponent<SigninFormProps> = ({ modal }) => {
   const { validate } = useValidator("login", rules);
   const { axios, status } = useRemoteCall();
   const dispatch = useAppDispatch();
+  const router = useRouter();
+
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     validate(async () => {
       const formdata = new FormData(event.currentTarget);
       await baseURL.get('/sanctum/csrf-cookie');
-      const res = await axios.post("/login", {
+      const res = await axios.post("/signin", {
         formdata,
+        ky: "user",
         successMessage: "SignedIn Success!",
-        failMessage: "SignIn Fail"
+        failMessage: "SignIn Fail",
       });
-      if(res?.data.success === 1) dispatch(setAuthUser(res.data.result));
+      if (res) {
+        router.push("/");
+        dispatch(setAuthUser(res));
+      }
     });
   };
   return (

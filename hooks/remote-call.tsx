@@ -4,7 +4,7 @@ import { Close } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { AxiosRequestConfig } from "axios";
 import { useSnackbar } from "notistack";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export const useRemoteCall = () => {
     const [status, setStatus] = useState<statusTypes>("idle");
@@ -24,8 +24,8 @@ export const useRemoteCall = () => {
             const res = await axios.post(url, options?.formdata, options?.requestConfig);
             setStatus("idle");
             if (res.data.success === 1) {
-                if(options?.successCallBack) options?.successCallBack
-                else if(options?.successMessage) enqueueSnackbar(options?.successMessage, {
+                if (options?.successCallBack) options?.successCallBack()
+                if (options?.successMessage) enqueueSnackbar(options?.successMessage, {
                     variant: "success",
                     action: <IconButton onClick={() => closeSnackbar()}><Close /></IconButton>,
                     anchorOrigin: {
@@ -33,12 +33,12 @@ export const useRemoteCall = () => {
                         horizontal: "right"
                     }
                 })
-                if(options?.ky) return res.data[options.ky]
+                if (options?.ky) return res.data[options.ky]
                 else return res.data.result
-            }else if(res.data.message) enqueueSnackbar(res.data.message, {
+            } else if (res.data.message) enqueueSnackbar(res.data.message, {
                 variant: "info",
-                    action: <IconButton onClick={() => closeSnackbar()}><Close /></IconButton>,
-                    anchorOrigin: {
+                action: <IconButton onClick={() => closeSnackbar()}><Close /></IconButton>,
+                anchorOrigin: {
                     vertical: "top",
                     horizontal: "right"
                 }
@@ -50,18 +50,18 @@ export const useRemoteCall = () => {
                     variant: "error",
                     action: <IconButton onClick={() => closeSnackbar()}><Close /></IconButton>,
                     anchorOrigin: {
-                    vertical: "top",
-                    horizontal: "right"
-                }
+                        vertical: "top",
+                        horizontal: "right"
+                    }
                 });
-            }else {
+            } else {
                 enqueueSnackbar("Something Went Wrong", {
                     variant: "error",
                     action: <IconButton onClick={() => closeSnackbar()}><Close /></IconButton>,
                     anchorOrigin: {
-                    vertical: "top",
-                    horizontal: "right"
-                }
+                        vertical: "top",
+                        horizontal: "right"
+                    }
                 })
             }
             return null;
@@ -82,16 +82,16 @@ export const useRemoteCall = () => {
             const res = await axios.get(url, options?.requestConfig);
             setStatus("idle");
             if (res.data.success === 1) {
-                if(options?.successCallBack) options?.successCallBack
-                else if(options?.successMessage) alert(options?.successMessage)
-                if(options?.ky) return res.data[options.ky]
+                if (options?.successCallBack) options?.successCallBack
+                else if (options?.successMessage) alert(options?.successMessage)
+                if (options?.ky) return res.data[options.ky]
                 else return res.data.result
-            }else if(res.data.message) alert(res.data.message)
+            } else if (res.data.message) alert(res.data.message)
         } catch (error: any) {
             setStatus("rejected");
             if (error.response?.status === 422) {
                 alert(error.response?.data.message);
-            }else {
+            } else {
                 alert("Something Went Wrong")
             }
             return null;
@@ -106,4 +106,32 @@ export const useRemoteCall = () => {
             get
         }
     }
+}
+
+export const useInitialCall = (url: string, options?: {
+    successCallBack?: () => void;
+    failCallBack?: () => void;
+    successMessage?: string;
+    failMessage?: string;
+    ky?: string;
+    requestConfig?: AxiosRequestConfig
+}) => {
+    const { axios, status } = useRemoteCall();
+    const [data, setData] = useState<any>(null);
+
+    useEffect(() => {
+        axios.get(url, options).then(res => {
+            setData(res)
+        });
+        return () => {
+
+        }
+    }, []);
+
+    return {
+        status,
+        data,
+        setData
+    }
+
 }

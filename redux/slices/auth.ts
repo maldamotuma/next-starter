@@ -6,7 +6,8 @@ export type userType = {
     id: number;
     first_name: string;
     last_name: string;
-    profile: string;
+    profile_picture: string;
+    created_at: string;
 }
 
 export interface auth {

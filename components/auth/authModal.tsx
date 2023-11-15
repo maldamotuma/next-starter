@@ -31,7 +31,7 @@ const AuthModal: FunctionComponent<AuthModalProps> = ({btn}) => {
         PaperProps={{
             sx: {
                 position: "absolute",
-                top: "100px"
+                top: 0
             }
         }}
         >

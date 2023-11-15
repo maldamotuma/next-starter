@@ -4,13 +4,13 @@ import { Avatar, Box, Grid } from "@mui/material";
 import { FunctionComponent, ReactNode } from "react";
 
 interface AuthLayoutProps {
-    children: ReactNode | ReactNode[]
+  children: ReactNode | ReactNode[]
 }
- 
-const AuthLayout: FunctionComponent<AuthLayoutProps> = ({children}) => {
-    return (
-        <>
-         <Grid container component="main" sx={{ height: '100vh' }}>
+
+const AuthLayout: FunctionComponent<AuthLayoutProps> = ({ children }) => {
+  return (
+    <>
+      <Grid container component="main" sx={{ height: '100vh' }}>
         <Grid
           item
           xs={false}
@@ -39,18 +39,25 @@ const AuthLayout: FunctionComponent<AuthLayoutProps> = ({children}) => {
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LockOutlined />
             </Avatar>
-            {
+            <Box
+              sx={{
+                width: "100%",
+                maxWidth: "sm"
+              }}
+            >
+              {
                 children
-            }
-            <Box sx={{flexGrow: 1}}/>
-            <Box sx={{py: 1}}>
-                <Footer />
+              }
+            </Box>
+            <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ py: 1 }}>
+              <Footer />
             </Box>
           </Box>
         </Grid>
       </Grid>
-        </>
-    );
+    </>
+  );
 }
- 
+
 export default AuthLayout;

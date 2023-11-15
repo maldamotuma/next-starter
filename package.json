@@ -17,6 +17,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "axios": "^1.5.1",
     "material-ui-popup-state": "^5.0.10",
+    "moment": "^2.29.4",
     "next": "14.0.2",
     "notistack": "^3.0.1",
     "react": "^18",
