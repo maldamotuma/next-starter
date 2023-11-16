@@ -11,10 +11,10 @@ import { FunctionComponent, useState } from "react";
 
 const settings = [{
   title: 'Profile',
-  href: "#"
+  href: "/dashboard/profile"
 }, {
   title: 'Account',
-  href: "#"
+  href: "/"
 }, {
   title: 'Dashboard',
   href: '/dashboard'

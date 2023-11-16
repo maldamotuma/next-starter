@@ -25,7 +25,7 @@ export const useRemoteCall = () => {
             setStatus("idle");
             if (res.data.success === 1) {
                 if (options?.successCallBack) options?.successCallBack()
-                if (options?.successMessage) enqueueSnackbar(options?.successMessage, {
+                enqueueSnackbar(options?.successMessage || "Success", {
                     variant: "success",
                     action: <IconButton onClick={() => closeSnackbar()}><Close /></IconButton>,
                     anchorOrigin: {

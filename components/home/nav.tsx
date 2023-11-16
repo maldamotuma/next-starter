@@ -34,7 +34,7 @@ function ResponsiveAppBar({handleOpen, open}: ResponsiveAppBar) {
 
 
   return (
-    <AppBar position="static" elevation={0}>
+    <AppBar position="sticky" sx={{top: 0}} elevation={0}>
       <Container maxWidth="xl" sx={{
         maxWidth: "9000px !important"
       }}>

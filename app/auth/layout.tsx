@@ -1,13 +1,45 @@
+"use client"
+
+
 import Footer from "@/components/footer";
 import { LockOutlined } from "@mui/icons-material";
 import { Avatar, Box, Grid } from "@mui/material";
-import { FunctionComponent, ReactNode } from "react";
+import { FunctionComponent, ReactNode, useEffect } from "react";
+import { useAppSelector } from '@/redux/store'
+import { useRouter } from 'next/navigation'
 
 interface AuthLayoutProps {
   children: ReactNode | ReactNode[]
 }
 
 const AuthLayout: FunctionComponent<AuthLayoutProps> = ({ children }) => {
+  const auth = useAppSelector(state => state.auth);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (auth.status !== "pending" && auth.user) {
+      router.push("/")
+    }
+
+    return () => {
+
+    }
+  }, [auth])
+
+  if (auth.status === "pending") {
+    return (
+      <>
+        Loading...
+      </>
+    )
+  } else if (auth.status === "rejected") {
+    return (
+      <>
+        Something Went Wrong
+      </>
+    )
+  }
+
   return (
     <>
       <Grid container component="main" sx={{ height: '100vh' }}>

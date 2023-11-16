@@ -18,7 +18,6 @@ const PartnerLogo: FunctionComponent<PartnerLogoProps> = ({partner}) => {
         sx={{
             mx: 3,
             filter: "grayscale(100%)",
-            transition: "filter .2s ease",
             "&:hover": {
             filter: "grayscale(0)",
             }

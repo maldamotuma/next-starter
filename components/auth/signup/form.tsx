@@ -14,6 +14,7 @@ const rules: rulesAndMessagedType = {
   rules: {
     first_name: ['required', 'name'],
     last_name: ['required', 'name'],
+    username: ['required'],
     email: ['required', 'email'],
     password: ['required', 'strong_password'],
     password_confirmation: ['required', 'strong_password'],
