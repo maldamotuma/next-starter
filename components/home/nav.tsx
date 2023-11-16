@@ -35,7 +35,7 @@ function ResponsiveAppBar({handleOpen, open}: ResponsiveAppBar) {
 
 
   return (
-    <AppBar position="sticky" sx={{top: 0}} elevation={0}>
+    <AppBar position="sticky" sx={{top: 0, bgcolor: "background.paper", color: "primary.dark", borderBottom: 1, borderColor: "divider"}} elevation={0}>
       <Container maxWidth="xl" sx={{
         maxWidth: "9000px !important"
       }}>
@@ -43,7 +43,7 @@ function ResponsiveAppBar({handleOpen, open}: ResponsiveAppBar) {
         {
             !open &&
         <IconButton  onClick={handleOpen}>
-            <ChevronRight sx={{color: "#ffffff"}}/>
+            <ChevronRight sx={{color: "primary.dark"}}/>
         </IconButton>
         }
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -125,7 +125,7 @@ function ResponsiveAppBar({handleOpen, open}: ResponsiveAppBar) {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, display: 'block' }}
               >
                 {page}
               </Button>

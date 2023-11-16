@@ -6,6 +6,7 @@ import Siebar from '@/components/home/Sidebar'
 import { ReactNode, useEffect, useState } from 'react'
 import { useAppSelector } from '@/redux/store'
 import { useRouter } from 'next/navigation'
+import VerifyEmail from '@/components/auth/verifyEmail'
 
 interface DashboardLayoutProps {
     children: ReactNode;
@@ -87,7 +88,7 @@ export default function Home({ children }: DashboardLayoutProps) {
                     }}
                 >
                     {
-                        children
+                        auth.user?.email_verified_at ? children : <VerifyEmail />
                     }
                 </Box>
             </Box>

@@ -12,6 +12,7 @@ export type userType = {
   email: string;
   phone: string;
   gender: string;
+  email_verified_at: string | null;
 }
 
 export interface auth {
