@@ -16,6 +16,7 @@ import AccountDD from '@/components/nav/accountDropDown';
 import { useAppSelector } from '@/redux/store';
 import AuthModal from '@/components/auth/authModal';
 import { Person4 } from '@mui/icons-material';
+import AuthButton from '@/components/nav/AuthButton';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 
@@ -34,15 +35,15 @@ function ResponsiveAppBar() {
 
   return (
     <AppBar position="static" elevation={0}
-    sx={{
-      bgcolor: "background.paper",
-      color: "primary.dark",
-      borderBottom: 1,
-      borderColor: "divider",
-      position: "sticky",
-      top: 0,
-      zIndex: 999
-    }}
+      sx={{
+        bgcolor: "background.paper",
+        color: "primary.dark",
+        borderBottom: 1,
+        borderColor: "divider",
+        position: "sticky",
+        top: 0,
+        zIndex: 999
+      }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -120,7 +121,7 @@ function ResponsiveAppBar() {
           >
             LOGO
           </Typography>
-          <Box sx={{flexGrow: 1}}/>
+          <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
@@ -134,14 +135,7 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            {
-              user ?
-              <AccountDD />
-              :
-              <AuthModal
-            btn={bp => <Button startIcon={<Person4 />} {...bp} variant='contained'>SignIn / SignUp</Button>}
-              />
-            }
+            <AuthButton />
           </Box>
         </Toolbar>
       </Container>

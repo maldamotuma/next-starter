@@ -50,7 +50,7 @@ const AccountDD: FunctionComponent<AccountDDProps> = () => {
 
   return (
     <div>
-      <Tooltip title="Open settings">
+      <Tooltip title="Open settings" disableInteractive>
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar alt={`${user?.first_name} ${user?.last_name}`} src={`${server_url}/avatar/small/${user?.profile_picture}`} />
         </IconButton>

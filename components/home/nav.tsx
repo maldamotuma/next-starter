@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { ChevronRight } from '@mui/icons-material';
 import AccountDD from '../nav/accountDropDown';
+import AuthButton from '../nav/AuthButton';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 
@@ -132,7 +133,7 @@ function ResponsiveAppBar({handleOpen, open}: ResponsiveAppBar) {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <AccountDD />
+            <AuthButton />
           </Box>
         </Toolbar>
       </Container>
