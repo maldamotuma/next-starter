@@ -7,24 +7,25 @@ interface PartnerLogoProps {
         url?: string;
     }
 }
- 
-const PartnerLogo: FunctionComponent<PartnerLogoProps> = ({partner}) => {
+
+const PartnerLogo: FunctionComponent<PartnerLogoProps> = ({ partner }) => {
     return (
         <>
-        <Box
-        component={"img"}
-        src={partner.img}
-        height={"50px"}
-        sx={{
-            mx: 3,
-            filter: "grayscale(100%)",
-            "&:hover": {
-            filter: "grayscale(0)",
-            }
-        }}
-        />
+            <Box
+                component={"img"}
+                src={partner.img}
+                height={"50px"}
+                sx={{
+                    mx: 3,
+                    filter: "grayscale(100%)",
+                    transition: ".1s filter ease",
+                    "&:hover": {
+                        filter: "grayscale(0)",
+                    }
+                }}
+            />
         </>
     );
 }
- 
+
 export default PartnerLogo;

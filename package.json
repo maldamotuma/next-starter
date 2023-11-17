@@ -16,6 +16,7 @@
     "@mui/material": "^5.14.18",
     "@reduxjs/toolkit": "^1.9.7",
     "axios": "^1.5.1",
+    "keen-slider": "^6.8.6",
     "material-ui-popup-state": "^5.0.10",
     "moment": "^2.29.4",
     "next": "14.0.2",
