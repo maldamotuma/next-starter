@@ -1,12 +1,15 @@
 "use client"
 
 import ResponsiveAppBar from '@/components/home/nav'
-import { Box, Stack } from '@mui/material'
+import { Box, Container, Dialog, Drawer, Stack, useTheme } from '@mui/material'
 import Siebar from '@/components/home/Sidebar'
 import { ReactNode, useEffect, useState } from 'react'
 import { useAppSelector } from '@/redux/store'
 import { useRouter } from 'next/navigation'
 import VerifyEmail from '@/components/auth/verifyEmail'
+import { bindDialog, usePopupState } from 'material-ui-popup-state/hooks'
+import Tabform from '@/components/auth/tabForm'
+import Title from '@/components/home/title'
 
 interface DashboardLayoutProps {
     children: ReactNode;
@@ -15,16 +18,10 @@ export default function Home({ children }: DashboardLayoutProps) {
     const [width, setWidth] = useState<0 | 300>(300);
     const auth = useAppSelector(state => state.auth);
     const router = useRouter();
-
-    useEffect(() => {
-        if (auth.status !== "pending" && !auth.user) {
-            router.push("/")
-        }
-
-        return () => {
-
-        }
-    }, [auth])
+    const theme = useTheme();
+    const pps = usePopupState({
+        variant: "dialog"
+    });
 
 
     const handleOpen = () => {
@@ -35,7 +32,17 @@ export default function Home({ children }: DashboardLayoutProps) {
         setWidth(0);
     }
 
-    if (auth.status === "pending") {
+    if (auth.status !== "pending" && !auth.user) {
+        return (
+            <Container maxWidth={"sm"}>
+                <Title
+                    primary="Authentication Required"
+                    secondary='you must authenticate before proceeding'
+                />
+                <Tabform noRedirect/>
+            </Container>
+        )
+    } else if (auth.status === "pending") {
         return (
             <>
                 Loading...
@@ -54,6 +61,23 @@ export default function Home({ children }: DashboardLayoutProps) {
             direction={"row"}
             alignItems={"flex-start"}
         >
+            <Drawer
+                {...bindDialog(pps)}
+                sx={{
+                    display: {
+                        xs: "block",
+                        md: "none"
+                    }
+                }}
+            >
+                <Box
+                    sx={{
+                        width: 240
+                    }}
+                >
+                    <Siebar handleClose={pps.close} />
+                </Box>
+            </Drawer>
             <Box
                 sx={{
                     display: {
@@ -77,7 +101,12 @@ export default function Home({ children }: DashboardLayoutProps) {
                     flex: 1,
                 }}
             >
-                <ResponsiveAppBar handleOpen={handleOpen} open={width === 300} />
+                <ResponsiveAppBar
+                    handleOpen={handleOpen}
+                    open={width === 300}
+                // handleOpen={pps.open}
+                // open={pps.isOpen}
+                />
                 <Box
                     sx={{
                         p: {

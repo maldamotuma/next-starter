@@ -7,6 +7,7 @@ import { setAuthUser } from "@/redux/slices/auth";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { Avatar, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FunctionComponent, useState } from "react";
 
 const settings = [{
@@ -29,6 +30,8 @@ const AccountDD: FunctionComponent<AccountDDProps> = () => {
   const { user } = useAppSelector(state => state.auth)
   const dispatch = useAppDispatch();
   const { axios, status } = useRemoteCall();
+  const router = useRouter();
+
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -44,6 +47,7 @@ const AccountDD: FunctionComponent<AccountDDProps> = () => {
       successMessage: "Suuccessfully Logged Out",
       successCallBack() {
         dispatch(setAuthUser(null));
+        router.push("/");
       },
     })
   }

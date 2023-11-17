@@ -19,7 +19,14 @@ const Header: FC = () => {
           alignItems: "center",
         }}
       >
-        <Stack direction="row" spacing={1}>
+        <Stack direction="row" spacing={1}
+          sx={{
+            display: {
+              xs: "none",
+              md: "flex"
+            }
+          }}
+        >
           <Chip
             size={"small"}
             variant={"outlined"}

@@ -21,10 +21,11 @@ const rules: rulesAndMessagedType = {
   }
 }
 interface SignUpFormProps {
-  modal?: boolean
+  modal?: boolean;
+  noRedirect?: boolean;
 }
 
-const SignUpForm: FunctionComponent<SignUpFormProps> = ({ modal }) => {
+const SignUpForm: FunctionComponent<SignUpFormProps> = ({ modal, noRedirect }) => {
   const { validate } = useValidator("signup-register", rules);
   const dispatch = useAppDispatch();
   const { axios, status } = useRemoteCall();
@@ -42,7 +43,7 @@ const SignUpForm: FunctionComponent<SignUpFormProps> = ({ modal }) => {
         failMessage: "SignUp Fail"
       });
       if (res) {
-        dispatch(setAuthUser(res));
+        if(!noRedirect) dispatch(setAuthUser(res));
         router.push("/");
       }
     });

@@ -69,7 +69,10 @@ const ContentCopy: FunctionComponent<ContentCopyProps> = () => {
                         borderColor: "divider",
                         px: 3,
                         py: 1,
-                        display: "inline-block",
+                        display: {
+                            xs: "none",
+                            lg: "inline-block"
+                        },
                         borderRadius: 7
                     }}
                 >

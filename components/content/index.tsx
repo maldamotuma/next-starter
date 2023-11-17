@@ -10,7 +10,10 @@ interface ContentProps {
 const Content: FunctionComponent<ContentProps> = () => {
     return (
         <Container maxWidth="xl">
-            <Stack direction="row-reverse" alignItems="center" gap={10}>
+            <Stack direction={{
+                xs: "column",
+                md: "row-reverse"
+            }} alignItems="center" gap={10}>
                 <Box
                     sx={{
                         flex: 1

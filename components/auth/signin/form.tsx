@@ -18,10 +18,11 @@ const rules: rulesAndMessagedType = {
 }
 
 interface SigninFormProps {
-  modal?: boolean
+  modal?: boolean;
+  noRedirect?: boolean;
 }
 
-const SigninForm: FunctionComponent<SigninFormProps> = ({ modal }) => {
+const SigninForm: FunctionComponent<SigninFormProps> = ({ modal, noRedirect }) => {
   const { validate } = useValidator("login", rules);
   const { axios, status } = useRemoteCall();
   const dispatch = useAppDispatch();
@@ -40,7 +41,7 @@ const SigninForm: FunctionComponent<SigninFormProps> = ({ modal }) => {
         failMessage: "SignIn Fail",
       });
       if (res) {
-        router.push("/");
+        if (!noRedirect) router.push("/");
         dispatch(setAuthUser(res));
       }
     });

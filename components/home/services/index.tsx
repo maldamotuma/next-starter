@@ -25,7 +25,11 @@ const Services: FunctionComponent<ServicesProps> = () => {
                     <Box
                     key={`service-card-${crd}`}
                     sx={{
-                        width: "33.33333%",
+                        width: {
+                            xs: "100%",
+                            sm: "50%",
+                            md: "33.33333%"
+                        },
                         p: 1,
                         boxSizing: "border-box"
                     }}

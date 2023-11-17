@@ -16,16 +16,17 @@ const Contact: FunctionComponent<ContactProps> = () => {
         <Container maxWidth="xl">
             <Stack
                 sx={{
-                    position: "relative",
-                    minHeight: {
-                        lg: "750px"
-                    }
+                    position: "relative"
                 }}
                 direction={{ xs: "column", md: "row" }} alignItems="center" justifyContent={"space-between"} spacing={3}>
                 <Box
                     sx={{
                         flex: 1,
                         maxWidth: "500px",
+                        width: {
+                            xs: "100%",
+                            md: "35%"
+                        }
                     }}
                 >
                     <CardContent>
@@ -93,18 +94,27 @@ const Contact: FunctionComponent<ContactProps> = () => {
                     alt={""}
                     src={"/contact.png"}
                     sx={{
-                        height: "calc(100% + 50px)",
+                        width: "30%",
+                        // height: "calc(100% + 50px)",
                         position: "absolute",
-                        top: 0,
+                        bottom: "-50px",
                         left: "50%",
                         transform: "translateX(-50%)",
-                        zIndex: 1
+                        zIndex: 1,
+                        display: {
+                            xs: "none",
+                            lg: "inline-block"
+                        }
                     }}
                 />
                 <Paper
                     sx={{
-                        maxWidth: 500,
-                        width: "100%"
+                        // maxWidth: 500,
+                        width: {
+                            xs: "100%",
+                            md: "35%"
+                        },
+                        display: "inline-block"
                     }}
                 >
                     <Tabform />
@@ -119,7 +129,10 @@ const Contact: FunctionComponent<ContactProps> = () => {
                 }}
                 maxWidth="md"
             >
-                <Stack direction="row" justifyContent={"center"} gap={5}>
+                <Stack direction={{
+                    xs: "column",
+                    md: "row"
+                }} justifyContent={"center"} gap={5}>
                     <Divider
                         sx={{
                             bgcolor: "#999"

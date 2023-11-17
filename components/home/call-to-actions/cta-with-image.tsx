@@ -18,7 +18,11 @@ const CTAWithImage: FunctionComponent<CTAWithImageProps> = () => {
             <Paper
             sx={{
                 p: 5,
-                width: "50%",
+                width: {
+                    xs: "calc(100% - 20px)",
+                    md: "75%",
+                    lg: "50%"
+                },
                 zIndex: 1,
                 position: "relative",
                 mt: 15,
@@ -94,14 +98,17 @@ const CTAWithImage: FunctionComponent<CTAWithImageProps> = () => {
             <Box
             component={"img"}
             src="https://images.pexels.com/photos/753331/pexels-photo-753331.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            width={"70%"}
             sx={{
                 position: "absolute",
                 top: 0,
                 right: 0,
                 height: "100%",
                 objectFit: "cover",
-                borderRadius: 2
+                borderRadius: 2,
+                width: {
+                    xs: "80%",
+                    md: "70%"
+                }
             }}
             />
         </Container>

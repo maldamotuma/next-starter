@@ -16,9 +16,13 @@ const Testimonials: FunctionComponent<TestimonialsProps> = () => {
     const [loaded, setLoaded] = useState<boolean>(false);
     const [sliderRef, instanceRef] = useKeenSlider(
         {
+            // breakpoints: {
+
+            // },
             slides: {
                 origin: "center",
                 perView: 3.2,
+                // perView: 1.2,
                 spacing: 15,
             },
             created() {

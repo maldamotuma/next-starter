@@ -18,7 +18,7 @@ const AuthButton: FunctionComponent<AuthButtonProps> = () => {
     const colorMode = useContext(ColorModeContext);
 
     return (
-        <div style={{display: "flex", alignItems: "center"}}>
+        <div style={{ display: "flex", alignItems: "center" }}>
             <Tooltip title="Toggle Theme" sx={{ mr: 1 }} disableInteractive>
                 <IconButton
                     onClick={colorMode.toggleColorMode}
@@ -32,7 +32,26 @@ const AuthButton: FunctionComponent<AuthButtonProps> = () => {
                         <AccountDD />
                         :
                         <AuthModal
-                            btn={bp => <Button startIcon={<Person4 />} {...bp} variant='contained'>SignIn / SignUp</Button>}
+                            btn={bp => <>
+                                <Button startIcon={<Person4 />} {...bp}
+                                    sx={{
+                                        display: {
+                                            xs: "none",
+                                            md: "flex"
+                                        }
+                                    }}
+                                    variant='contained'>SignIn / SignUp</Button>
+                                <IconButton
+                                    sx={{
+                                        display: {
+                                            md: "none"
+                                        }
+                                    }}
+                                    {...bp}
+                                >
+                                    <Person4 />
+                                </IconButton>
+                            </>}
                         />
                 }
             </div>

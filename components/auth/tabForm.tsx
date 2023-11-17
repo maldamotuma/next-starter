@@ -7,16 +7,16 @@ import { indigo } from "@mui/material/colors";
 import { Stack, Tabs, Tab, Box } from "@mui/material";
 
 interface TabformProps {
-
+    noRedirect?: boolean;
 }
 
-const Tabform: FunctionComponent<TabformProps> = () => {
+const Tabform: FunctionComponent<TabformProps> = ({ noRedirect }) => {
     const [tab, settab] = useState<"signin" | "signup">("signin");
 
     const handleTabChabge = (e: SyntheticEvent, nv: "signin" | "signup") => {
         settab(nv);
     }
-    
+
     return (
         <Stack>
             <Tabs
@@ -58,9 +58,9 @@ const Tabform: FunctionComponent<TabformProps> = () => {
             >
                 {
                     tab === "signin" ?
-                        <SigninForm modal />
+                        <SigninForm modal noRedirect={noRedirect} />
                         :
-                        <SignUpForm modal />
+                        <SignUpForm modal noRedirect={noRedirect} />
                 }
             </Box>
         </Stack>
