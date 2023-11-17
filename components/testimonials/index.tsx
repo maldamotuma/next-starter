@@ -18,7 +18,7 @@ const Testimonials: FunctionComponent<TestimonialsProps> = () => {
         {
             slides: {
                 origin: "center",
-                perView: 3,
+                perView: 3.2,
                 spacing: 15,
             },
             created() {
@@ -40,8 +40,9 @@ const Testimonials: FunctionComponent<TestimonialsProps> = () => {
     )
 
     return (
-        <Container maxWidth={"xl"} sx={{
-            // px: "0 !important"
+        <Box sx={{
+            // px: "0 !important",
+            width: "100%"
         }}>
             <Title
                 primary="Testimonials"
@@ -101,7 +102,7 @@ const Testimonials: FunctionComponent<TestimonialsProps> = () => {
                     <ArrowForward />
                 </Fab>
             </Box>
-        </Container>
+        </Box>
     );
 }
 

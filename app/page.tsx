@@ -1,3 +1,4 @@
+import Content from "@/components/content";
 import Footers from "@/components/footers";
 import CAS from "@/components/home/call-to-actions";
 import Contact from "@/components/home/contact";
@@ -23,6 +24,7 @@ const HomePage: FunctionComponent<HomePageProps> = () => {
       <Hero />
       <Stack spacing={15} sx={{ pt: 15, position: "relative" }} alignItems={"center"}>
         <Partners />
+        <Content />
         <Services />
         <CAS />
         <Pricing />
