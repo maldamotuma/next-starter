@@ -13,7 +13,7 @@ const HeroImage: FunctionComponent<HeroImageProps> = () => {
                 justifyContent: "flex-end"
             }}
         >
-            <Box
+            {/* <Box
                 sx={{
                     position: "relative",
                     display: "inline-block",
@@ -44,7 +44,17 @@ const HeroImage: FunctionComponent<HeroImageProps> = () => {
                         boxShadow: 5,
                     }}
                 />
-            </Box>
+            </Box> */}
+            <Box
+                component={"img"}
+                src={"/hero-banner.png"}
+                sx={{
+                    width: "100%",
+                    pl: {
+                        md: 5
+                    }
+                }}
+            />
         </Box>
     );
 }
