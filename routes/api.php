@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\AdminsController;
 use App\Http\Controllers\admin\CategoriesController;
 use App\Http\Controllers\admin\SectionsController;
 use App\Http\Controllers\user\AuthController;
@@ -44,6 +45,13 @@ Route::middleware("api")->group(function () {
         Route::get("/categories", "categories");
         Route::post("/update-category/{category}", "updateCategory");
         Route::post("/delete-category/{category}", "deleteCategory");
+    });
+
+    Route::controller(AdminsController::class)->group(function () {
+        Route::get("/admins", "admins");
+        Route::post("/add-admin", "addAdmin");
+        Route::post("/update-admin/{admin}", "updateAdmin");
+        Route::post("/delete-admin/{admin}", "deleteAdmin");
     });
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
