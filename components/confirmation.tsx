@@ -1,5 +1,5 @@
 import { Warning } from "@mui/icons-material";
-import { Alert, Button, ButtonProps, Collapse, Dialog, DialogActions, DialogContent, DialogTitle, ListItem, ListItemIcon, ListItemText, TextField } from "@mui/material";
+import { Alert, Button, ButtonProps, Collapse, Dialog, DialogActions, DialogContent, DialogTitle, ListItem, ListItemIcon, ListItemText, MenuItemProps, TextField } from "@mui/material";
 import { bindDialog, bindTrigger } from "material-ui-popup-state";
 import { usePopupState } from "material-ui-popup-state/hooks";
 import { FunctionComponent, ReactNode, useEffect, useRef, useState } from "react";
@@ -8,7 +8,7 @@ interface ConfirmProps {
     button?: ButtonProps;
     button_text?: string;
     action(): void;
-    render_button?: (btn: ButtonProps) => ReactNode;
+    render_button?: (btn: MenuItemProps) => ReactNode;
 }
 
 const Confirm: FunctionComponent<ConfirmProps> = ({

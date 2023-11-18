@@ -1,10 +1,11 @@
 import axios from "@/config/axios";
 import { statusTypes } from "@/config/types"
 import { Close } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import { Box, Button, Dialog, CardHeader, IconButton } from "@mui/material";
 import { AxiosRequestConfig } from "axios";
+import { bindDialog, bindTrigger, usePopupState } from "material-ui-popup-state/hooks";
 import { useSnackbar } from "notistack";
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react"
 
 export const useRemoteCall = () => {
     const [status, setStatus] = useState<statusTypes>("idle");
@@ -161,4 +162,101 @@ export const useInitialCall = <T,>(url: string, initialValue: T, options?: {
         setData
     }
 
+}
+
+interface useInitialList<T> {
+    status: statusTypes;
+    data: T[];
+    setData: Dispatch<SetStateAction<T[]>>;
+    alterData(dt: T, edit?: boolean): void;
+    handleEdit(dt: T): void;
+    handleDelete(data_id: number): void;
+    renderDialog(copy: {
+        txt: {
+            btn_txt: string;
+            header: string;
+        },
+        frm: ReactNode
+    }): ReactNode;
+    edit: T | null;
+    close(): void;
+}
+
+interface IdentifierProp {
+    id: number;
+}
+
+type RequestConfigType = {
+    successCallBack?: () => void;
+    failCallBack?: () => void;
+    successMessage?: string;
+    failMessage?: string;
+    ky?: string;
+    requestConfig?: AxiosRequestConfig
+}
+
+export const useInitialList = <T extends IdentifierProp>(url: string, options?: RequestConfigType): useInitialList<T> => {
+    const { data, setData, status } = useInitialCall<T[]>(url, [], options);
+    const [edit, setEdit] = useState<T | null>(null); // Stores Admin to be edited
+    const pps = usePopupState({ variant: "dialog" });
+
+    useEffect(() => {
+        if (!pps.isOpen) setEdit(null)
+
+        return () => {
+
+        }
+    }, [pps.isOpen]);
+
+    const alterData = (dt: T, edit?: boolean) => {
+        if (edit) {
+            setData(prev => prev.map(pdt => pdt.id === dt.id ? dt : pdt));
+        } else {
+            setData(prev => ([dt, ...prev]));
+        }
+    }
+
+    const handleEdit = (dt: T) => {
+        pps.open();
+        setEdit(dt);
+    }
+
+    const handleDelete = (data_id: number) => {
+        setData(prev => prev.filter(pr => pr.id !== data_id))
+    }
+
+    const renderDialog = (copy: {
+        txt: {
+            btn_txt: string;
+            header: string;
+        },
+        frm: ReactNode
+    }) => (
+        <>
+            <Button {...bindTrigger(pps)}>{copy.txt.btn_txt}</Button>
+            <Dialog {...bindDialog(pps)} onClose={() => { }}>
+                <CardHeader
+                    title={copy.txt.header}
+                    action={<IconButton onClick={pps.close}><Close /></IconButton>}
+                />
+                <Box sx={{ p: 3 }}>
+                    {
+                        copy.frm
+                    }
+                </Box>
+            </Dialog>
+        </>
+    )
+
+    return {
+        status,
+        data,
+        setData,
+        alterData,
+        handleEdit,
+        handleDelete,
+        renderDialog,
+        edit,
+        close: pps.close
+    }
 }
