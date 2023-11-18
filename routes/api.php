@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\admin\CategoriesController;
+use App\Http\Controllers\admin\SectionsController;
 use App\Http\Controllers\user\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +30,20 @@ Route::middleware("api")->group(function () {
         Route::post("/change-password", "changePassword");
         Route::get("/email/verify/{id}/{hash}", "verifyEmail")->middleware(['auth', 'signed'])->name('verification.verify');
         Route::post("/email/verification-notification", "resendEmailVerification");
+    });
+
+    Route::controller(SectionsController::class)->group(function () {
+        Route::post("/add-section", "addSection");
+        Route::get("/sections", "sections");
+        Route::post("/update-section/{section}", "updateSection");
+        Route::post("/delete-section/{section}", "deleteSection");
+    });
+
+    Route::controller(CategoriesController::class)->group(function () {
+        Route::post("/add-category", "addCategory");
+        Route::get("/categories", "categories");
+        Route::post("/update-category/{category}", "updateCategory");
+        Route::post("/delete-category/{category}", "deleteCategory");
     });
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
