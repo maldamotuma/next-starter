@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AdminsController;
 use App\Http\Controllers\admin\CategoriesController;
 use App\Http\Controllers\admin\SectionsController;
+use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\user\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,13 @@ Route::middleware("api")->group(function () {
         Route::post("/add-admin", "addAdmin");
         Route::post("/update-admin/{admin}", "updateAdmin");
         Route::post("/delete-admin/{admin}", "deleteAdmin");
+    });
+
+    Route::controller(UserController::class)->group(function () {
+        Route::get("/users", "users");
+        Route::post("/add-user", "addUser");
+        Route::post("/update-user/{user}", "updateUser");
+        Route::post("/delete-user/{user}", "deleteUser");
     });
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

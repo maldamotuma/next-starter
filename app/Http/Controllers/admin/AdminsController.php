@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AdminsController extends Controller
@@ -44,8 +45,8 @@ class AdminsController extends Controller
         $data = $request->validate([
             "first_name" => "required",
             "last_name" => "required",
-            "username" => ["required", "unique:admins,username,".$admin->id],
-            "email" => ['required', 'unique:admins,email,'.$admin->id],
+            "username" => ["required", "unique:admins,username," . $admin->id],
+            "email" => ['required', 'unique:admins,email,' . $admin->id],
             "gender" => ["required"],
             "is_super" => ["required"]
         ]);
@@ -57,7 +58,13 @@ class AdminsController extends Controller
         ]);
     }
 
-    function deleteAdmin(Admin $admin) : JsonResponse {
+    function deleteAdmin(Admin $admin): JsonResponse
+    {
+        if ($admin->profile_picture) {
+            Storage::disk('avatar')->delete("small/" . $admin->profile_picture);
+            Storage::disk('avatar')->delete("medium/" . $admin->profile_picture);
+            Storage::disk('avatar')->delete("large/" . $admin->profile_picture);
+        }
         $admin->delete();
         return response()->json([
             'success' => 1
