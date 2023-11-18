@@ -2,16 +2,17 @@ import { Warning } from "@mui/icons-material";
 import { Alert, Button, ButtonProps, Collapse, Dialog, DialogActions, DialogContent, DialogTitle, ListItem, ListItemIcon, ListItemText, TextField } from "@mui/material";
 import { bindDialog, bindTrigger } from "material-ui-popup-state";
 import { usePopupState } from "material-ui-popup-state/hooks";
-import { FunctionComponent, useEffect, useRef, useState } from "react";
+import { FunctionComponent, ReactNode, useEffect, useRef, useState } from "react";
 
 interface ConfirmProps {
     button?: ButtonProps;
-    button_text: string;
+    button_text?: string;
     action(): void;
+    render_button?: (btn: ButtonProps) => ReactNode;
 }
 
 const Confirm: FunctionComponent<ConfirmProps> = ({
-    button, button_text, action
+    button, button_text, action, render_button
 }) => {
     const popupstate = usePopupState({ variant: "dialog" });
     const [code, setCode] = useState<string | null>(null);
@@ -34,7 +35,7 @@ const Confirm: FunctionComponent<ConfirmProps> = ({
     }
 
     const handle_confirm = () => {
-        if(inpRef.current?.value !== `${code}`) {
+        if (inpRef.current?.value !== `${code}`) {
             setMessage("Incorrect Entry. Confirmation Failed")
             return;
         }
@@ -44,14 +45,19 @@ const Confirm: FunctionComponent<ConfirmProps> = ({
 
     return (
         <>
-            <Button
-                variant={"outlined"}
-                color={"error"}
-                {...button} {...bindTrigger(popupstate)}>
-                {
-                    button_text
-                }
-            </Button>
+            {
+                render_button ?
+                    render_button({ ...bindTrigger(popupstate) })
+                    :
+                    <Button
+                        variant={"outlined"}
+                        color={"error"}
+                        {...button} {...bindTrigger(popupstate)}>
+                        {
+                            button_text
+                        }
+                    </Button>
+            }
             <Dialog
                 {...bindDialog(popupstate)}
             >

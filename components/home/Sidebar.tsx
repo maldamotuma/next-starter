@@ -1,7 +1,7 @@
 import { server_url } from "@/config/variables";
 import { useAppSelector } from "@/redux/store";
-import { ChevronLeft, ChevronLeftOutlined, ExpandMore, Inbox, Mail } from "@mui/icons-material";
-import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, CardHeader, Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack } from "@mui/material";
+import { ChevronLeft, ChevronLeftOutlined, CircleOutlined, ExpandMore, Group, GroupOutlined, Inbox, Mail } from "@mui/icons-material";
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, CardHeader, Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, accordionDetailsClasses, alpha, listItemIconClasses } from "@mui/material";
 import moment from "moment";
 import Link from "next/link";
 import { FunctionComponent } from "react";
@@ -38,9 +38,25 @@ const Siebar: FunctionComponent<SiebarProps> = ({ handleClose }) => {
           </IconButton>}
         />
       </Box>
-      <Box sx={{ flexGrow: 1, overflow: "auto" }}>
+      <Box sx={{
+        flexGrow: 1,
+        overflow: "auto",
+        [`& .${listItemIconClasses.root}`]: {
+          minWidth: "unset",
+          mr: 1
+        },
+        [`& .${accordionDetailsClasses.root}`]: {
+          bgcolor: theme => alpha(theme.palette.divider, .05),
+          py: 0,
+          pl: 0,
+          width: "calc(100% - 30px)",
+          ml: "20px",
+          mr: "10px",
+          borderRadius: 5
+        }
+      }}>
         <Accordion
-          disableGutters
+          // disableGutters
           variant="outlined"
           sx={{
             border: 0
@@ -57,6 +73,9 @@ const Siebar: FunctionComponent<SiebarProps> = ({ handleClose }) => {
                 component={Link}
                 href={"/dashboard/sections"}
               >
+                <ListItemIcon>
+                  <CircleOutlined />
+                </ListItemIcon>
                 <ListItemText
                   primary={"Sections"}
                 />
@@ -65,6 +84,9 @@ const Siebar: FunctionComponent<SiebarProps> = ({ handleClose }) => {
                 component={Link}
                 href={"/dashboard/categories"}
               >
+                <ListItemIcon>
+                  <CircleOutlined />
+                </ListItemIcon>
                 <ListItemText
                   primary={"Categories"}
                 />
@@ -72,8 +94,47 @@ const Siebar: FunctionComponent<SiebarProps> = ({ handleClose }) => {
             </List>
           </AccordionDetails>
         </Accordion>
+        <Accordion
+          // disableGutters
+          variant="outlined"
+          sx={{
+            border: 0
+          }}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMore />}
+          >
+            User Management
+          </AccordionSummary>
+          <AccordionDetails>
+            <List>
+              <ListItemButton
+                component={Link}
+                href={"/dashboard/admin/list"}
+              >
+                <ListItemIcon>
+                  <GroupOutlined />
+                </ListItemIcon>
+                <ListItemText
+                  primary={"Admins"}
+                />
+              </ListItemButton>
+              <ListItemButton
+                component={Link}
+                href={"/dashboard/user/list"}
+              >
+                <ListItemIcon>
+                  <Group />
+                </ListItemIcon>
+                <ListItemText
+                  primary={"Users"}
+                />
+              </ListItemButton>
+            </List>
+          </AccordionDetails>
+        </Accordion>
       </Box>
-    </Stack>
+    </Stack >
   );
 }
 

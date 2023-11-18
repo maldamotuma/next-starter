@@ -1,6 +1,7 @@
 "use client";
 
 import Confirm from "@/components/confirmation";
+import { sectionPrpos } from "@/components/sections/types";
 import { useInitialCall, useRemoteCall } from "@/hooks/remote-call";
 import { useValidator } from "@malda/react-validator";
 import { AppRegistration, Delete } from "@mui/icons-material";
@@ -21,7 +22,7 @@ interface CategoriesProps {
 }
 
 const Categories: FunctionComponent<CategoriesProps> = () => {
-    const { data: categories, setData: setCategories, status } = useInitialCall("/categories", {
+    const { data: categories, setData: setCategories, status } = useInitialCall<CategoryPrpos[]>("/categories", [], {
         ky: "categories"
     });
     const [edit, setEdit] = useState<CategoryPrpos | undefined>(undefined);
@@ -42,9 +43,9 @@ const Categories: FunctionComponent<CategoriesProps> = () => {
 
     const handleAddCategory = (sctn: CategoryPrpos, edit?: boolean) => {
         if (edit) {
-            setCategories((prev: CategoryPrpos[]) => prev.map(old_sctn => old_sctn.id === sctn.id ? sctn : old_sctn))
+            setCategories(prev => prev.map(old_sctn => old_sctn.id === sctn.id ? sctn : old_sctn))
         } else {
-            setCategories((prev: CategoryPrpos[]) => ([sctn, ...prev]));
+            setCategories(prev => ([sctn, ...prev]));
         }
     }
 
@@ -56,7 +57,7 @@ const Categories: FunctionComponent<CategoriesProps> = () => {
     const handleDelete = async (sctn_id: number) => {
         axios.post(`/delete-category/${sctn_id}`, {
             successCallBack() {
-                setCategories((prev: CategoryPrpos[]) => prev.filter(pr => pr.id !== sctn_id))
+                setCategories(prev => prev.filter(pr => pr.id !== sctn_id))
             },
         })
     }
@@ -74,7 +75,7 @@ const Categories: FunctionComponent<CategoriesProps> = () => {
                     handleAddCategory={handleAddCategory}
                     pps={pps}
                     category={edit}
-                    categories={categories}
+                    categories={categories || []}
                 />
             </Dialog>
             <List
@@ -141,7 +142,7 @@ const CategoryForm = ({ handleAddCategory, pps, category, categories }: {
     category?: CategoryPrpos;
     categories: CategoryPrpos[]
 }) => {
-    const { data: sections, setData: setSections, status: sec_status } = useInitialCall("/sections", {
+    const { data: sections, setData: setSections, status: sec_status } = useInitialCall<sectionPrpos[]>("/sections", [], {
         ky: "sections"
     });
     const { axios, status } = useRemoteCall();

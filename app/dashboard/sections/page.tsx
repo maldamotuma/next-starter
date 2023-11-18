@@ -1,6 +1,7 @@
 "use client";
 
 import Confirm from "@/components/confirmation";
+import { sectionPrpos } from "@/components/sections/types";
 import { useInitialCall, useRemoteCall } from "@/hooks/remote-call";
 import { useValidator } from "@malda/react-validator";
 import { AppRegistration, Delete } from "@mui/icons-material";
@@ -8,18 +9,13 @@ import { Alert, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, 
 import { PopupState, bindDialog, bindTrigger, usePopupState } from "material-ui-popup-state/hooks";
 import { FormEvent, FunctionComponent, useEffect, useState } from "react";
 
-type sectionPrpos = {
-    id: number;
-    title: string;
-    is_active: boolean;
-}
 
 interface SectionsProps {
 
 }
 
 const Sections: FunctionComponent<SectionsProps> = () => {
-    const { data: sections, setData: setSections, status } = useInitialCall("/sections", {
+    const { data: sections, setData: setSections, status } = useInitialCall<sectionPrpos[]>("/sections", [], {
         ky: "sections"
     });
     const [edit, setEdit] = useState<sectionPrpos | undefined>(undefined);
@@ -40,9 +36,9 @@ const Sections: FunctionComponent<SectionsProps> = () => {
 
     const handleAddSection = (sctn: sectionPrpos, edit?: boolean) => {
         if (edit) {
-            setSections((prev: sectionPrpos[]) => prev.map(old_sctn => old_sctn.id === sctn.id ? sctn : old_sctn))
+            setSections(prev => prev.map(old_sctn => old_sctn.id === sctn.id ? sctn : old_sctn))
         } else {
-            setSections((prev: sectionPrpos[]) => ([sctn, ...prev]));
+            setSections(prev => ([sctn, ...prev]));
         }
     }
 
@@ -54,7 +50,7 @@ const Sections: FunctionComponent<SectionsProps> = () => {
     const handleDelete = async (sctn_id: number) => {
         axios.post(`/delete-section/${sctn_id}`, {
             successCallBack() {
-                setSections((prev: sectionPrpos[]) => prev.filter(pr => pr.id !== sctn_id))
+                setSections(prev => prev.filter(pr => pr.id !== sctn_id))
             },
         })
     }

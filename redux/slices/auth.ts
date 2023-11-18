@@ -13,6 +13,7 @@ export type userType = {
   phone: string;
   gender: string;
   email_verified_at: string | null;
+  is_active: boolean;
 }
 
 export interface auth {

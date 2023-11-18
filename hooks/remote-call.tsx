@@ -4,7 +4,7 @@ import { Close } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { AxiosRequestConfig } from "axios";
 import { useSnackbar } from "notistack";
-import { useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 
 export const useRemoteCall = () => {
     const [status, setStatus] = useState<statusTypes>("idle");
@@ -129,16 +129,22 @@ export const useRemoteCall = () => {
     }
 }
 
-export const useInitialCall = (url: string, options?: {
+interface UseInitialCall<T> {
+    status: statusTypes;
+    data: T;
+    setData: Dispatch<SetStateAction<T>>
+}
+
+export const useInitialCall = <T,>(url: string, initialValue: T, options?: {
     successCallBack?: () => void;
     failCallBack?: () => void;
     successMessage?: string;
     failMessage?: string;
     ky?: string;
     requestConfig?: AxiosRequestConfig
-}) => {
+}): UseInitialCall<T> => {
     const { axios, status } = useRemoteCall();
-    const [data, setData] = useState<any>(null);
+    const [data, setData] = useState<T>(initialValue);
 
     useEffect(() => {
         axios.get(url, options).then(res => {
