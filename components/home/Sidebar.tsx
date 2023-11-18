@@ -1,8 +1,9 @@
 import { server_url } from "@/config/variables";
 import { useAppSelector } from "@/redux/store";
-import { ChevronLeft, Inbox, Mail } from "@mui/icons-material";
-import { Avatar, Box, CardHeader, Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack } from "@mui/material";
+import { ChevronLeft, ChevronLeftOutlined, ExpandMore, Inbox, Mail } from "@mui/icons-material";
+import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, CardHeader, Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack } from "@mui/material";
 import moment from "moment";
+import Link from "next/link";
 import { FunctionComponent } from "react";
 
 interface SiebarProps {
@@ -38,43 +39,39 @@ const Siebar: FunctionComponent<SiebarProps> = ({ handleClose }) => {
         />
       </Box>
       <Box sx={{ flexGrow: 1, overflow: "auto" }}>
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <Inbox /> : <Mail />}
-                </ListItemIcon>
-                <ListItemText primary={text}
-                  primaryTypographyProps={{
-                    noWrap: true
-                  }}
-                  secondaryTypographyProps={{
-                    noWrap: true
-                  }}
+        <Accordion
+          disableGutters
+          variant="outlined"
+          sx={{
+            border: 0
+          }}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMore />}
+          >
+            Catalogue
+          </AccordionSummary>
+          <AccordionDetails>
+            <List>
+              <ListItemButton
+                component={Link}
+                href={"/dashboard/sections"}
+              >
+                <ListItemText
+                  primary={"Sections"}
                 />
               </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <Inbox /> : <Mail />}
-                </ListItemIcon>
-                <ListItemText primary={text} primaryTypographyProps={{
-                  noWrap: true
-                }}
-                  secondaryTypographyProps={{
-                    noWrap: true
-                  }} />
+              <ListItemButton
+                component={Link}
+                href={"/dashboard/categories"}
+              >
+                <ListItemText
+                  primary={"Categories"}
+                />
               </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+            </List>
+          </AccordionDetails>
+        </Accordion>
       </Box>
     </Stack>
   );

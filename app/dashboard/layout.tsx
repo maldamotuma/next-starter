@@ -1,7 +1,7 @@
 "use client"
 
 import ResponsiveAppBar from '@/components/home/nav'
-import { Box, Container, Dialog, Drawer, Stack, useTheme } from '@mui/material'
+import { Box, Container, Dialog, Drawer, Stack, useMediaQuery, useTheme } from '@mui/material'
 import Siebar from '@/components/home/Sidebar'
 import { ReactNode, useEffect, useState } from 'react'
 import { useAppSelector } from '@/redux/store'
@@ -22,6 +22,7 @@ export default function Home({ children }: DashboardLayoutProps) {
     const pps = usePopupState({
         variant: "dialog"
     });
+    const matches = useMediaQuery(theme.breakpoints.down("md"));
 
 
     const handleOpen = () => {
@@ -39,7 +40,7 @@ export default function Home({ children }: DashboardLayoutProps) {
                     primary="Authentication Required"
                     secondary='you must authenticate before proceeding'
                 />
-                <Tabform noRedirect/>
+                <Tabform noRedirect />
             </Container>
         )
     } else if (auth.status === "pending") {
@@ -102,10 +103,8 @@ export default function Home({ children }: DashboardLayoutProps) {
                 }}
             >
                 <ResponsiveAppBar
-                    handleOpen={handleOpen}
-                    open={width === 300}
-                // handleOpen={pps.open}
-                // open={pps.isOpen}
+                    handleOpen={matches ? pps.open : handleOpen}
+                    open={matches ? pps.isOpen : width === 300}
                 />
                 <Box
                     sx={{
