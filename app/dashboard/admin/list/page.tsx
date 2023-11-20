@@ -3,6 +3,7 @@
 import AdminForm from "@/components/admin/form";
 import { AdminType } from "@/components/admin/types";
 import Confirm from "@/components/confirmation";
+import { useSearch } from "@/components/user/search";
 import { server_url } from "@/config/variables";
 import { useInitialCall, useRemoteCall } from "@/hooks/remote-call";
 import { Close, MoreVert } from "@mui/icons-material";
@@ -19,7 +20,48 @@ const Admins: FunctionComponent<AdminsProps> = () => {
     const { data: admins, setData: setAdmins, status } = useInitialCall<AdminType[]>("/admins", [], { ky: "admins" });
     const pps = usePopupState({ variant: "dialog" });
     const [edit, setEdit] = useState<AdminType | null>(null); // Stores Admin to be edited
-    const { axios, status: del_status  } = useRemoteCall();
+    const { axios, status: del_status } = useRemoteCall();
+    const { renderInput, renderResult } = useSearch<AdminType>("admins", {
+        searchby: {
+            first_name: "First Name",
+            last_name: "Last Name",
+            email: "Email",
+            phone: "Phone",
+        },
+        rl: (user) => (
+            <ListItem key={`user-search-${user.id}`}
+                secondaryAction={
+                    <PopupState variant="dialog">
+                        {
+                            ppsa => (
+                                <>
+                                    <IconButton {...bindToggle(ppsa)}>
+                                        <MoreVert />
+                                    </IconButton>
+                                    <Menu
+                                        {...bindMenu(ppsa)}
+                                    >
+                                        <MenuItem onClick={() => handleEdit(user)}>Edit</MenuItem>
+                                        <Confirm
+                                            action={() => handleDelete(user.id)}
+                                            render_button={btn => <MenuItem {...btn} disabled={del_status === "pending"}>Delete</MenuItem>}
+                                        />
+                                    </Menu>
+                                </>
+                            )
+                        }
+                    </PopupState>
+                }
+            >
+                <ListItemIcon>
+                    <Avatar src={`${server_url}/avatar/small/${user.profile_picture}`} />
+                </ListItemIcon>
+                <ListItemText
+                    primary={`${user.first_name} ${user.last_name}`}
+                />
+            </ListItem>
+        )
+    })
 
     useEffect(() => {
         if (!pps.isOpen) setEdit(null)
@@ -56,17 +98,25 @@ const Admins: FunctionComponent<AdminsProps> = () => {
         return <>Something Went Wrong!</>
     }
     return (
-        <Box>
+        <Box sx={{maxWidth: "sm"}}>
             <Button {...bindTrigger(pps)}>Add Admin</Button>
             <Dialog {...bindDialog(pps)} onClose={() => { }}>
                 <CardHeader
-                    title={"Add Admin"}
+                    title={edit ? "Edit Admin" : "Add Admin"}
                     action={<IconButton onClick={pps.close}><Close /></IconButton>}
                 />
                 <Box sx={{ p: 3 }}>
                     <AdminForm alterAdmins={alterAdmins} close={pps.close} admin={edit} />
                 </Box>
             </Dialog>
+            <Box sx={{ py: 2 }}>
+                {
+                    renderInput
+                }
+                {
+                    renderResult
+                }
+            </Box>
             <List sx={{
                 maxWidth: "sm"
             }}>

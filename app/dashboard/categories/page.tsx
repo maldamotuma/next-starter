@@ -80,7 +80,7 @@ const Categories: FunctionComponent<CategoriesProps> = () => {
             </Dialog>
             <List
                 sx={{
-                    maxWidth: 300
+                    maxWidth: "sm"
                 }}
             >
                 {

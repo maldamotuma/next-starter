@@ -72,7 +72,7 @@ const Sections: FunctionComponent<SectionsProps> = () => {
             </Dialog>
             <List
                 sx={{
-                    maxWidth: 300
+                    maxWidth: "sm"
                 }}
             >
                 {
