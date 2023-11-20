@@ -11,13 +11,32 @@ use Illuminate\Support\Str;
 
 class AdminsController extends Controller
 {
-    function admins(): JsonResponse
+    function admins(Request $request): JsonResponse
     {
-        $admins = Admin::latest()->get();
-        return response()->json([
-            'success' => 1,
-            'admins' => $admins
-        ]);
+
+        if ($request->has("q")) {
+            $query = $request->q;
+            if ($query && $request->by) {
+                $admins = Admin::latest()
+                    ->where($request->by, "LIKE", "%" . $query . "%")
+                    ->get();
+                return response()->json([
+                    'success' => 1,
+                    'result' => $admins
+                ]);
+            } else {
+                return response()->json([
+                    'success' => 0,
+                    'result' => []
+                ]);
+            }
+        } else {
+            $admins = Admin::latest()->get();
+            return response()->json([
+                'success' => 1,
+                'admins' => $admins
+            ]);
+        }
     }
 
     function addAdmin(Request $request): JsonResponse

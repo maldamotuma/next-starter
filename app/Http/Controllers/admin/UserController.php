@@ -11,13 +11,31 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    function users(): JsonResponse
+    function users(Request $request): JsonResponse
     {
-        $users = User::latest()->get();
-        return response()->json([
-            'success' => 1,
-            'users' => $users
-        ]);
+        if ($request->has("q")) {
+            $query = $request->q;
+            if ($query && $request->by) {
+                $users = User::latest()
+                    ->where($request->by, "LIKE", "%".$query."%")
+                    ->get();
+                return response()->json([
+                    'success' => 1,
+                    'result' => $users
+                ]);
+            } else {
+                return response()->json([
+                    'success' => 0,
+                    'result' => []
+                ]);
+            }
+        } else {
+            $users = User::latest()->get();
+            return response()->json([
+                'success' => 1,
+                'users' => $users
+            ]);
+        }
     }
 
     function addUser(Request $request): JsonResponse
