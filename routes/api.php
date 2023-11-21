@@ -25,6 +25,7 @@ Route::middleware("api")->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::get("/auth-user", "auth_user");
         Route::post("/signin", "signin");
+        Route::post("/app-login", "appLogin");
         Route::post("/signup", "signup");
         Route::post("/logout", "logout");
         Route::post("/forgot-password", "forgot_password")->middleware('guest');

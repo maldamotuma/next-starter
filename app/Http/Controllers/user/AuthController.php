@@ -4,6 +4,7 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -246,9 +247,34 @@ class AuthController extends Controller
     function resendEmailVerification(Request $request): JsonResponse
     {
         $request->user()->sendEmailVerificationNotification();
-        
+
         return response()->json([
             'success' => 1
+        ]);
+    }
+
+    function appLogin(Request $request): JsonResponse
+    {
+        $name = $request->name;
+        $email = $request->email;
+        $user = User::where("email", $email)->first();
+        if (!$user) {
+            $user = User::create([
+                "first_name" => Str::before($name, " "),
+                "last_name" => Str::after($name, " "),
+                "username" => Str::before($email, "@") . Str::random(4),
+                "email" => $email,
+                "password" => Str::random(8)
+            ]);
+        }
+        if (!$user->email_verified_at) {
+            $user->email_verified_at = Carbon::now();
+            $user->save();
+        }
+        Auth::login($user, true);
+        return response()->json([
+            'success' => 1,
+            'user' => $user
         ]);
     }
 }
