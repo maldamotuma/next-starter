@@ -1,6 +1,6 @@
 import { server_url } from "@/config/variables";
 import { useAppSelector } from "@/redux/store";
-import { ChevronLeft, ChevronLeftOutlined, CircleOutlined, ExpandMore, Group, GroupOutlined, Inbox, Mail } from "@mui/icons-material";
+import { ChevronLeft, ChevronLeftOutlined, CircleOutlined, Error, ExpandMore, Group, GroupOutlined, Inbox, Mail, Warning } from "@mui/icons-material";
 import { Accordion, AccordionDetails, AccordionSummary, Avatar, Box, CardHeader, Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, accordionDetailsClasses, alpha, listItemIconClasses } from "@mui/material";
 import moment from "moment";
 import Link from "next/link";
@@ -133,6 +133,28 @@ const Siebar: FunctionComponent<SiebarProps> = ({ handleClose }) => {
             </List>
           </AccordionDetails>
         </Accordion>
+        <ListItemButton
+          component={Link}
+          href={"/dashboard/exceptions"}
+        >
+          <ListItemIcon>
+            <Error />
+          </ListItemIcon>
+          <ListItemText
+            primary={"Exceptions"}
+          />
+        </ListItemButton>
+        <ListItemButton
+          component={Link}
+          href={"/dashboard/nfp"}
+        >
+          <ListItemIcon>
+            <Warning />
+          </ListItemIcon>
+          <ListItemText
+            primary={"Not Found"}
+          />
+        </ListItemButton>
       </Box>
     </Stack >
   );

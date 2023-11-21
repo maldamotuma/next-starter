@@ -1,7 +1,7 @@
 import axios from "@/config/axios";
 import { statusTypes } from "@/config/types"
 import { Close } from "@mui/icons-material";
-import { Box, Button, Dialog, CardHeader, IconButton } from "@mui/material";
+import { Box, Button, Dialog, CardHeader, IconButton, Alert } from "@mui/material";
 import { AxiosRequestConfig } from "axios";
 import { bindDialog, bindTrigger, usePopupState } from "material-ui-popup-state/hooks";
 import { useSnackbar } from "notistack";
@@ -180,6 +180,7 @@ interface useInitialList<T> {
     }): ReactNode;
     edit: T | null;
     close(): void;
+    renderList(nd: ReactNode | ReactNode[]): ReactNode;
 }
 
 interface IdentifierProp {
@@ -227,13 +228,16 @@ export const useInitialList = <T extends IdentifierProp>(url: string, options?: 
 
     const renderDialog = (copy: {
         txt: {
-            btn_txt: string;
+            btn_txt?: string;
             header: string;
         },
         frm: ReactNode
     }) => (
         <>
-            <Button {...bindTrigger(pps)}>{copy.txt.btn_txt}</Button>
+            {
+                copy.txt.btn_txt &&
+                <Button {...bindTrigger(pps)}>{copy.txt.btn_txt}</Button>
+            }
             <Dialog {...bindDialog(pps)} onClose={() => { }}>
                 <CardHeader
                     title={copy.txt.header}
@@ -248,6 +252,17 @@ export const useInitialList = <T extends IdentifierProp>(url: string, options?: 
         </>
     )
 
+    const renderList = (nd: ReactNode | ReactNode[]) => {
+        switch (status) {
+            case "pending":
+                return <>Loading...</>
+            case "idle":
+                return data.length ? nd : <Alert severity="info">No Data Found</Alert>;
+            default:
+                return <>Something Went Wrong.</>;
+        }
+    }
+
     return {
         status,
         data,
@@ -257,6 +272,7 @@ export const useInitialList = <T extends IdentifierProp>(url: string, options?: 
         handleDelete,
         renderDialog,
         edit,
-        close: pps.close
+        close: pps.close,
+        renderList
     }
 }

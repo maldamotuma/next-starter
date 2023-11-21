@@ -1,7 +1,7 @@
 "use client"
 
 import ResponsiveAppBar from '@/components/home/nav'
-import { Box, Container, Dialog, Drawer, Stack, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Container, Dialog, Drawer, Stack, accordionClasses, alpha, useMediaQuery, useTheme } from '@mui/material'
 import Siebar from '@/components/home/Sidebar'
 import { ReactNode, useEffect, useState } from 'react'
 import { useAppSelector } from '@/redux/store'
@@ -10,6 +10,7 @@ import VerifyEmail from '@/components/auth/verifyEmail'
 import { bindDialog, usePopupState } from 'material-ui-popup-state/hooks'
 import Tabform from '@/components/auth/tabForm'
 import Title from '@/components/home/title'
+import { lightBlue } from '@mui/material/colors'
 
 interface DashboardLayoutProps {
     children: ReactNode;
@@ -92,7 +93,11 @@ export default function Home({ children }: DashboardLayoutProps) {
                     borderColor: "divider",
                     height: "100vh",
                     overflowX: "hidden",
-                    transition: ".3s width ease"
+                    transition: ".3s width ease",
+                    bgcolor: theme => theme.palette.mode === "light" ? alpha(lightBlue[100], .2) : alpha(lightBlue[900], .1),
+                    [`& .${accordionClasses.root}`]: {
+                        bgcolor: "inherit",
+                    }
                 }}
             >
                 <Siebar handleClose={handleClose} />
