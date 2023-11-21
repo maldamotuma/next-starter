@@ -6,6 +6,7 @@ import './globals.css'
 import WholeWrapper from '@/components/wrappers/wholeWrapper'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
+import { SessionProvider } from 'next-auth/react'
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -33,11 +34,13 @@ export default function RootLayout({
       <body
       // className={inter.className}
       >
-        <Provider store={store}>
-          <WholeWrapper>
-            {children}
-          </WholeWrapper>
-        </Provider>
+        <SessionProvider>
+          <Provider store={store}>
+            <WholeWrapper>
+              {children}
+            </WholeWrapper>
+          </Provider>
+        </SessionProvider>
       </body>
     </html>
   )

@@ -3,17 +3,18 @@
 import { FunctionComponent, useContext } from "react";
 import AccountDD from "./accountDropDown";
 import AuthModal from "../auth/authModal";
-import { Button, IconButton, Tooltip, useTheme } from "@mui/material";
+import { Button, CircularProgress, IconButton, Tooltip, useTheme } from "@mui/material";
 import { DarkMode, LightMode, Person4 } from "@mui/icons-material";
 import { useAppSelector } from "@/redux/store";
 import { ColorModeContext } from "../wrappers/wholeWrapper";
+import { LoadingButton } from "@mui/lab";
 
 interface AuthButtonProps {
 
 }
 
 const AuthButton: FunctionComponent<AuthButtonProps> = () => {
-    const { user } = useAppSelector(state => state.auth);
+    const { user, status } = useAppSelector(state => state.auth);
     const theme = useTheme();
     const colorMode = useContext(ColorModeContext);
 
@@ -33,14 +34,16 @@ const AuthButton: FunctionComponent<AuthButtonProps> = () => {
                         :
                         <AuthModal
                             btn={bp => <>
-                                <Button startIcon={<Person4 />} {...bp}
+                                <LoadingButton
+                                    loadingPosition="start"
+                                    loading={status === "pending"} startIcon={<Person4 />} {...bp}
                                     sx={{
                                         display: {
                                             xs: "none",
                                             md: "flex"
                                         }
                                     }}
-                                    variant='contained'>SignIn / SignUp</Button>
+                                    variant='contained'>SignIn / SignUp</LoadingButton>
                                 <IconButton
                                     sx={{
                                         display: {
@@ -48,8 +51,14 @@ const AuthButton: FunctionComponent<AuthButtonProps> = () => {
                                         }
                                     }}
                                     {...bp}
+                                    disabled={status === "pending"}
                                 >
-                                    <Person4 />
+                                    {
+                                        status === "pending" ?
+                                            <CircularProgress size={20} />
+                                            :
+                                            <Person4 />
+                                    }
                                 </IconButton>
                             </>}
                         />

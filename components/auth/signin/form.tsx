@@ -5,7 +5,9 @@ import { useRemoteCall } from "@/hooks/remote-call";
 import { setAuthUser } from "@/redux/slices/auth";
 import { useAppDispatch } from "@/redux/store";
 import { rulesAndMessagedType, useValidator } from "@malda/react-validator";
-import { Box, Button, Checkbox, FormControlLabel, Grid, TextField } from "@mui/material";
+import { GitHub, Google } from "@mui/icons-material";
+import { Box, Button, Checkbox, Divider, FormControlLabel, Grid, TextField, Typography } from "@mui/material";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FunctionComponent } from "react";
@@ -88,7 +90,7 @@ const SigninForm: FunctionComponent<SigninFormProps> = ({ modal, noRedirect }) =
             "Sign In"
         }
       </Button>
-      <Grid container>
+      <Grid container sx={{ mb: 2 }}>
         <Grid item xs>
           <Button component={Link} sx={{ textTransform: "none" }} href="/auth/forgot-password">
             Forgot password?
@@ -103,6 +105,33 @@ const SigninForm: FunctionComponent<SigninFormProps> = ({ modal, noRedirect }) =
           </Grid>
         }
       </Grid>
+      <Divider sx={{ my: 1 }}>
+        <Typography color="text.secondary">Or</Typography>
+      </Divider>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-around",
+          gap: 2,
+          mt: 2
+        }}
+      >
+        <Button
+          startIcon={<Google />}
+          onClick={() => signIn("google")}
+          variant={"outlined"}
+          fullWidth
+        >
+          SignIN With Google
+        </Button>
+        <Button
+          startIcon={<GitHub />}
+          variant={"outlined"}
+          fullWidth
+        >
+          SignIN With Github
+        </Button>
+      </Box>
     </Box>
   );
 }

@@ -6,6 +6,7 @@ import { useRemoteCall } from "@/hooks/remote-call";
 import { setAuthUser } from "@/redux/slices/auth";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { Avatar, IconButton, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FunctionComponent, useState } from "react";
@@ -47,8 +48,13 @@ const AccountDD: FunctionComponent<AccountDDProps> = () => {
       successMessage: "Suuccessfully Logged Out",
       successCallBack() {
         dispatch(setAuthUser(null));
-        router.push("/");
+        signOut({
+          redirect: false
+        }).then(() => {
+          router.push("/");
+        });
       },
+
     })
   }
 

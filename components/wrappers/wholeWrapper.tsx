@@ -1,11 +1,13 @@
 "use client"
 
-import axios, { baseURL } from "@/config/axios";
+import { baseURL } from "@/config/axios";
+import { useRemoteCall } from "@/hooks/remote-call";
 import { setInitialAuthUser } from "@/redux/slices/auth";
-import { useAppDispatch } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import { useSession } from "next-auth/react";
 import { SnackbarProvider } from "notistack";
-import { FunctionComponent, ReactNode, createContext, useEffect, useMemo, useState } from "react";
+import { FunctionComponent, ReactNode, createContext, useCallback, useEffect, useMemo, useState } from "react";
 
 interface WholeWrapperProps {
     children: ReactNode
@@ -15,6 +17,10 @@ export const ColorModeContext = createContext({ toggleColorMode: () => { } });
 
 const WholeWrapper: FunctionComponent<WholeWrapperProps> = ({ children }) => {
     const [mode, setMode] = useState<'light' | 'dark'>('light');
+    const session = useSession<any>();
+    const { axios } = useRemoteCall();
+    const user = useAppSelector(state => state.auth.user);
+
     const colorMode = useMemo(
         () => ({
             toggleColorMode: () => {
@@ -39,26 +45,58 @@ const WholeWrapper: FunctionComponent<WholeWrapperProps> = ({ children }) => {
     );
     const dispatch = useAppDispatch();
 
+    const initialCall = useCallback(
+        async () => {
+            await baseURL.get('/sanctum/csrf-cookie');
+            const res = await axios.get("/auth-user", {
+                ky: "user"
+            });
+            if (res) dispatch(setInitialAuthUser({ status: "idle", user: res }));
+            else dispatch(setInitialAuthUser({ status: "idle", user: null }));
+        },
+        [],
+    )
+
+    const appLogin = useCallback(
+        async () => {
+            await baseURL.get('/sanctum/csrf-cookie');
+            const formdata = new FormData();
+            formdata.append("name", session.data?.user?.name || "");
+            formdata.append("email", session.data?.user?.email || "");
+            const res = await axios.post("/app-login", {
+                ky: "user",
+                formdata
+            })
+            if (res) dispatch(setInitialAuthUser({ status: "idle", user: res }));
+            else dispatch(setInitialAuthUser({ status: "idle", user: null }));
+        },
+        [session],
+    )
+
+
+
     useEffect(() => {
+
         if (localStorage.getItem("theme")) {
             setMode(localStorage.getItem("theme") === "light" ? "light" : "dark");
         }
-        const initialCall = async () => {
-            await baseURL.get('/sanctum/csrf-cookie');
-            const res = await axios.get("/auth-user");
-            if (res.data.success === 1) dispatch(setInitialAuthUser({ status: "idle", user: res.data.user }));
-            else dispatch(setInitialAuthUser({ status: "idle", user: null }));
+
+        console.log(session);
+
+        if (!user && session.status === "unauthenticated") {
+            initialCall();
+        } else if (session.status === "authenticated") {
+            appLogin();
         }
-        initialCall();
         return () => {
 
         }
-    }, [])
+    }, [session.status])
 
     return (
         <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
-                <CssBaseline enableColorScheme/>
+                <CssBaseline enableColorScheme />
                 <SnackbarProvider>
                     {
                         children
