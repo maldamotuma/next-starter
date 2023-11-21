@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\admin\AdminsController;
 use App\Http\Controllers\admin\CategoriesController;
+use App\Http\Controllers\admin\ErrorReportController as AdminErrorReportController;
 use App\Http\Controllers\admin\SectionsController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\user\AuthController;
+use App\Http\Controllers\user\ErrorReportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -60,6 +62,14 @@ Route::middleware("api")->group(function () {
         Route::post("/add-user", "addUser");
         Route::post("/update-user/{user}", "updateUser");
         Route::post("/delete-user/{user}", "deleteUser");
+    });
+
+    Route::controller(ErrorReportController::class)->group(function () {
+        Route::post("/report-error", "reportError");
+    });
+    Route::controller(AdminErrorReportController::class)->group(function () {
+        Route::get("/exceptions", "exceptions");
+        Route::post("/delete-exception/{ex}", "deleteException");
     });
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
