@@ -2,6 +2,7 @@
 
 import { baseURL } from "@/config/axios";
 import { useRemoteCall } from "@/hooks/remote-call";
+import { setInitialPage } from "@/redux/page/page";
 import { setInitialAuthUser } from "@/redux/slices/auth";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
@@ -81,8 +82,6 @@ const WholeWrapper: FunctionComponent<WholeWrapperProps> = ({ children }) => {
             setMode(localStorage.getItem("theme") === "light" ? "light" : "dark");
         }
 
-        console.log(session);
-
         if (!user && session.status === "unauthenticated") {
             initialCall();
         } else if (session.status === "authenticated") {
@@ -91,7 +90,20 @@ const WholeWrapper: FunctionComponent<WholeWrapperProps> = ({ children }) => {
         return () => {
 
         }
-    }, [session.status])
+    }, [session.status]);
+
+    useEffect(() => {
+        axios.get("/home", {
+            ky: "page",
+        }).then(page => {
+            if (page) dispatch(setInitialPage({ status: "idle", home: page.home }));
+        })
+
+        return () => {
+
+        }
+    }, [])
+
 
     return (
         <ColorModeContext.Provider value={colorMode}>

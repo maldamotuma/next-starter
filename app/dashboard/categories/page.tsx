@@ -8,14 +8,7 @@ import { AppRegistration, Delete } from "@mui/icons-material";
 import { Alert, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, FormLabel, IconButton, InputLabel, List, ListItem, ListItemButton, ListItemText, MenuItem, Radio, RadioGroup, Select, Stack, TextField, Typography } from "@mui/material";
 import { PopupState, bindDialog, bindTrigger, usePopupState } from "material-ui-popup-state/hooks";
 import { FormEvent, FunctionComponent, useEffect, useState } from "react";
-
-type CategoryPrpos = {
-    id: number;
-    title: string;
-    section_id: number;
-    parent_id?: number;
-    is_active: boolean;
-}
+import { CategoryPrpos } from "./types";
 
 interface CategoriesProps {
 

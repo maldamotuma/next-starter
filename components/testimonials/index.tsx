@@ -3,7 +3,6 @@
 import { Box, Container, Fab, Skeleton, Stack } from "@mui/material";
 import { FunctionComponent, useCallback, useState } from "react";
 import Testimony from "./testimony";
-import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import Title from "../home/title";

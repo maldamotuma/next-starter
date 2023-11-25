@@ -3,6 +3,7 @@
 import type { Metadata } from 'next'
 // import { Inter } from 'next/font/google'
 import './globals.css'
+import 'keen-slider/keen-slider.min.css'
 import WholeWrapper from '@/components/wrappers/wholeWrapper'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'

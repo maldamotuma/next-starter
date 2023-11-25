@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './slices/auth'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import pageReducer from './page/page'
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer
+    auth: authReducer,
+    page: pageReducer,
   },
 })
 

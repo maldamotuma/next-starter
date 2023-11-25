@@ -130,6 +130,17 @@ const Siebar: FunctionComponent<SiebarProps> = ({ handleClose }) => {
                   primary={"Users"}
                 />
               </ListItemButton>
+               <ListItemButton
+                component={Link}
+                href={"/dashboard/blog/list"}
+              >
+                <ListItemIcon>
+                  <Group />
+                </ListItemIcon>
+                <ListItemText
+                  primary={"Blogs"}
+                />
+              </ListItemButton>
             </List>
           </AccordionDetails>
         </Accordion>

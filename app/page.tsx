@@ -1,5 +1,6 @@
 import Content from "@/components/content";
 import Footers from "@/components/footers";
+import Blogs from "@/components/home/blogs";
 import CAS from "@/components/home/call-to-actions";
 import Contact from "@/components/home/contact";
 import Hero from "@/components/home/hero";
@@ -29,6 +30,7 @@ const HomePage: FunctionComponent<HomePageProps> = () => {
         <CAS />
         <Pricing />
         <Testimonials />
+        <Blogs />
         <Contact />
         <Footers />
       </Stack>
