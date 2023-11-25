@@ -6,7 +6,10 @@ use App\Http\Controllers\admin\ErrorReportController as AdminErrorReportControll
 use App\Http\Controllers\admin\SectionsController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\user\AuthController;
+use App\Http\Controllers\user\BlogsController;
+use App\Http\Controllers\user\CommentsController;
 use App\Http\Controllers\user\ErrorReportController;
+use App\Http\Controllers\user\PagesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -71,6 +74,22 @@ Route::middleware("api")->group(function () {
     Route::controller(AdminErrorReportController::class)->group(function () {
         Route::get("/exceptions", "exceptions");
         Route::post("/delete-exception/{ex}", "deleteException");
+    });
+
+    Route::controller(BlogsController::class)->group(function () {
+        Route::post("/create-blog", "createBlog");
+        Route::get("/blogs", "blogs");
+        Route::get("/blog", "blog");
+        Route::post("/update-blog/{blog}", "updateBlog");
+        Route::post("/delete-blog/{blog}", "deleteBlog");
+    });
+
+    Route::controller(CommentsController::class)->group(function () {
+        Route::post("/write-comment/{blog_id}", "writeComment");
+    });
+
+    Route::controller(PagesController::class)->group(function () {
+        Route::get("/home", "home");
     });
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -24,8 +24,14 @@ class SectionsController extends Controller
         ]);
     }
 
-    function sections(): JsonResponse
+    function sections(Request $request): JsonResponse
     {
+        if ($request->form === "yes") {
+            return response()->json([
+                'success' => 1,
+                'sections' => Section::with("categories:id,section_id,title")->get()
+            ]);
+        }
         return response()->json([
             'success' => 1,
             'sections' => Section::latest()->get()

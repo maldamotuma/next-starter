@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Http\Controllers\user;
+
+use App\Http\Controllers\Controller;
+use App\Models\Blog;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+
+class PagesController extends Controller
+{
+    function home(): JsonResponse
+    {
+        $home['blogs'] = Blog::limit(8)->with("cat")->get();
+        return response()->json([
+            'success' => 1,
+            'page' => [
+                'home' => $home
+            ]
+        ]);
+    }
+}

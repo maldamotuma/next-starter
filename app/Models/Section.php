@@ -10,4 +10,9 @@ class Section extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
 }
