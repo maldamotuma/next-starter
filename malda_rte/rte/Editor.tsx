@@ -87,14 +87,14 @@ export default function Editor({
   onChange,
   value,
   notEditable,
-  noAuoFocus
+  noAutoFocus
 }:
   {
     settings: SettingsContextShape["settings"];
     onChange?: (ev: string) => void;
     value?: string;
     notEditable?: boolean;
-    noAuoFocus?: boolean;
+    noAutoFocus?: boolean;
   }
 ): JSX.Element {
   const { historyState } = useSharedHistoryContext();
@@ -172,10 +172,10 @@ export default function Editor({
           }`}>
         {isMaxLength && <MaxLengthPlugin maxLength={30} />}
         <DragDropPaste />
-        {
-          !noAuoFocus &&
+        {/* {
+          !noAutoFocus &&
           <AutoFocusPlugin />
-        }
+        } */}
         <ClearEditorPlugin />
         <ComponentPickerPlugin />
         <EmojiPickerPlugin />

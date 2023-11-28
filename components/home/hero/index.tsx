@@ -9,15 +9,21 @@ interface HeroProps {
 
 const Hero: FunctionComponent<HeroProps> = () => {
     return (
-        <Container maxWidth="xl" sx={{py: {xs: 5, md: 15}}}>
+        <Container maxWidth="xl"
+            sx={{
+                py: { xs: 5, md: 10 },
+            }}
+        >
             <Stack direction={{
                 xs: "column",
                 md: "row"
-            }} alignItems="center" spacing={{xs: 5, md: 10}}>
+            }} alignItems="center" spacing={{ xs: 5, md: 10 }}>
                 <Box sx={{ flex: 1 }}>
                     <HeroTitle />
                 </Box>
-                <Box sx={{ flex: 1 }}>
+                <Box sx={{
+                    flex: 1
+                }}>
                     <HeroImage />
                 </Box>
             </Stack>

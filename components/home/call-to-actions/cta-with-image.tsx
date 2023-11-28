@@ -97,7 +97,7 @@ const CTAWithImage: FunctionComponent<CTAWithImageProps> = () => {
             </Paper>
             <Box
             component={"img"}
-            src="https://images.pexels.com/photos/753331/pexels-photo-753331.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            src="/ca.jpg"
             sx={{
                 position: "absolute",
                 top: 0,

@@ -13,10 +13,11 @@ const Header: FC = () => {
         px: 2
       }}
     >
-      <Container maxWidth="xl"
+      <Box
         sx={{
           display: "flex",
           alignItems: "center",
+          px: 3
         }}
       >
         <Stack direction="row" spacing={1}
@@ -86,7 +87,7 @@ const Header: FC = () => {
             }} />
           </IconButton>
         </Stack>
-      </Container>
+      </Box>
     </Box>
   )
 }

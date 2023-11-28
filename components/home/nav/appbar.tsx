@@ -17,12 +17,30 @@ import { useAppSelector } from '@/redux/store';
 import AuthModal from '@/components/auth/authModal';
 import { Person4 } from '@mui/icons-material';
 import AuthButton from '@/components/nav/AuthButton';
+import { server_url } from '@/config/variables';
+import Link from 'next/link';
+import { alpha, useTheme } from '@mui/material';
+import ComboBox from '@/components/nav/Search';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = [
+  {
+    title: "Bookmarks",
+    href: "/bookmarks"
+  },
+  {
+    title: "Pricing",
+    href: "#"
+  },
+  {
+    title: "Blog",
+    href: "#"
+  },
+];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const user = useAppSelector(state => state.auth.user);
+  const theme = useTheme();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -36,7 +54,8 @@ function ResponsiveAppBar() {
   return (
     <AppBar position="static" elevation={0}
       sx={{
-        bgcolor: "background.paper",
+        bgcolor: theme => alpha(theme.palette.background.paper, .5),
+        backdropFilter: "blur(14px)",
         color: "primary.dark",
         borderBottom: 1,
         borderColor: "divider",
@@ -45,26 +64,24 @@ function ResponsiveAppBar() {
         zIndex: 999
       }}
     >
-      <Container maxWidth="xl">
+      <Box sx={{ px: 5 }}>
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+          <Box
             sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              display: "flex",
+              gap: 2,
+              alignItems: "center"
             }}
           >
-            LOGO
-          </Typography>
+            <Link href="/">
+              <Box
+                component={'img'}
+                src={`${server_url}/logo/logo-${theme.palette.mode === "dark" ? "light" : "dark"}.png`}
+                height={50}
+              />
+            </Link>
+            <ComboBox />
+          </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -96,8 +113,8 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.title} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page.title}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -122,14 +139,16 @@ function ResponsiveAppBar() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                key={page.title}
+                component={Link}
+                href={page.href}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, display: 'block' }}
               >
-                {page}
+                {page.title}
               </Button>
             ))}
           </Box>
@@ -138,7 +157,7 @@ function ResponsiveAppBar() {
             <AuthButton />
           </Box>
         </Toolbar>
-      </Container>
+      </Box>
     </AppBar>
   );
 }

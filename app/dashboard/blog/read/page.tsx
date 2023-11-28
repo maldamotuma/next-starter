@@ -1,5 +1,6 @@
 "use client"
 
+import BlogLoading from "@/components/blog/loading";
 import BlogRead from "@/components/blog/read";
 import { Blog } from "@/components/blog/types";
 import { useInitialCall } from "@/hooks/remote-call";
@@ -18,7 +19,7 @@ const ReadBlog: FunctionComponent<ReadBlogProps> = () => {
         ky: "blog"
     });
     if (status === "pending") {
-        return <>Loading</>
+        return <BlogLoading />
     } else if (!blog) {
         return <>URL Not Found</>
     }

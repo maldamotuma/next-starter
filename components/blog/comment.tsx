@@ -35,6 +35,9 @@ const Comment: FunctionComponent<CommentProps> = ({ comment, setComments }) => {
                     bgcolor: "divider",
                     "& .editor div": {
                         p: 0,
+                    },
+                    "& .ContentEditable__root": {
+                        minHeight: "unset"
                     }
                 }}
             >

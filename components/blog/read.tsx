@@ -1,3 +1,5 @@
+"use client"
+
 import { Avatar, Box, Button, CardHeader, CardMedia, Chip, Container, Divider, InputLabel, Stack } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { Blog } from "./types";
@@ -11,6 +13,9 @@ import { LoadingButton } from "@mui/lab";
 import Comment from "./comment";
 import BlogCard from "./blog-card";
 import RelatedBlogs from "./relatedSlide";
+import SimpleBar from 'simplebar-react';
+import 'simplebar-react/dist/simplebar.min.css';
+import Favorite from "./fovorite";
 
 interface BlogReadProps {
     blog: Blog & {
@@ -23,6 +28,7 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
     const [editorState, seteditorState] = useState<string>("");
     const { axios, status } = useRemoteCall();
     const [comments, setComments] = useState<Blog['comments']>(blog.comments);
+    const [is_favorite, setIs_favorite] = useState<boolean>(blog.is_favorite);
 
     const writeComment = async () => {
         const formdata = new FormData();
@@ -52,36 +58,57 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                     }
                 }}
             >
-                <Stack
-                    gap={2}
+                <Box
                     sx={{
                         display: {
                             xs: "none",
-                            lg: "block"
+                            lg: "inline-block"
                         },
+                        width: "100%",
                         maxWidth: {
-                            lg: "300px !important",
-                            xl: "400px !important"
+                            lg: "315px !important",
+                            xl: "365px !important"
                         },
-                        height: "calc(100vh - 100px)",
+                        "& #related-scroll": {
+                            maxWidth: {
+                                lg: "315px !important",
+                                xl: "365px !important"
+                            },
+                            height: "calc(100vh - 110px)",
+                            pr: "15px"
+                        },
                         overflow: "auto",
                         pr: 1,
                         position: "sticky",
-                        top: 80
+                        top: 80,
+                        p: 0,
+                        m: 0,
+                        borderRadius: "10px",
+                        overflowX: "hidden"
                     }}
                 >
-                    {
-                        blog.related_blogs.map(blg => (
-                            <Box
-                                key={"related-" + blg.id}
-                            >
-                                <BlogCard
-                                    blog={blg}
-                                />
-                            </Box>
-                        ))
-                    }
-                </Stack>
+                    <SimpleBar
+                        id="related-scroll"
+                    >
+
+                        <div>
+                            {
+                                blog.related_blogs.map(blg => (
+                                    <Box
+                                        key={"related-" + blg.id}
+                                        sx={{
+                                            mb: 1
+                                        }}
+                                    >
+                                        <BlogCard
+                                            blog={blg}
+                                        />
+                                    </Box>
+                                ))
+                            }
+                        </div>
+                    </SimpleBar>
+                </Box>
                 <Container sx={{ maxWidth: "750px !important" }}>
                     <Box>
                         <Title
@@ -104,7 +131,8 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                                 mt: 1
                             }}
                             variant={"outlined"}
-                        />
+                        /><br />
+                        <Favorite blog={blog} setIs_favorite={setIs_favorite} is_favorite={is_favorite} />
                         {
                             blog.user ?
                                 <CardHeader
@@ -185,7 +213,14 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                                 }}
                             />
                         </Box>
-                        <Divider sx={{ mt: 3, mb: 10 }} />
+                        <Divider sx={{ mt: 3, mb: 1 }} />
+                        <Box sx={{ mb: 10 }}>
+                            {
+                                !is_favorite &&
+                                <Favorite blog={blog} setIs_favorite={setIs_favorite} is_favorite={is_favorite} />
+                            }
+                        </Box>
+
                         <RelatedBlogs
                             blogs={blog.related_blogs || []}
                         />
@@ -205,7 +240,7 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                                         }}
                                         onChange={nv => seteditorState(nv)}
                                         value={editorState}
-                                        noAuoFocus
+                                        noAutoFocus
                                     />
                                 </Box>
                                 <LoadingButton

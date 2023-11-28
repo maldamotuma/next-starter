@@ -47,7 +47,7 @@ const HeroImage: FunctionComponent<HeroImageProps> = () => {
             </Box> */}
             <Box
                 component={"img"}
-                src={"/hero-banner.png"}
+                src={"/hero.png"}
                 sx={{
                     width: "100%",
                     pl: {

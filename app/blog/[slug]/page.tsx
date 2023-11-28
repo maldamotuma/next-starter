@@ -1,5 +1,6 @@
 "use client";
 
+import BlogLoading from "@/components/blog/loading";
 import BlogRead from "@/components/blog/read";
 import { Blog } from "@/components/blog/types";
 import Wrapper from "@/components/wrapper";
@@ -18,16 +19,20 @@ const Blg: FunctionComponent<BlgProps> = ({ params: { slug } }) => {
     } | null>(`/blog?b=${slug}`, null, {
         ky: "blog"
     });
-    if (status === "pending") {
-        return <>Loading</>
-    } else if (!blog) {
-        return <>URL Not Found</>
-    }
+
     return (
         <Wrapper>
-            <BlogRead
-                blog={blog}
-            />
+            {
+                status === "pending" ?
+                    <BlogLoading />
+                    :
+                    !blog ?
+                        <>URL Not Found</>
+                        :
+                        <BlogRead
+                            blog={blog}
+                        />
+            }
         </Wrapper>
     );
 }

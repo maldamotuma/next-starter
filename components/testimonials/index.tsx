@@ -17,19 +17,28 @@ const Testimonials: FunctionComponent<TestimonialsProps> = () => {
         {
             breakpoints: {
                 "(min-width: 600px)": {
-                    slides: { perView: 2, spacing: 5, origin: "center", },
+                    slides: {
+                        perView: 2, spacing: 5,
+                        // origin: "center",
+                    },
                 },
                 "(min-width: 900px)": {
-                    slides: { perView: 2.75, spacing: 10, origin: "center", },
+                    slides: {
+                        perView: 2.75, spacing: 10,
+                        // origin: "center",
+                    },
                 },
                 "(min-width: 1200px)": {
-                    slides: { perView: 3.2, spacing: 10, origin: "center", },
+                    slides: {
+                        perView: 3.2, spacing: 10,
+                        // origin: "center",
+                    },
                 },
             },
             slides: {
                 perView: 1.2,
                 spacing: 5,
-                origin: "center",
+                // origin: "center",
             },
             created() {
                 setLoaded(true);

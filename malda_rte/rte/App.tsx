@@ -150,11 +150,11 @@ interface AppProps {
   onChange?: (ev: string) => void;
   value?: string;
   notEditable?: boolean;
-  noAuoFocus?: boolean;
+  noAutoFocus?: boolean;
 }
 
 function App(props: AppProps): JSX.Element {
-  const { settings: userSS, value, onChange, notEditable, noAuoFocus } = props;
+  const { settings: userSS, value, onChange, notEditable, noAutoFocus } = props;
   const {
     settings: {isCollab, emptyEditor, measureTypingPerf},
   } = useSettings();
