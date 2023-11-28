@@ -46,4 +46,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function bookmarks()
+    {
+        return $this->belongsToMany(Blog::class, 'bookmark')->using(Bookmark::class);
+    }
 }

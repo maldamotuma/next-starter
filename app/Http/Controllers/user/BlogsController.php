@@ -5,6 +5,7 @@ namespace App\Http\Controllers\user;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,8 +48,31 @@ class BlogsController extends Controller
         ]);
     }
 
-    function blogs(): JsonResponse
+    function blogs(Request $request): JsonResponse
     {
+        if ($request->has('q')) {
+            $query = $request->q;
+            $split_string = Str::of($query)->squish()->explode(' ')->toArray();
+            $join_chars = join('%', $split_string);
+            $blogs = Blog::where('title', 'LIKE', "%{$join_chars}%")
+                ->orWhere('article', 'LIKE', "%{$join_chars}%")
+                ->select('title', 'slug')
+                ->limit(15)->get();
+            return response()->json([
+                'success' => 1,
+                'blogs' => $blogs
+            ]);
+        } else if ($request->has("favorites")) {
+            $usr = User::select('id')->with(['bookmarks' => function($query){
+                $query->select("blogs.id", "blogs.title", "blogs.slug", "blogs.image", "blogs.category_id", "blogs.article");
+                $query->with("cat:id,title");
+            }])->find(Auth::id())->toArray();
+            $blogs = $usr["bookmarks"];
+            return response()->json([
+                'success' => 1,
+                'blogs' => $blogs
+            ]);
+        }
         return response()->json([
             'success' => 1,
             'blogs' => Blog::with("admin", "user", "cat")->latest()->get()
@@ -60,6 +84,7 @@ class BlogsController extends Controller
         $blog = Blog::with("admin", "user", "cat", "comments")
             ->where('slug', $request->b)
             ->first();
+        $blog['is_favorite'] = $blog->is_favorite ? 1 : 0;
         $blog['related_blogs'] = Blog::where("category_id", $blog->category_id)
             ->inRandomOrder()
             ->with("cat")
@@ -109,6 +134,15 @@ class BlogsController extends Controller
         Storage::disk('blog')->delete($blog->image);
         Comment::where("blog_id", $blog->id)->delete();
         $blog->delete();
+        return response()->json([
+            'success' => 1
+        ]);
+    }
+
+    function toggleBookmark($blog): JsonResponse
+    {
+        $usr = User::select("id")->find(Auth::id());
+        $usr->bookmarks()->toggle($blog);
         return response()->json([
             'success' => 1
         ]);

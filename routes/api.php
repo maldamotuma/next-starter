@@ -82,6 +82,7 @@ Route::middleware("api")->group(function () {
         Route::get("/blog", "blog");
         Route::post("/update-blog/{blog}", "updateBlog");
         Route::post("/delete-blog/{blog}", "deleteBlog");
+        Route::post("/toggle-bookmark/{blog}", "toggleBookmark");
     });
 
     Route::controller(CommentsController::class)->group(function () {
