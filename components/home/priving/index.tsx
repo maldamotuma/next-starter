@@ -3,6 +3,7 @@
 import { Check, DiamondOutlined, Star } from "@mui/icons-material";
 import { Box, Button, Card, CardActions, CardContent, CardHeader, Chip, Container, GlobalStyles, Grid, Typography } from "@mui/material";
 import { blue, blueGrey, indigo } from "@mui/material/colors";
+import Link from "next/link";
 import { FunctionComponent } from "react";
 
 
@@ -176,6 +177,8 @@ const Pricing: FunctionComponent<PricingProps> = () => {
                       sx={{
                         borderRadius: 5
                       }}
+                      component={Link}
+                      href={"/plans/checkout"}
                     >
                       {tier.buttonText}
                     </Button>

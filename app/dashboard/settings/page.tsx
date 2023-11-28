@@ -9,6 +9,7 @@ import { Avatar, Box, Button, Card, CardContent, CardHeader, Tab, Tabs } from "@
 import moment from "moment";
 import { FunctionComponent, useState } from "react";
 import EditPP from "./edit-pp";
+import { useSearchParams } from "next/navigation";
 
 const settingTab = {
     profile: <BasicEdit />,
@@ -21,7 +22,8 @@ interface SettingsProps {
 
 const Settings: FunctionComponent<SettingsProps> = () => {
     const { user } = useAppSelector(state => state.auth);
-    const [setting, setSetting] = useState<"profile" | "security">("profile");
+    const sp = useSearchParams();
+    const [setting, setSetting] = useState<"profile" | "security">(sp.get("tab") === "change-password" ? "security" : "profile");
 
 
     return (

@@ -180,7 +180,7 @@ interface useInitialList<T> {
     }): ReactNode;
     edit: T | null;
     close(): void;
-    renderList(nd: ReactNode | ReactNode[]): ReactNode;
+    renderList(nd: ReactNode | ReactNode[], ldng?: ReactNode | ReactNode[]): ReactNode;
 }
 
 interface IdentifierProp {
@@ -252,10 +252,10 @@ export const useInitialList = <T extends IdentifierProp>(url: string, options?: 
         </>
     )
 
-    const renderList = (nd: ReactNode | ReactNode[]) => {
+    const renderList = (nd: ReactNode | ReactNode[], ldng?: ReactNode | ReactNode[]) => {
         switch (status) {
             case "pending":
-                return <>Loading...</>
+                return ldng || <>Loading...</>
             case "idle":
                 return data.length ? nd : <Alert severity="info">No Data Found</Alert>;
             default:

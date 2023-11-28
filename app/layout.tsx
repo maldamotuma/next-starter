@@ -8,6 +8,8 @@ import WholeWrapper from '@/components/wrappers/wholeWrapper'
 import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { SessionProvider } from 'next-auth/react'
+import 'simplebar-react/dist/simplebar.min.css';
+
 
 // const inter = Inter({ subsets: ['latin'] })
 

@@ -14,7 +14,6 @@ import Comment from "./comment";
 import BlogCard from "./blog-card";
 import RelatedBlogs from "./relatedSlide";
 import SimpleBar from 'simplebar-react';
-import 'simplebar-react/dist/simplebar.min.css';
 import Favorite from "./fovorite";
 
 interface BlogReadProps {

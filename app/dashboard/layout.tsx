@@ -1,7 +1,7 @@
 "use client"
 
 import ResponsiveAppBar from '@/components/home/nav'
-import { Box, Container, Dialog, Drawer, Stack, accordionClasses, alpha, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Container, Dialog, Drawer, Stack, accordionClasses, alpha, listSubheaderClasses, useMediaQuery, useTheme } from '@mui/material'
 import Siebar from '@/components/home/Sidebar'
 import { ReactNode, useEffect, useState } from 'react'
 import { useAppSelector } from '@/redux/store'
@@ -94,10 +94,13 @@ export default function Home({ children }: DashboardLayoutProps) {
                     height: "100vh",
                     overflowX: "hidden",
                     transition: ".3s width ease",
-                    bgcolor: theme => theme.palette.mode === "light" ? alpha(lightBlue[100], .2) : alpha(lightBlue[900], .1),
-                    [`& .${accordionClasses.root}`]: {
-                        bgcolor: "inherit",
-                    }
+                    // bgcolor: theme => theme.palette.mode === "light" ? alpha(lightBlue[100], .2) : alpha(lightBlue[900], .1),
+                    // [`& .${accordionClasses.root}`]: {
+                    //     bgcolor: "inherit",
+                    // },
+                    // [`& .${listSubheaderClasses.root}`]: {
+                    //     bgcolor: "inherit",
+                    // }
                 }}
             >
                 <Siebar handleClose={handleClose} />
@@ -105,6 +108,10 @@ export default function Home({ children }: DashboardLayoutProps) {
             <Box
                 sx={{
                     flex: 1,
+                    width: {
+                        xs: "100%",
+                        md: `calc(100% - ${width}px)`
+                    }
                 }}
             >
                 <ResponsiveAppBar
