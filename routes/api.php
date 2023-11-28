@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\user\AuthController;
 use App\Http\Controllers\user\BlogsController;
 use App\Http\Controllers\user\CommentsController;
+use App\Http\Controllers\user\DashboardController;
 use App\Http\Controllers\user\ErrorReportController;
 use App\Http\Controllers\user\PagesController;
 use Illuminate\Http\Request;
@@ -91,6 +92,10 @@ Route::middleware("api")->group(function () {
 
     Route::controller(PagesController::class)->group(function () {
         Route::get("/home", "home");
+    });
+
+    Route::controller(DashboardController::class)->group(function () {
+        Route::get("/dashboard", "dashboard");
     });
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
