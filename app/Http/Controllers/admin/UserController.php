@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -51,6 +52,8 @@ class UserController extends Controller
         $data['password'] = Str::random(8);
 
         $user = User::create($data);
+        event(new Registered($user));
+
         return response()->json([
             'success' => 1,
             'user' => $user

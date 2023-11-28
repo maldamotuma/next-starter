@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -53,6 +54,7 @@ class AdminsController extends Controller
         $data['password'] = Str::random(8);
 
         $admin = Admin::create($data);
+        event(new Registered($admin));
         return response()->json([
             'success' => 1,
             'admin' => $admin

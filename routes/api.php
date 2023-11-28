@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\admin\AdminsController;
+use App\Http\Controllers\admin\AuthController as AdminAuthController;
+use App\Http\Controllers\admin\BlogsController as AdminBlogsController;
 use App\Http\Controllers\admin\CategoriesController;
+use App\Http\Controllers\admin\CommentsController as AdminCommentsController;
+use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\admin\ErrorReportController as AdminErrorReportController;
 use App\Http\Controllers\admin\SectionsController;
 use App\Http\Controllers\admin\UserController;
@@ -41,6 +45,48 @@ Route::middleware("api")->group(function () {
         Route::post("/email/verification-notification", "resendEmailVerification");
     });
 
+    Route::controller(ErrorReportController::class)->group(function () {
+        Route::post("/report-error", "reportError");
+    });
+
+    Route::controller(BlogsController::class)->group(function () {
+        Route::post("/create-blog", "createBlog");
+        Route::get("/blogs", "blogs");
+        Route::get("/blog", "blog");
+        Route::post("/update-blog/{blog}", "updateBlog");
+        Route::post("/delete-blog/{blog}", "deleteBlog");
+        Route::post("/toggle-bookmark/{blog}", "toggleBookmark");
+    });
+
+    Route::controller(CommentsController::class)->group(function () {
+        Route::post("/write-comment/{blog_id}", "writeComment");
+    });
+
+    Route::controller(PagesController::class)->group(function () {
+        Route::get("/home", "home");
+    });
+
+    Route::controller(DashboardController::class)->group(function () {
+        Route::get("/dashboard", "dashboard");
+    });
+});
+
+// Admin Routes
+Route::middleware("api")->prefix("admin")->group(function () {
+    Route::controller(AdminAuthController::class)->group(function () {
+        Route::get("/auth-user", "auth_user");
+        Route::post("/signin", "signin");
+        Route::post("/app-login", "appLogin");
+        Route::post("/logout", "logout");
+        Route::post("/forgot-password", "forgot_password")->middleware('guest');
+        Route::post("/reset-password", "reset_password")->middleware('guest');
+        Route::post("/update-profile-picture", "update_profile_picture");
+        Route::post("/update-profile", "update_profile");
+        Route::post("/change-password", "changePassword");
+        Route::get("/email/verify/{id}/{hash}", "verifyEmail")->middleware(['auth:admin', 'signed']);
+        Route::post("/email/verification-notification", "resendEmailVerification");
+    });
+
     Route::controller(SectionsController::class)->group(function () {
         Route::post("/add-section", "addSection");
         Route::get("/sections", "sections");
@@ -72,12 +118,13 @@ Route::middleware("api")->group(function () {
     Route::controller(ErrorReportController::class)->group(function () {
         Route::post("/report-error", "reportError");
     });
+
     Route::controller(AdminErrorReportController::class)->group(function () {
         Route::get("/exceptions", "exceptions");
         Route::post("/delete-exception/{ex}", "deleteException");
     });
 
-    Route::controller(BlogsController::class)->group(function () {
+    Route::controller(AdminBlogsController::class)->group(function () {
         Route::post("/create-blog", "createBlog");
         Route::get("/blogs", "blogs");
         Route::get("/blog", "blog");
@@ -86,18 +133,16 @@ Route::middleware("api")->group(function () {
         Route::post("/toggle-bookmark/{blog}", "toggleBookmark");
     });
 
-    Route::controller(CommentsController::class)->group(function () {
+    Route::controller(AdminCommentsController::class)->group(function () {
         Route::post("/write-comment/{blog_id}", "writeComment");
     });
 
-    Route::controller(PagesController::class)->group(function () {
-        Route::get("/home", "home");
-    });
-
-    Route::controller(DashboardController::class)->group(function () {
+    Route::controller(AdminDashboardController::class)->group(function () {
         Route::get("/dashboard", "dashboard");
     });
 });
+
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('bookmark', function (Blueprint $table) {
             $table->id();
             $table->foreignId('blog_id');
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->nullable();
+            $table->foreignId('admin_id')->nullable();
             $table->timestamps();
         });
     }

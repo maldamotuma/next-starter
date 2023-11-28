@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        ResetPassword::createUrlUsing(function (User $user, string $token) {
+        ResetPassword::createUrlUsing(function ($user, string $token) {
             // if ($user instanceof Admin) {
             //     return env("ADMIN_URL") . '/auth/reset-password?token=' . $token;
             // }

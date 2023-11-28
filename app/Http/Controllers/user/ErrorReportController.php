@@ -21,6 +21,8 @@ class ErrorReportController extends Controller
 
         if (Auth::check()) {
             $data['user_id'] = Auth::id();
+        } else if (Auth::guard('admin')->check()) {
+            $data['admin_id'] = Auth::guard('admin')->id();
         }
 
         Exceptions::create($data);
