@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class UserController extends Controller
             $query = $request->q;
             if ($query && $request->by) {
                 $users = User::latest()
-                    ->where($request->by, "LIKE", "%".$query."%")
+                    ->where($request->by, "LIKE", "%" . $query . "%")
                     ->get();
                 return response()->json([
                     'success' => 1,
@@ -46,9 +47,14 @@ class UserController extends Controller
             "last_name" => "required",
             "username" => ["required", "unique:users,username"],
             "email" => ['required', 'unique:users,email'],
-            "gender" => ["required"]
+            "gender" => ["required"],
+            "can_blog" => []
         ]);
-
+        if ($request->can_blog === "can_blog") {
+            $data['can_blog'] = Carbon::now();
+        } else {
+            $data['can_blog'] = null;
+        }
         $data['password'] = Str::random(8);
 
         $user = User::create($data);
@@ -67,9 +73,14 @@ class UserController extends Controller
             "last_name" => "required",
             "username" => ["required", "unique:users,username," . $user->id],
             "email" => ['required', 'unique:users,email,' . $user->id],
-            "gender" => ["required"]
+            "gender" => ["required"],
+            "can_blog" => []
         ]);
-
+        if ($request->can_blog === "can_blog") {
+            $data['can_blog'] = Carbon::now();
+        } else {
+            $data['can_blog'] = null;
+        }
         $user->update($data);
         return response()->json([
             'success' => 1,

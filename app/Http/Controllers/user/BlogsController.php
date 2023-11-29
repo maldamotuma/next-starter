@@ -72,11 +72,12 @@ class BlogsController extends Controller
                 'success' => 1,
                 'blogs' => $blogs
             ]);
+        }else if ($request->has("mine")) {
+            return response()->json([
+                'success' => 1,
+                'blogs' => Blog::where("user_id", Auth::id())->with("user", "cat")->latest()->get()
+            ]);
         }
-        return response()->json([
-            'success' => 1,
-            'blogs' => Blog::with("admin", "user", "cat")->latest()->get()
-        ]);
     }
 
     function blog(Request $request): JsonResponse

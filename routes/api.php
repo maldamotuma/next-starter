@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\AuthController as AdminAuthController;
 use App\Http\Controllers\admin\BlogsController as AdminBlogsController;
 use App\Http\Controllers\admin\CategoriesController;
 use App\Http\Controllers\admin\CommentsController as AdminCommentsController;
+use App\Http\Controllers\admin\CompanyController;
 use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\admin\ErrorReportController as AdminErrorReportController;
 use App\Http\Controllers\admin\SectionsController;
@@ -12,6 +13,8 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\user\AuthController;
 use App\Http\Controllers\user\BlogsController;
 use App\Http\Controllers\user\CommentsController;
+use App\Http\Controllers\user\CompanyController as UserCompanyController;
+use App\Http\Controllers\user\ContactController;
 use App\Http\Controllers\user\DashboardController;
 use App\Http\Controllers\user\ErrorReportController;
 use App\Http\Controllers\user\PagesController;
@@ -50,11 +53,11 @@ Route::middleware("api")->group(function () {
     });
 
     Route::controller(BlogsController::class)->group(function () {
-        Route::post("/create-blog", "createBlog");
+        Route::post("/create-blog", "createBlog")->middleware('blog.authorized');
         Route::get("/blogs", "blogs");
         Route::get("/blog", "blog");
-        Route::post("/update-blog/{blog}", "updateBlog");
-        Route::post("/delete-blog/{blog}", "deleteBlog");
+        Route::post("/update-blog/{blog}", "updateBlog")->middleware(['blog.authorized', 'blog.owner']);
+        Route::post("/delete-blog/{blog}", "deleteBlog")->middleware(['blog.authorized', 'blog.owner']);
         Route::post("/toggle-bookmark/{blog}", "toggleBookmark");
     });
 
@@ -68,6 +71,14 @@ Route::middleware("api")->group(function () {
 
     Route::controller(DashboardController::class)->group(function () {
         Route::get("/dashboard", "dashboard");
+    });
+
+    Route::controller(UserCompanyController::class)->group(function () {
+        Route::get("/company-copy/{slug}", "companyCopy");
+    });
+
+    Route::controller(ContactController::class)->group(function(){
+        Route::post("/contact", "contact");
     });
 });
 
@@ -139,6 +150,13 @@ Route::middleware("api")->prefix("admin")->group(function () {
 
     Route::controller(AdminDashboardController::class)->group(function () {
         Route::get("/dashboard", "dashboard");
+    });
+
+    Route::controller(CompanyController::class)->group(function () {
+        Route::get("/company-copies", "copies");
+        Route::post("/create-copy", "createCopy");
+        Route::post("/update-copy/{copy}", "updateCopy");
+        Route::post("/delete-copy/{copy}", "deleteCopy");
     });
 });
 
