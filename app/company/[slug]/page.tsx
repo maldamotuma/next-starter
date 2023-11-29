@@ -1,4 +1,4 @@
-import CompanyCopy from "@/app/dashboard/company";
+import CompanyCopy from "@/components/company";
 import { FunctionComponent } from "react";
 
 interface CompanyProps {

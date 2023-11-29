@@ -2,19 +2,31 @@
 import { useInitialList } from "@/hooks/remote-call";
 import { FunctionComponent } from "react";
 import { Blog } from "./types";
-import { Grid, Skeleton } from "@mui/material";
+import { Button, Grid, Skeleton } from "@mui/material";
 import BlogCard from "./blog-card";
+import { Article } from "@mui/icons-material";
+import Link from "next/link";
+import { useAppSelector } from "@/redux/store";
 
 interface BlogListProps {
 
 }
 
 const BlogList: FunctionComponent<BlogListProps> = () => {
-    const { data: blogs, renderList: renderBlogs } = useInitialList<Blog>("/blogs", {
+    const { data: blogs, renderList: renderBlogs } = useInitialList<Blog>("/blogs?mine=yes", {
         ky: "blogs"
     });
+    const user = useAppSelector(state => state.auth.user);
+
     return (
         <>
+            <Button
+                sx={{
+                    mb: 2
+                }}
+                disabled={!user?.can_blog}
+                startIcon={<Article />}
+                component={Link} href="/dashboard/blog/create">Create Blog</Button>
             {
                 renderBlogs(<Grid container spacing={2} sx={{ boxSizing: "border-box" }}>
                     {

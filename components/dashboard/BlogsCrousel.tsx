@@ -1,6 +1,6 @@
 "use client"
 
-import { Box, Container, Fab, Skeleton } from "@mui/material";
+import { Alert, Box, Container, Fab, Skeleton } from "@mui/material";
 import { FunctionComponent, useCallback, useState } from "react";
 import Title from "../home/title";
 import { Blog } from "../blog/types";
@@ -81,65 +81,72 @@ const BlogsCrousel: FunctionComponent<BlogsCrouselProps> = ({
                     align: "left"
                 }}
             />
-            <Box
-                ref={sliderRef}
-                className="keen-slider"
-                sx={{
-                    overflow: "hidden !important"
-                }}
-            >
-                {
-                    blogs.map(blog => (
+            {
+                blogs.length === 0 ?
+                    <Alert severity="info">No Bloggs Bookmarked</Alert>
+                    :
+                    <>
                         <Box
-                            key={`testimony-blog-${blog.id}`}
-                            className="keen-slider__slide"
+                            ref={sliderRef}
+                            className="keen-slider"
+                            sx={{
+                                overflow: "hidden !important"
+                            }}
                         >
                             {
-                                loaded ?
-                                    <BlogCard
-                                        blog={blog}
-                                    />
-                                    :
-                                    <Skeleton
-                                        variant="rounded"
-                                        width={"100%"}
-                                        height={250}
-                                    />
+                                blogs.map(blog => (
+                                    <Box
+                                        key={`testimony-blog-${blog.id}`}
+                                        className="keen-slider__slide"
+                                    >
+                                        {
+                                            loaded ?
+                                                <BlogCard
+                                                    blog={blog}
+                                                />
+                                                :
+                                                <Skeleton
+                                                    variant="rounded"
+                                                    width={"100%"}
+                                                    height={250}
+                                                />
+                                        }
+                                    </Box>
+                                ))
                             }
                         </Box>
-                    ))
-                }
-            </Box>
-            <Box
-                sx={{
-                    display: "flex",
-                    width: "100%",
-                    justifyContent: "center",
-                    gap: 2,
-                    pt: 3
-                }}
-            >
-                <Fab
-                    color="primary"
-                    size="small"
-                    sx={{
-                        zIndex: 1
-                    }}
-                    onClick={scrollPrev}
-                >
-                    <ArrowBack />
-                </Fab>
-                <Fab
-                    color="primary"
-                    size="small"
-                    sx={{
-                        zIndex: 1
-                    }}
-                    onClick={scrollNext}
-                >
-                    <ArrowForward />
-                </Fab>
-            </Box>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                width: "100%",
+                                justifyContent: "center",
+                                gap: 2,
+                                pt: 3
+                            }}
+                        >
+                            <Fab
+                                color="primary"
+                                size="small"
+                                sx={{
+                                    zIndex: 1
+                                }}
+                                onClick={scrollPrev}
+                            >
+                                <ArrowBack />
+                            </Fab>
+                            <Fab
+                                color="primary"
+                                size="small"
+                                sx={{
+                                    zIndex: 1
+                                }}
+                                onClick={scrollNext}
+                            >
+                                <ArrowForward />
+                            </Fab>
+                        </Box>
+                    </>
+            }
         </Box>
     );
 }

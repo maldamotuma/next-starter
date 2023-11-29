@@ -6,6 +6,7 @@ import Title from "../title";
 import Tabform from "@/components/auth/tabForm";
 import { LocationOn } from "@mui/icons-material";
 import { blueGrey } from "@mui/material/colors";
+import ContactForm from "@/components/contact/form";
 
 interface ContactProps {
 
@@ -114,10 +115,12 @@ const Contact: FunctionComponent<ContactProps> = () => {
                             xs: "100%",
                             md: "35%"
                         },
+                        p: 2,
                         display: "inline-block"
                     }}
                 >
-                    <Tabform />
+                    <Typography fontSize={"1.5em"} fontWeight={600} sx={{mb: 2}}>I value your Input</Typography>
+                    <ContactForm formId="contact-form-on-page" />
                 </Paper>
             </Stack>
             <Container

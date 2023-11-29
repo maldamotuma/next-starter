@@ -16,7 +16,7 @@ interface DashboardLayoutProps {
     children: ReactNode;
 }
 export default function Home({ children }: DashboardLayoutProps) {
-    const [width, setWidth] = useState<0 | 300>(300);
+    const [width, setWidth] = useState<0 | 240>(240);
     const auth = useAppSelector(state => state.auth);
     const router = useRouter();
     const theme = useTheme();
@@ -27,7 +27,7 @@ export default function Home({ children }: DashboardLayoutProps) {
 
 
     const handleOpen = () => {
-        setWidth(300);
+        setWidth(240);
     }
 
     const handleClose = () => {
@@ -89,7 +89,7 @@ export default function Home({ children }: DashboardLayoutProps) {
                     position: "sticky",
                     top: 0,
                     width,
-                    borderRight: width === 300 ? 1 : 0,
+                    borderRight: width === 240 ? 1 : 0,
                     borderColor: "divider",
                     height: "100vh",
                     overflowX: "hidden",
@@ -116,7 +116,7 @@ export default function Home({ children }: DashboardLayoutProps) {
             >
                 <ResponsiveAppBar
                     handleOpen={matches ? pps.open : handleOpen}
-                    open={matches ? pps.isOpen : width === 300}
+                    open={matches ? pps.isOpen : width === 240}
                 />
                 <Box
                     sx={{

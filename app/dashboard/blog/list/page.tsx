@@ -11,12 +11,6 @@ interface BlogsProps {
 const Blogs: FunctionComponent<BlogsProps> = () => {
     return (
         <>
-            <Button
-                sx={{
-                    mb: 2
-                }}
-                startIcon={<Article />}
-                component={Link} href="/dashboard/blog/create">Create Blog</Button>
             <BlogList />
         </>
     );

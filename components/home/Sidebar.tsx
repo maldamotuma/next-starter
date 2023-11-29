@@ -83,6 +83,8 @@ const links = [
     ]
   }
 ]
+
+const only_authorized = ["/dashboard/blog/create"];
 const Siebar: FunctionComponent<SiebarProps> = ({ handleClose }) => {
   const { user } = useAppSelector(state => state.auth);
   return (
@@ -135,117 +137,6 @@ const Siebar: FunctionComponent<SiebarProps> = ({ handleClose }) => {
             overflowX: "hidden"
           }}
         >
-          <Accordion
-            // disableGutters
-            variant="outlined"
-            sx={{
-              border: 0
-            }}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMore />}
-            >
-              Catalogue
-            </AccordionSummary>
-            <AccordionDetails>
-              <List>
-                <ListItemButton
-                  component={Link}
-                  href={"/dashboard/sections"}
-                >
-                  <ListItemIcon>
-                    <CircleOutlined />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"Sections"}
-                  />
-                </ListItemButton>
-                <ListItemButton
-                  component={Link}
-                  href={"/dashboard/categories"}
-                >
-                  <ListItemIcon>
-                    <CircleOutlined />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"Categories"}
-                  />
-                </ListItemButton>
-              </List>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion
-            // disableGutters
-            variant="outlined"
-            sx={{
-              border: 0
-            }}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMore />}
-            >
-              User Management
-            </AccordionSummary>
-            <AccordionDetails>
-              <List>
-                <ListItemButton
-                  component={Link}
-                  href={"/dashboard/admin/list"}
-                >
-                  <ListItemIcon>
-                    <GroupOutlined />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"Admins"}
-                  />
-                </ListItemButton>
-                <ListItemButton
-                  component={Link}
-                  href={"/dashboard/user/list"}
-                >
-                  <ListItemIcon>
-                    <Group />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"Users"}
-                  />
-                </ListItemButton>
-                <ListItemButton
-                  component={Link}
-                  href={"/dashboard/blog/list"}
-                >
-                  <ListItemIcon>
-                    <Group />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"Blogs"}
-                  />
-                </ListItemButton>
-              </List>
-            </AccordionDetails>
-          </Accordion>
-          <ListItemButton
-            component={Link}
-            href={"/dashboard/exceptions"}
-          >
-            <ListItemIcon>
-              <Error />
-            </ListItemIcon>
-            <ListItemText
-              primary={"Exceptions"}
-            />
-          </ListItemButton>
-          <ListItemButton
-            component={Link}
-            href={"/dashboard/nfp"}
-          >
-            <ListItemIcon>
-              <Warning />
-            </ListItemIcon>
-            <ListItemText
-              primary={"Not Found"}
-            />
-          </ListItemButton>
           {
             links.map(lnk => (
               <Box
@@ -258,6 +149,11 @@ const Siebar: FunctionComponent<SiebarProps> = ({ handleClose }) => {
                       key={"links-sub-qwerty-" + sb.title}
                       component={Link}
                       href={sb.href}
+                      {
+                        ...(only_authorized.includes(sb.href) && !user?.can_blog && {
+                          disabled: true
+                        })
+                      }
                     >
                       <ListItemIcon>
                         {

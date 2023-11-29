@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import { store } from '@/redux/store'
 import { SessionProvider } from 'next-auth/react'
 import 'simplebar-react/dist/simplebar.min.css';
+import FloatingContact from '@/components/contact'
 
 
 // const inter = Inter({ subsets: ['latin'] })
@@ -40,6 +41,7 @@ export default function RootLayout({
         <SessionProvider>
           <Provider store={store}>
             <WholeWrapper>
+              <FloatingContact />
               {children}
             </WholeWrapper>
           </Provider>

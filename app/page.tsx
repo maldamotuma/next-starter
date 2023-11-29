@@ -8,6 +8,7 @@ import ResponsiveAppBar from "@/components/home/nav/appbar";
 import Header from "@/components/home/nav/header";
 import Partners from "@/components/home/partners";
 import Pricing from "@/components/home/priving";
+import ScrollPage from "@/components/home/scroll-page";
 import Services from "@/components/home/services";
 import Testimonials from "@/components/testimonials";
 import { Stack } from "@mui/material";
@@ -20,6 +21,7 @@ interface HomePageProps {
 const HomePage: FunctionComponent<HomePageProps> = () => {
   return (
     <>
+      <ScrollPage />
       <Header />
       <ResponsiveAppBar />
       <Hero />

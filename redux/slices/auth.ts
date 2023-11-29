@@ -14,6 +14,7 @@ export type userType = {
   gender: string;
   email_verified_at: string | null;
   is_active: boolean;
+  can_blog: 1 | 0;
 }
 
 export interface auth {
