@@ -4,7 +4,7 @@ import BlogCard from "@/components/blog/blog-card";
 import { Blog } from "@/components/blog/types";
 import Title from "@/components/home/title";
 import { useInitialCall } from "@/hooks/remote-call";
-import { Container, Grid, Skeleton } from "@mui/material";
+import { Alert, Container, Grid, Skeleton } from "@mui/material";
 import { FunctionComponent } from "react";
 
 interface BookmarksProps {
@@ -83,6 +83,10 @@ const Bookmarks: FunctionComponent<BookmarksProps> = () => {
                         ))
                 }
             </Grid>
+            {
+                status !== "pending" && blogs.length === 0 &&
+                <Alert severity={"info"}>No Blog Bookmarked</Alert>
+            }
         </Container>
     );
 }

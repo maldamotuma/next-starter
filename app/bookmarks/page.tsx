@@ -5,7 +5,7 @@ import { Blog } from "@/components/blog/types";
 import Title from "@/components/home/title";
 import Wrapper from "@/components/wrapper";
 import { useInitialCall } from "@/hooks/remote-call";
-import { Container, Grid, Skeleton } from "@mui/material";
+import { Alert, Container, Grid, Skeleton } from "@mui/material";
 import { FunctionComponent } from "react";
 
 interface BoolmarksProps {
@@ -85,6 +85,10 @@ const Boolmarks: FunctionComponent<BoolmarksProps> = () => {
                             ))
                     }
                 </Grid>
+                {
+                    status !== "pending" && blogs.length === 0 &&
+                    <Alert severity={"info"}>No Blog Bookmarked</Alert>
+                }
             </Container>
         </Wrapper>
     );
