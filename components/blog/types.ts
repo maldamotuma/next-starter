@@ -32,4 +32,5 @@ export type Blog = {
     admin?: AdminType;
     cat: CategoryPrpos;
     comments: CommentWithReplay[];
+    is_favorite: boolean;
 }

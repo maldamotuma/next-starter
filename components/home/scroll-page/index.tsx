@@ -24,20 +24,23 @@ const ScrollPage: FunctionComponent<ScrollPageProps> = () => {
             flexDirection: "column",
             justifyContent: "center",
             opacity: trigger ? 0 : 1,
-            transition: ".2s opacity ease",
         }}>
             <KeyboardDoubleArrowDownOutlined sx={{
                 width: 50,
                 height: 50,
                 color: "text.secondary",
-                animation: 'arranim 1.2s infinite ease-in-out',
+                animation: 'arranim 1.2s infinite linear',
                 '@keyframes arranim': {
                     '0%': {
+                        transform: 'translateY(-100%)',
+                        opacity: 0,
+                    },
+                    '50%': {
                         transform: 'translateY(-50%)',
                         opacity: 1,
                     },
                     '100%': {
-                        transform: 'translateY(50%)',
+                        transform: 'translateY(0)',
                         opacity: 0,
                     },
                 },

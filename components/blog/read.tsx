@@ -1,6 +1,6 @@
 "use client"
 
-import { Avatar, Box, Button, CardHeader, CardMedia, Chip, Container, Divider, InputLabel, Stack } from "@mui/material";
+import { Alert, AlertTitle, Avatar, Box, Button, CardHeader, CardMedia, Chip, Container, Divider, InputLabel, Stack } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { Blog } from "./types";
 import { server_url } from "@/config/variables";
@@ -15,6 +15,7 @@ import BlogCard from "./blog-card";
 import RelatedBlogs from "./relatedSlide";
 import SimpleBar from 'simplebar-react';
 import Favorite from "./fovorite";
+import SubscribeCta from "../home/call-to-actions/SubscribeCard";
 
 interface BlogReadProps {
     blog: Blog & {
@@ -213,39 +214,50 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                             />
                         </Box>
                         <Divider sx={{ mt: 3, mb: 1 }} />
-                        <Box sx={{ mb: 10 }}>
+                        <Box sx={{ mb: 5 }}>
                             {
                                 !is_favorite &&
                                 <Favorite blog={blog} setIs_favorite={setIs_favorite} is_favorite={is_favorite} />
                             }
                         </Box>
-
+                        <Box sx={{ mb: { xs: 2, md: 10 } }}>
+                            <SubscribeCta />
+                        </Box>
                         <RelatedBlogs
                             blogs={blog.related_blogs || []}
                         />
                         <Box>
                             <Box sx={{ mb: 3 }}>
                                 <InputLabel sx={{ mb: 1 }}>Share Your Thought</InputLabel>
-                                <Box className="malda-react" sx={{
-                                    border: 1,
-                                    borderColor: "divider",
-                                    borderRadius: 2,
-                                    mb: 1
-                                }}>
-                                    <PlaygroundApp
-                                        settings={{
-                                            showTreeView: false,
-                                            isRichText: false
-                                        }}
-                                        onChange={nv => seteditorState(nv)}
-                                        value={editorState}
-                                        noAutoFocus
-                                    />
-                                </Box>
-                                <LoadingButton
-                                    onClick={writeComment}
-                                    loading={status === "pending"}
-                                >Submit</LoadingButton>
+                                {
+                                    user ?
+                                        <>
+                                            <Box className="malda-react" sx={{
+                                                border: 1,
+                                                borderColor: "divider",
+                                                borderRadius: 2,
+                                                mb: 1
+                                            }}>
+                                                <PlaygroundApp
+                                                    settings={{
+                                                        showTreeView: false,
+                                                        isRichText: false
+                                                    }}
+                                                    onChange={nv => seteditorState(nv)}
+                                                    value={editorState}
+                                                    noAutoFocus
+                                                />
+                                            </Box>
+                                            <LoadingButton
+                                                onClick={writeComment}
+                                                loading={status === "pending"}
+                                            >Submit</LoadingButton>
+                                        </>
+                                        :
+                                        <Alert severity="info">
+                                            <AlertTitle>SignUp To Comment</AlertTitle>
+                                        </Alert>
+                                }
                             </Box>
                             {
                                 comments?.map(comment => (

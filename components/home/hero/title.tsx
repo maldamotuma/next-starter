@@ -4,12 +4,20 @@ import { ArrowForwardIosOutlined, ArrowForwardOutlined, GroupOutlined, MailOutli
 import { Button, ButtonBase, Chip, Stack, Typography, Box, TextField, FormHelperText } from "@mui/material";
 import { FunctionComponent } from "react";
 import GroupAvatars from "./avatars";
+import { useEmailSubscribe } from "@/hooks/subscribecta";
+import { LoadingButton } from "@mui/lab";
 
 interface HeroTitleProps {
 
 }
 
 const HeroTitle: FunctionComponent<HeroTitleProps> = () => {
+    const {
+        handleChange,
+        handleSubmit,
+        loading
+    } = useEmailSubscribe();
+
     return (
         <>
             <Chip
@@ -28,27 +36,32 @@ const HeroTitle: FunctionComponent<HeroTitleProps> = () => {
             </Typography>
             <Stack direction={"row"} spacing={2} alignItems={"center"} sx={{ mt: 2 }}>
                 <div style={{ width: "100%" }}>
-                    <div id="input-sub-email">
-                        <TextField
-                            fullWidth
-                            label="Email"
-                            // size="small"
-                            placeholder="yourmail@mail.com`"
-                            InputProps={{
-                                // startAdornment: <MailOutline sx={{color: "text.secondary"}}/>
-                                endAdornment: <Button endIcon={<ArrowForwardOutlined />} variant="contained" disableElevation
-                                    sx={{
-                                        // borderTopRightRadius: 0,
-                                        // borderBottomRightRadius: 0
-                                    }}
-                                    size="large"
-                                >Join</Button>,
-                                sx: {
-                                    // pr: .3
-                                }
-                            }}
-                        />
-                    </div>
+                    <form onSubmit={handleSubmit}>
+                        <div id="input-sub-email">
+                            <TextField
+                                fullWidth
+                                label="Email"
+                                // size="small"
+                                placeholder="yourmail@mail.com`"
+                                onChange={handleChange}
+                                InputProps={{
+                                    // startAdornment: <MailOutline sx={{color: "text.secondary"}}/>
+                                    endAdornment: <LoadingButton endIcon={<ArrowForwardOutlined />} variant="contained" disableElevation
+                                        sx={{
+                                            // borderTopRightRadius: 0,
+                                            // borderBottomRightRadius: 0
+                                        }}
+                                        size="large"
+                                        type={"submit"}
+                                        loading={loading}
+                                    >Join</LoadingButton>,
+                                    sx: {
+                                        // pr: .3
+                                    }
+                                }}
+                            />
+                        </div>
+                    </form>
                     <FormHelperText>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cupiditate, facilis? Facere eveniet.</FormHelperText>
                 </div>
                 {/* <Button endIcon={<ArrowForwardOutlined />} variant="contained" disableElevation>Join</Button> */}
