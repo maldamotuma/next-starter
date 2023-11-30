@@ -40,9 +40,17 @@ class Blog extends Model
 
     function getIsFavoriteAttribute()
     {
-        return Bookmark::where([
-            'user_id' => Auth::id(),
-            'blog_id' => $this->id
-        ])->exists();
+        if (Auth::check()) {
+            return Bookmark::where([
+                'user_id' => Auth::id(),
+                'blog_id' => $this->id
+            ])->exists() ? 1 : 0;
+        } else if (Auth::guard('admin')->check()) {
+            return Bookmark::where([
+                'admin_id' => Auth::guard('admin')->id(),
+                'blog_id' => $this->id
+            ])->exists() ? 1 : 0;
+        }
+        return 0;
     }
 }

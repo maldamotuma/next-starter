@@ -63,11 +63,19 @@ class BlogsController extends Controller
                 'blogs' => $blogs
             ]);
         } else if ($request->has("favorites")) {
-            $usr = Admin::select('id')->with(['bookmarks' => function($query){
+            $usr = Admin::select('id')->with(['bookmarks' => function ($query) {
                 $query->select("blogs.id", "blogs.title", "blogs.slug", "blogs.image", "blogs.category_id", "blogs.article");
                 $query->with("cat:id,title");
             }])->find(Auth::guard('admin')->id())->toArray();
             $blogs = $usr["bookmarks"];
+            return response()->json([
+                'success' => 1,
+                'blogs' => $blogs
+            ]);
+        } else if ($request->has("mine")) {
+            $blogs = Blog::with("admin", "cat")
+                ->where('admin_id', Auth::guard('admin')->id())
+                ->latest()->get();
             return response()->json([
                 'success' => 1,
                 'blogs' => $blogs

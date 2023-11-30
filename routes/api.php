@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\BlogsController as AdminBlogsController;
 use App\Http\Controllers\admin\CategoriesController;
 use App\Http\Controllers\admin\CommentsController as AdminCommentsController;
 use App\Http\Controllers\admin\CompanyController;
+use App\Http\Controllers\admin\ContactsController;
 use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\admin\ErrorReportController as AdminErrorReportController;
 use App\Http\Controllers\admin\SectionsController;
@@ -77,7 +78,7 @@ Route::middleware("api")->group(function () {
         Route::get("/company-copy/{slug}", "companyCopy");
     });
 
-    Route::controller(ContactController::class)->group(function(){
+    Route::controller(ContactController::class)->group(function () {
         Route::post("/contact", "contact");
         Route::post("/subscribe", "subscribe");
     });
@@ -158,6 +159,13 @@ Route::middleware("api")->prefix("admin")->group(function () {
         Route::post("/create-copy", "createCopy");
         Route::post("/update-copy/{copy}", "updateCopy");
         Route::post("/delete-copy/{copy}", "deleteCopy");
+    });
+
+    Route::controller(ContactsController::class)->group(function () {
+        Route::get("/contacts", "contacts");
+        Route::post("/delete-contact/{contact}", "deleteContact");
+        Route::get("/email-list", "emailList");
+        Route::post("/delete-email/{email}", "deleteEmail");
     });
 });
 

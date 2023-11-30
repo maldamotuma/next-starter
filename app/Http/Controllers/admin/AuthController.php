@@ -230,7 +230,7 @@ class AuthController extends Controller
     {
         $email = $request->email;
         $user = Admin::where("email", $email)->first();
-        if (!$user->email_verified_at) {
+        if ($user && !$user->email_verified_at) {
             $user->email_verified_at = Carbon::now();
             $user->save();
         }
