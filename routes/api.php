@@ -79,6 +79,7 @@ Route::middleware("api")->group(function () {
 
     Route::controller(ContactController::class)->group(function(){
         Route::post("/contact", "contact");
+        Route::post("/subscribe", "subscribe");
     });
 });
 
