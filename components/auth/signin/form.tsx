@@ -113,7 +113,11 @@ const SigninForm: FunctionComponent<SigninFormProps> = ({ modal, noRedirect }) =
           display: "flex",
           justifyContent: "space-around",
           gap: 2,
-          mt: 2
+          mt: 2,
+          flexDirection: {
+            xs: "column",
+            md: "row"
+          }
         }}
       >
         <Button

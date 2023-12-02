@@ -27,11 +27,44 @@ const HeroTitle: FunctionComponent<HeroTitleProps> = () => {
                 deleteIcon={<ArrowForwardOutlined />}
                 onDelete={() => { }}
                 size="small"
+                sx={{
+                    position: "relative",
+                    left: {
+                        xs: "50%",
+                        md: "0"
+                    },
+                    transform: {
+                        xs: "translateX(-50%)",
+                        md: "none"
+                    },
+                }}
             />
-            <Typography variant="h1" component="h1" fontWeight={800} fontSize={"3.5em"} sx={{ my: 1 }}>
+            <Typography
+                variant="h1"
+                component="h1"
+                fontWeight={800}
+                fontSize={{
+                    xs: "2.5em",
+                    md: "3.5em"
+                }}
+                sx={{
+                    my: 1,
+                    textAlign: {
+                        xs: "center",
+                        md: "left"
+                    }
+                }}
+            >
                 Trahsport Your Goods Around the World.
             </Typography>
-            <Typography color={"GrayText"}>
+            <Typography color={"GrayText"}
+                sx={{
+                    textAlign: {
+                        xs: "center",
+                        md: "left"
+                    }
+                }}
+            >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea est reiciendis placeat amet ad iste pariatur, qui voluptas possimus alias earum provident.
             </Typography>
             <Stack direction={"row"} spacing={2} alignItems={"center"} sx={{ mt: 2 }}>
@@ -62,7 +95,14 @@ const HeroTitle: FunctionComponent<HeroTitleProps> = () => {
                             />
                         </div>
                     </form>
-                    <FormHelperText>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cupiditate, facilis? Facere eveniet.</FormHelperText>
+                    <FormHelperText
+                        sx={{
+                            textAlign: {
+                                xs: "center",
+                                md: "left"
+                            }
+                        }}
+                    >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cupiditate, facilis? Facere eveniet.</FormHelperText>
                 </div>
                 {/* <Button endIcon={<ArrowForwardOutlined />} variant="contained" disableElevation>Join</Button> */}
             </Stack>

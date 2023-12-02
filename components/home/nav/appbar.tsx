@@ -21,6 +21,7 @@ import { server_url } from '@/config/variables';
 import Link from 'next/link';
 import { alpha, useTheme } from '@mui/material';
 import ComboBox from '@/components/nav/Search';
+import LabelBottomNavigation from './mobile-appbar';
 
 const pages = [
   {
@@ -52,113 +53,66 @@ function ResponsiveAppBar() {
 
 
   return (
-    <AppBar position="static" elevation={0}
-      sx={{
-        bgcolor: theme => alpha(theme.palette.background.paper, .5),
-        backdropFilter: "blur(14px)",
-        color: "primary.dark",
-        borderBottom: 1,
-        borderColor: "divider",
-        position: "sticky",
-        top: 0,
-        zIndex: 999
-      }}
-    >
-      <Box sx={{ px: 5 }}>
-        <Toolbar disableGutters>
-          <Box
-            sx={{
-              display: "flex",
-              gap: 2,
-              alignItems: "center"
-            }}
-          >
-            <Link href="/">
-              <Box
-                component={'img'}
-                src={`${server_url}/logo/logo-${theme.palette.mode === "dark" ? "light" : "dark"}.png`}
-                height={50}
-              />
-            </Link>
-            <ComboBox />
-          </Box>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+    <>
+      <LabelBottomNavigation />
+      <AppBar position="static" elevation={0}
+        sx={{
+          bgcolor: theme => alpha(theme.palette.background.paper, .5),
+          backdropFilter: "blur(14px)",
+          color: "primary.dark",
+          borderBottom: 1,
+          borderColor: "divider",
+          position: "sticky",
+          top: 0,
+          zIndex: 999,
+          display: {
+            xs: "none",
+            md: "block"
+          }
+        }}
+      >
+        <Box sx={{
+          px: 5
+        }}>
+          <Toolbar disableGutters>
+            <Box
               sx={{
-                display: { xs: 'block', md: 'none' },
+                display: "flex",
+                gap: 2,
+                alignItems: "center"
               }}
             >
+              <Link href="/">
+                <Box
+                  component={'img'}
+                  src={`${server_url}/logo/logo-${theme.palette.mode === "dark" ? "light" : "dark"}.png`}
+                  height={50}
+                />
+              </Link>
+              <ComboBox />
+            </Box>
+            <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
               {pages.map((page) => (
-                <MenuItem key={page.title} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page.title}</Typography>
-                </MenuItem>
+                <Button
+                  key={page.title}
+                  component={Link}
+                  href={page.href}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, display: 'block' }}
+                >
+                  {page.title}
+                </Button>
               ))}
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.title}
-                component={Link}
-                href={page.href}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, display: 'block' }}
-              >
-                {page.title}
-              </Button>
-            ))}
-          </Box>
+            </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <AuthButton />
-          </Box>
-        </Toolbar>
-      </Box>
-    </AppBar>
+            <Box sx={{ flexGrow: 0 }}>
+              <AuthButton />
+            </Box>
+          </Toolbar>
+        </Box>
+      </AppBar>
+    </>
   );
 }
 export default ResponsiveAppBar;

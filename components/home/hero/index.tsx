@@ -11,7 +11,7 @@ const Hero: FunctionComponent<HeroProps> = () => {
     return (
         <Container maxWidth="xl"
             sx={{
-                py: { xs: 5, md: 10 },
+                py: { xs: 2, md: 10 },
             }}
         >
             <Stack direction={{

@@ -54,7 +54,8 @@ export default function GroupAvatars() {
         >
             <Box
                 sx={{
-                    display: "inline-block"
+                    display: "inline-block",
+                    pl: 2
                 }}
             >
                 <AvatarGroup

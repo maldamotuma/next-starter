@@ -25,7 +25,10 @@ const Partners: FunctionComponent<PartnersProps> = () => {
         />
         </Container>
         <Box sx={{
-            width: "calc(100vw - 20px) !important",
+            width: {
+                xs: "calc(100vw - 5px) !important",
+                sm: "calc(100vw - 20px) !important"
+            },
             overflow: "hidden"
         }}>
         <Marquee>
