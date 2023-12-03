@@ -31,7 +31,7 @@ const HomePage: FunctionComponent<HomePageProps> = () => {
         <Services />
         <CAS />
         <Pricing />
-        <Testimonials />
+        {/* <Testimonials /> */}
         <Blogs />
         <Contact />
         <Footers />

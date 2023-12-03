@@ -12,7 +12,7 @@ function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Typography component={Link} color="inherit" href="https://mui.com/">
+      <Typography component={Link} color="inherit" href="https://tech-scan.com">
         Tech-Scan
       </Typography>{' '}
       {new Date().getFullYear()}
@@ -24,25 +24,75 @@ function Copyright(props: any) {
 const footers = [
   {
     title: 'Company',
-    description: ['Team', 'History', 'Contact us', 'Locations'],
-  },
-  {
-    title: 'Features',
     description: [
-      'Cool stuff',
-      'Random feature',
-      'Team feature',
-      'Developer stuff',
-      'Another one',
+      {
+        title: "About",
+        href: "/company/about-us"
+      },
+      {
+        title: "FAQ",
+        href: "/company/frequently-asked-questions"
+      },
+      {
+        title: "Contact",
+        href: "/#contact"
+      },
+      {
+        title: "Terms and Regulations",
+        href: "/company/terms-and-regulations"
+      }
     ],
   },
   {
-    title: 'Resources',
-    description: ['Resource', 'Resource name', 'Another resource', 'Final resource'],
+    title: 'Navigation',
+    description: [
+      {
+        title: "Dashboard",
+        href: "/dashboard"
+      },
+      {
+        title: "Home",
+        href: "/"
+      },
+      {
+        title: "Bookmarks",
+        href: "/bookmarks"
+      },
+      {
+        title: "Pricing",
+        href: "/plans"
+      }
+    ],
+  },
+  {
+    title: 'Auth',
+    description: [
+      {
+        title: "SignIn",
+        href: "/auth/signin"
+      },
+      {
+        title: "SignUp",
+        href: "/auth/signup"
+      },
+      {
+        title: "Forgot Password",
+        href: "/auth/forgot-password"
+      }
+    ],
   },
   {
     title: 'Legal',
-    description: ['Privacy policy', 'Terms of use'],
+    description: [
+      {
+        title: "Privacy policy",
+        href: "/company/privacy-policy"
+      },
+      {
+        title: "Terms of use",
+        href: "/company/terms-of-use"
+      },
+    ],
   },
 ];
 interface FootersProps {
@@ -77,7 +127,7 @@ const Footers: FunctionComponent<FootersProps> = () => {
                 }}
               />
               <Typography color={"text.secondary"}>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis accusantium excepturi eum quaerat id vero molestiae explicabo veniam nostrum, veritatis autem eaque, laborum eveniet. Tempora asperiores reiciendis ullam culpa.
+                Our curated collection of resources, personalized assistance, and professional services are designed to empower your journey in AI and full-stack development. Whether you're a coding enthusiast or a company seeking expert solutions, find your path to excellence here at Tech-Scan.
               </Typography>
             </Grid>
             <Grid
@@ -93,13 +143,13 @@ const Footers: FunctionComponent<FootersProps> = () => {
                   </Typography>
                   <List>
                     {footer.description.map((item) => (
-                      <ListItemButton key={item} component={Link} href="#"
+                      <ListItemButton key={item.href} component={Link} href={item.href}
                         sx={{
                           color: "primary.main",
                           fontWeight: 500
                         }}
                       >
-                        {item}
+                        {item.title}
                       </ListItemButton>
                     ))}
                   </List>

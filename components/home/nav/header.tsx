@@ -1,9 +1,10 @@
 "use client"
 
 import React, { FC } from 'react'
-import { Box, Chip, Container, IconButton, Stack } from '@mui/material'
+import { Box, Chip, Container, IconButton, Stack, Typography } from '@mui/material'
 import { indigo } from '@mui/material/colors'
-import { Facebook, LinkedIn, LocationOnOutlined, LockClock, MailOutline, Twitter } from '@mui/icons-material'
+import { Facebook, GitHub, LinkedIn, LocationOnOutlined, LockClock, MailOutline, Twitter } from '@mui/icons-material'
+import Link from 'next/link'
 
 const Header: FC = () => {
   return (
@@ -17,9 +18,23 @@ const Header: FC = () => {
         sx={{
           display: "flex",
           alignItems: "center",
-          px: 3
+          pr: {
+            xs: 1,
+            md: 3
+          },
+          pl: 3
         }}
       >
+        <Typography
+          sx={{
+            display: {
+              md: "none"
+            }
+          }}
+          color={indigo[100]}
+        >
+          Let Us Connect!
+        </Typography>
         <Stack direction="row" spacing={1}
           sx={{
             display: {
@@ -35,7 +50,7 @@ const Header: FC = () => {
               border: "none",
               color: indigo[100]
             }}
-            label="4b, Walse Street , USA"
+            label="Fully Online"
             icon={<LocationOnOutlined sx={{
               color: `${indigo[50]} !important`
             }} />}
@@ -47,7 +62,7 @@ const Header: FC = () => {
               border: "none",
               color: indigo[100]
             }}
-            label="malda@template.go"
+            label="getintouch.malda@gmail.com"
             icon={<MailOutline sx={{
               color: `${indigo[50]} !important`
             }} />}
@@ -59,7 +74,7 @@ const Header: FC = () => {
               border: "none",
               color: indigo[100]
             }}
-            label="Mon – Sun: 9.00 am – 8.00pm"
+            label="Mon – Mon"
             icon={<LockClock sx={{
               color: `${indigo[50]} !important`
             }} />}
@@ -70,23 +85,38 @@ const Header: FC = () => {
             flexGrow: 1
           }}
         />
-        <Stack direction="row" spacing={1}>
-          <IconButton>
-            <Facebook sx={{
+        <Box
+          sx={{
+            display: "flex",
+            px: 2,
+            pl: 8
+          }}
+        >
+          <IconButton
+            component={Link}
+            target="_blank"
+            sx={{
               color: `${indigo[100]} !important`
-            }} />
-          </IconButton>
-          <IconButton>
-            <Twitter sx={{
+            }}
+            href="https://www.linkedin.com/in/malda-motuma-39b88a219"
+          ><LinkedIn /></IconButton>
+          <IconButton
+            component={Link}
+            target="_blank"
+            sx={{
               color: `${indigo[100]} !important`
-            }} />
-          </IconButton>
-          <IconButton>
-            <LinkedIn sx={{
+            }}
+            href="https://github.com/maldamotuma"
+          ><GitHub /></IconButton>
+          <IconButton
+            component={Link}
+            target="_blank"
+            sx={{
               color: `${indigo[100]} !important`
-            }} />
-          </IconButton>
-        </Stack>
+            }}
+            href="https://twitter.com/MaldaMotuma"
+          ><Twitter /></IconButton>
+        </Box>
       </Box>
     </Box>
   )

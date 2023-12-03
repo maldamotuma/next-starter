@@ -21,7 +21,7 @@ const Title: FunctionComponent<TitleProps> = ({primary, secondary, primaryProps,
             align="center"
             fontSize={"1.5em"}
             fontWeight={500}
-            color={"ActiveBorder"}
+            color={"text.secondary"}
             sx={{
                 mb: 4
             }}

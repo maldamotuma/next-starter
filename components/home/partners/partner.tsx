@@ -14,11 +14,14 @@ const PartnerLogo: FunctionComponent<PartnerLogoProps> = ({ partner }) => {
             <Box
                 component={"img"}
                 src={partner.img}
-                height={"50px"}
+                height={"70px"}
                 sx={{
                     mx: 3,
                     filter: "grayscale(100%)",
                     transition: ".1s filter ease",
+                    p: 1,
+                    borderRadius: 1,
+                    bgcolor: "#ffffff",
                     "&:hover": {
                         filter: "grayscale(0)",
                     }

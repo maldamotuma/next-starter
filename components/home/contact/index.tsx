@@ -1,20 +1,48 @@
 "use client"
 
-import { Box, ButtonBase, CardContent, Chip, Container, Divider, List, ListItem, ListItemIcon, ListItemText, Paper, Stack, Typography } from "@mui/material";
+import { Box, CardContent, Chip, Container, List, ListItem, ListItemIcon, ListItemText, Paper, Stack, Typography, SxProps, Theme, ListItemButton } from "@mui/material";
 import { FunctionComponent } from "react";
 import Title from "../title";
-import Tabform from "@/components/auth/tabForm";
-import { LocationOn } from "@mui/icons-material";
+import { Email, GitHub, LinkedIn, Twitter } from "@mui/icons-material";
 import { blueGrey } from "@mui/material/colors";
 import ContactForm from "@/components/contact/form";
 
 interface ContactProps {
 
 }
-
+const contacts = [
+    {
+        title: "Github",
+        href: "https://github.com/maldamotuma",
+        icon(prps: SxProps) {
+            return <GitHub sx={prps} />
+        }
+    },
+    {
+        title: "LinkedIn",
+        href: "https://www.linkedin.com/in/malda-motuma-39b88a219",
+        icon(prps: SxProps) {
+            return <LinkedIn sx={prps} />
+        }
+    },
+    {
+        title: "Email",
+        href: "getintouch.malda@gmail.com",
+        icon(prps: SxProps) {
+            return <Email sx={prps} />
+        }
+    },
+    {
+        title: "Twitter",
+        href: "https://twitter.com/MaldaMotuma",
+        icon(prps: SxProps) {
+            return <Twitter sx={prps} />
+        }
+    }
+];
 const Contact: FunctionComponent<ContactProps> = () => {
     return (
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" id={"contact"}>
             <Stack
                 sx={{
                     position: "relative"
@@ -36,8 +64,8 @@ const Contact: FunctionComponent<ContactProps> = () => {
                             color="info"
                         />
                         <Title
-                            primary="Contact"
-                            secondary="Get In Touch With Us"
+                            primary="Let's Connect"
+                            secondary="Reach Out to Tech-Scan"
                             primaryProps={{
                                 align: "left",
                                 sx: {
@@ -54,37 +82,42 @@ const Contact: FunctionComponent<ContactProps> = () => {
                             }}
                         />
                         <Typography sx={{ my: 2 }}>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa laboriosam odio possimus deleniti voluptates. Sapiente ad voluptatibus commodi optio in asperiores deserunt quis.
+                            Have questions, feedback, or a project in mind? We're here to listen. Contact Tech-Scan for personalized assistance, collaboration opportunities, or just to say hello. Your journey in technology starts with a conversation.
                         </Typography>
                         <List>
                             {
-                                [1, 2, 3, 4].map(ct => (
-                                    <ListItem
-                                        key={"contact-c-" + ct}
+                                contacts.map(ct => (
+                                    <ListItemButton
+                                        key={"contact-c-" + ct.title}
                                         sx={{
                                             gap: 3,
                                             mb: 1
                                         }}
+                                        component={"a"}
+                                        href={ct.title === "Email" ? `mailto:${ct.href}` : ct.href}
+                                        target="_blank"
                                     >
                                         <ListItemIcon
                                             sx={{
-                                                bgcolor: "primary.dark",
+                                                bgcolor: theme => theme.palette.mode === "light" ? "primary.dark" : "primary.light",
                                                 p: 2,
                                                 minWidth: "unset",
                                                 borderRadius: 5
                                             }}
                                         >
-                                            <LocationOn sx={{ color: theme => theme.palette.mode === "light" ? "#ffffff" : "#000000", width: 50, height: 50 }} />
+                                            {
+                                                ct.icon({ color: (theme: Theme) => theme.palette.mode === "light" ? "#ffffff" : "#000000", width: 50, height: 50 })
+                                            }
                                         </ListItemIcon>
                                         <ListItemText
-                                            primary={"Office Address:"}
+                                            primary={ct.title + ":"}
                                             primaryTypographyProps={{
                                                 fontSize: "1.3em",
                                                 fontWeight: 600
                                             }}
-                                            secondary={"Lorem ipsum dolor sit amet consectetur adipisicing elit!"}
+                                            secondary={ct.href}
                                         />
-                                    </ListItem>
+                                    </ListItemButton>
                                 ))
                             }
                         </List>
@@ -119,7 +152,7 @@ const Contact: FunctionComponent<ContactProps> = () => {
                         display: "inline-block"
                     }}
                 >
-                    <Typography fontSize={"1.5em"} fontWeight={600} sx={{mb: 2}}>I value your Input</Typography>
+                    <Typography fontSize={"1.5em"} fontWeight={600} sx={{ mb: 2 }}>We value your Input</Typography>
                     <ContactForm formId="contact-form-on-page" />
                 </Paper>
             </Stack>
@@ -128,55 +161,50 @@ const Contact: FunctionComponent<ContactProps> = () => {
                     bgcolor: blueGrey[900],
                     py: 5,
                     mt: "50px",
-                    borderRadius: 2
+                    borderRadius: 2,
+                    backgroundColor: "#263238",
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'%3E%3Cpath fill='%23274b5d' fill-opacity='0.4' d='M192 15v2a11 11 0 0 0-11 11c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H145v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11 13 13 0 1 1 .02 26 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43a6.1 6.1 0 0 0-3.03 4.87V143h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 181 164a11 11 0 0 0 11 11v2a13 13 0 0 1-13-13 12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84a6.1 6.1 0 0 0-4.87-3.03H145v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 124 181a11 11 0 0 0-11 11h-2a13 13 0 0 1 13-13c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43a6.1 6.1 0 0 0 3.03-4.87V145h-35.02a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 107 124a11 11 0 0 0-22 0c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H49v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11A13 13 0 0 1 81 192h-2a11 11 0 0 0-11-11c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V145H11.98a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 0 1 0 177v-2a11 11 0 0 0 11-11c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H47v-35.02a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 28 109a13 13 0 1 1 0-26c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43A6.1 6.1 0 0 0 47 84.02V49H11.98a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 11 28 11 11 0 0 0 0 17v-2a13 13 0 0 1 13 13c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84A6.1 6.1 0 0 0 11.98 47H47V11.98a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 68 11 11 11 0 0 0 79 0h2a13 13 0 0 1-13 13 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43A6.1 6.1 0 0 0 49 11.98V47h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 85 68a11 11 0 0 0 22 0c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H143V11.98a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 124 13a13 13 0 0 1-13-13h2a11 11 0 0 0 11 11c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V47h35.02a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 179 28a13 13 0 0 1 13-13zM84.02 143a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 83 124a13 13 0 1 1 26 0c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84a6.1 6.1 0 0 0 4.87 3.03H143v-35.02a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 164 107a11 11 0 0 0 0-22c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V49h-35.02a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 1 1 83 68a12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84A6.1 6.1 0 0 0 84.02 49H49v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 28 85a11 11 0 0 0 0 22c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V143h35.02z'%3E%3C/path%3E%3C/svg%3E")`
                 }}
-                maxWidth="md"
+                maxWidth="xl"
             >
-                <Stack direction={{
-                    xs: "column",
-                    md: "row"
-                }} justifyContent={"center"} gap={5}>
-                    <Divider
+                <Stack
+                    direction={{
+                        xs: "column",
+                        md: "row"
+                    }}
+                    alignItems="center"
+                    gap={5}
+                >
+                    <Box
+                        component={"img"}
+                        src={"/24-7.png"}
+                        width={"100%"}
                         sx={{
-                            bgcolor: "#999"
+                            display: "block",
+                            flex: 1,
+                            maxWidth: 200
                         }}
-                        flexItem
-                        orientation="vertical"
                     />
-                    {
-                        [1, 2, 3, 4].map(nmbr => (
-                            <>
-                                <ButtonBase
-                                    key={`count-${nmbr}`}
-                                    sx={{
-                                        display: "flex",
-                                        alignItems: "center"
-                                    }}
-                                >
-                                    {/* <GroupOutlined
+                    <Box
                         sx={{
-                            width: 50,
-                            height: 50,
-                            color: "AppWorkspace"
+                            px: 3
                         }}
-                    /> */}
-                                    <Box>
-                                        <Typography color={"#ffffff"} fontWeight={500} fontSize={"1.5em"} align="center">165k+</Typography>
-                                        <Typography color={"#ffffff"} fontWeight={600} fontSize={"1.8em"} align="center">Clients</Typography>
-                                    </Box>
-                                </ButtonBase>
-                                <Divider
-                                    key={`dvdr-count-${nmbr}`}
-                                    flexItem
-                                    orientation="vertical"
-                                    sx={{
-                                        bgcolor: "#999"
-                                    }}
-                                />
-                            </>
-                        ))
-
-                    }
+                    >
+                        <Title
+                            primary={"Always Here for You: 24/7 Tech Assistance"}
+                            secondary="Tech hiccups don't keep hours. Neither do we. Our 24/7 Help section ensures that assistance is just a click away, anytime you need it."
+                            primaryProps={{
+                                color: "#ffffff"
+                            }}
+                            secondaryProps={{
+                                sx: {
+                                    m: 0,
+                                    p: 0
+                                },
+                                color: "#aaaaaa"
+                            }}
+                        />
+                    </Box>
                 </Stack>
             </Container>
         </Container>

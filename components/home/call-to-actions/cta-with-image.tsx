@@ -44,8 +44,8 @@ const CTAWithImage: FunctionComponent<CTAWithImageProps> = () => {
                 onSubmit={handleSubmit}
             >
                 <Title
-                    primary="Stay Uptodate With Use"
-                    secondary="Lorem ipsum dolor sit amet consectetur adipisicing elit. udantium porro voluptas tempore distinctio sint! Voluptas porro odio officia perferendis odit iure cumque molestias id."
+                    primary="Stay Uptodate With Us"
+                    secondary="Your inbox deserves a dose of brilliance! Subscribe now and early access to groundbreaking content."
                     primaryProps={{
                         align: "left"
                     }}
@@ -95,7 +95,7 @@ const CTAWithImage: FunctionComponent<CTAWithImageProps> = () => {
                     }}
                 />
                 <FormHelperText sx={{ color: "#ffffff" }}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim debitis maxime sunt molestiae cupiditate hic!
+                    Elevate your projects with personalized code support, expert web development, and insightful blogs on React, Laravel, Python, AI, and more.
                 </FormHelperText>
                 <LoadingButton
                     variant="contained"

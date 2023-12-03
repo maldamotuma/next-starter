@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSnackbar } from "notistack";
 import { FunctionComponent } from "react";
+import { tiers } from "../home/priving";
 
 interface PaymetProcessProps {
 
@@ -67,7 +68,7 @@ const PaymetProcess: FunctionComponent<PaymetProcessProps> = () => {
                                 variant="body2"
                                 color={"text.secondary"}
                             >
-                                <s>45$</s> <span>$40</span>
+                                <s>$375</s> <span>$250</span>
                             </Typography>
                         }
                         sx={{
@@ -89,16 +90,7 @@ const PaymetProcess: FunctionComponent<PaymetProcessProps> = () => {
                         <AccordionDetails>
                             <List>
                                 {
-                                    [
-                                        "Read member-only stories",
-                                        "Support writers you read most",
-                                        "Earn money for your writing",
-                                        "Listen to audio narrations",
-                                        "Read offline with the Medium app",
-                                        "Access our Mastodon community",
-                                        "Connect your custom domain",
-                                        "Create your own publications"
-                                    ].map(incldd => (
+                                    tiers[1].description.map(incldd => (
                                         <ListItem key={incldd}>
                                             <ListItemIcon sx={{
                                                 minWidth: "unset",
@@ -214,8 +206,7 @@ const PaymetProcess: FunctionComponent<PaymetProcessProps> = () => {
                         variant={"caption"}
                         color={"text.secondary"}
                     >
-                        By starting a Medium membership, you agree to our Membership Terms of Service. Your payment method will be charged a recurring $50 USD yearly fee, unless you decide to cancel. No refunds for memberships canceled between billing cycles.
-                    </Typography>
+                        By subscribing to Tech-Scan membership, you agree to our Membership <Link href="/company/terms-and-regulations">Terms of Service</Link>. Your payment method will be charged a recurring $250 USD monthly fee, unless you decide to cancel. No refunds for memberships canceled between billing cycles.                    </Typography>
                 </CardContent>
             </Card>
         </Stack>

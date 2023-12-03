@@ -5,6 +5,8 @@ import { Avatar, Box, CardHeader, Fab, Fade, IconButton, Paper } from "@mui/mate
 import { FunctionComponent, useState } from "react";
 import ContactForm from "./form";
 import { StyledBadge } from "../home/hero/avatars";
+import Link from "next/link";
+import SimpleBar from "simplebar-react";
 
 interface FloatingContactProps {
 
@@ -84,17 +86,33 @@ const FloatingContact: FunctionComponent<FloatingContactProps> = () => {
                             pl: 8
                         }}
                     >
-                        <IconButton color="primary"><LinkedIn /></IconButton>
-                        <IconButton><GitHub /></IconButton>
-                        <IconButton color="info"><Twitter /></IconButton>
+                        <IconButton
+                            color="primary"
+                            component={Link}
+                            target="_blank"
+                            href="https://www.linkedin.com/in/malda-motuma-39b88a219"
+                        ><LinkedIn /></IconButton>
+                        <IconButton
+                            component={Link}
+                            target="_blank"
+                            href="https://github.com/maldamotuma"
+                        ><GitHub /></IconButton>
+                        <IconButton
+                            color="info"
+                            component={Link}
+                            target="_blank"
+                            href="https://twitter.com/MaldaMotuma"
+                        ><Twitter /></IconButton>
                     </Box>
-                    <Box
-                        sx={{
-                            p: 3
+                    <SimpleBar
+                        style={{
+                            padding: "20px",
+                            maxHeight: "70vh",
+                            width: "100%"
                         }}
                     >
                         <ContactForm formId={"floating-contact-form"} />
-                    </Box>
+                    </SimpleBar>
                 </Paper>
             </Fade>
         </>

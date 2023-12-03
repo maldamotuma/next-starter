@@ -29,27 +29,17 @@ const pages = [
     href: "/bookmarks"
   },
   {
-    title: "Pricing",
-    href: "#"
+    title: "Plans",
+    href: "/plans"
   },
   {
-    title: "Blog",
-    href: "#"
+    title: "Contact",
+    href: "/#contact"
   },
 ];
 
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const user = useAppSelector(state => state.auth.user);
   const theme = useTheme();
-
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
 
 
   return (
@@ -98,7 +88,6 @@ function ResponsiveAppBar() {
                   key={page.title}
                   component={Link}
                   href={page.href}
-                  onClick={handleCloseNavMenu}
                   sx={{ my: 2, display: 'block' }}
                 >
                   {page.title}

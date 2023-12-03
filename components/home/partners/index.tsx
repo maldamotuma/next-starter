@@ -6,46 +6,40 @@ import PartnerLogo from "./partner";
 import Marquee from "react-fast-marquee";
 
 interface PartnersProps {
-    
+
 }
- 
+
 const Partners: FunctionComponent<PartnersProps> = () => {
     return (
         <div>
-        <Container maxWidth="xl">
-        <Title
-        primary="We work with"
-        secondary="Some of our loyal partners. We trusted for"
-        // primaryProps={{
-        //     align: "left"
-        // }}
-        // secondaryProps={{
-        //     align: "left"
-        // }}
-        />
-        </Container>
-        <Box sx={{
-            width: {
-                xs: "calc(100vw - 5px) !important",
-                sm: "calc(100vw - 20px) !important"
-            },
-            overflow: "hidden"
-        }}>
-        <Marquee>
-            {
-                partners.map(partner => (
-                    <PartnerLogo
-                    key={`partner-${partner}`}
-                    partner={{
-                        img: partner.img
-                    }}
-                    />
-                ))
-            }
-        </Marquee>
-        </Box>
+            <Container maxWidth="xl">
+                <Title
+                    primary="Our Tech Toolbox"
+                    secondary="Discover the Tools and Technologies I Master for Your Digital Success!"
+                />
+            </Container>
+            <Box sx={{
+                width: {
+                    xs: "calc(100vw - 5px) !important",
+                    sm: "calc(100vw - 20px) !important"
+                },
+                overflow: "hidden"
+            }}>
+                <Marquee>
+                    {
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,1,8].map(lg => (
+                            <PartnerLogo
+                                key={`partner-${lg}`}
+                                partner={{
+                                    img: `/logos/logo${lg}.jpg`
+                                }}
+                            />
+                        ))
+                    }
+                </Marquee>
+            </Box>
         </div>
     );
 }
- 
+
 export default Partners;

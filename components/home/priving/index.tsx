@@ -7,40 +7,52 @@ import Link from "next/link";
 import { FunctionComponent } from "react";
 
 
-const tiers = [
+export const tiers = [
   {
+    chip: "Developer's Den",
+    summary: "Access our blogs, coding assistance, and community forums for free.",
     title: 'Free',
     price: '0',
     description: [
-      '10 users included',
-      '2 GB of storage',
-      'Help center access',
+      'Access to Premium Blogs',
+      'Troubleshooting assistance',
+      'Hosting Challenges Support',
       'Email support',
     ],
     buttonText: 'Sign up for free',
     buttonVariant: 'outlined',
   },
   {
+    chip: "Skill Builder",
+    summary: "Dive deeper with dedicated time slots for personalized assistance and learning sessions",
     title: 'Pro',
     subheader: 'Most popular',
-    price: '15',
+    price: '250',
     description: [
-      '20 users included',
-      '10 GB of storage',
+      'Access to Premium Blogs',
+      'Troubleshooting assistance',
+      'Hosting Challenges Support',
       'Help center access',
       'Priority email support',
+      'Personalized Facetime Support',
+      'Priority Access to New Content',
+      'Exclusive Webinars and Workshops',
+      'Extended Assistance Hours'
     ],
     buttonText: 'Get started',
     buttonVariant: 'contained',
   },
   {
-    title: 'Enterprise',
-    price: '30',
+    chip: "Tech Partner",
+    summary: "Unlock the full potential of Tech-Scan with premium access to hire us for web and AI development projects.",
+    title: 'Pro+',
+    price: 'Agreement',
     description: [
-      '50 users included',
-      '30 GB of storage',
-      'Help center access',
-      'Phone & email support',
+      'Customized Development Solutions',
+      'Dedicated Project Manager',
+      'Priority Technical Support',
+      'Exclusive Beta Access',
+      'Strategic Consultations'
     ],
     buttonText: 'Contact us',
     buttonVariant: 'outlined',
@@ -64,13 +76,13 @@ const Pricing: FunctionComponent<PricingProps> = () => {
           align="center"
           color="text.primary"
           gutterBottom
+          fontSize={"3em"}
+          fontWeight={500}
         >
           Pricing
         </Typography>
         <Typography variant="h5" align="center" color="text.secondary" component="p">
-          Quickly build an effective pricing table for your potential customers with
-          this layout. It&apos;s built with default MUI components with little
-          customization.
+          Choose Your Path to Tech Excellence: Our Flexible Pricing Plans
         </Typography>
       </Container>
       <Container maxWidth="lg">
@@ -91,7 +103,7 @@ const Pricing: FunctionComponent<PricingProps> = () => {
               }}
             >
               <Chip
-                label={"Package Title"}
+                label={tier.chip}
                 color={tier.title === 'Pro' ? "secondary" : "info"}
                 {
                 ...(tier.title === 'Pro' && {
@@ -137,7 +149,7 @@ const Pricing: FunctionComponent<PricingProps> = () => {
                     backgroundColor: (theme) =>
                       theme.palette.mode === 'light'
                         ? blue[900]
-                        : theme.palette.grey[700],
+                        : blueGrey[900],
                     color: "#ffffff",
                     pt: "20px"
                   }}
@@ -164,7 +176,9 @@ const Pricing: FunctionComponent<PricingProps> = () => {
                       px: 3
                     }}
                   >
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam error excepturi! Expedita, reiciendis quam.
+                    {
+                      tier.summary
+                    }
                   </Typography>
                   <CardActions sx={{
                     justifyContent: "center",
@@ -178,7 +192,7 @@ const Pricing: FunctionComponent<PricingProps> = () => {
                         borderRadius: 5
                       }}
                       component={Link}
-                      href={"/plans/checkout"}
+                      href={tier.title === "Free" ? "/auth/signin" : tier.title === "Pro" ? "/plans/checkout" : "/#contact"}
                     >
                       {tier.buttonText}
                     </Button>

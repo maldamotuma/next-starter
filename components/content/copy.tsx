@@ -2,6 +2,7 @@ import { CheckCircle, Circle, Help } from "@mui/icons-material";
 import { Box, Button, Chip, List, ListItem, ListItemIcon, Stack, Typography } from "@mui/material";
 import { FunctionComponent } from "react";
 import Title from "../home/title";
+import Link from "next/link";
 
 interface ContentCopyProps {
 
@@ -17,7 +18,7 @@ const ContentCopy: FunctionComponent<ContentCopyProps> = () => {
                     color="info"
                 />
                 <Title
-                    primary={"Introduction to the best Port Trader!"}
+                    primary={"AI and Full-stack Development Blogs, Get Free Coding Help!"}
                     primaryProps={{
                         align: "left"
                     }}
@@ -30,7 +31,7 @@ const ContentCopy: FunctionComponent<ContentCopyProps> = () => {
                 />
             </Box>
             <Typography color="text.secondary" sx={{ my: 1 }}>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione optio cumque veniam! Officiis quae possimus dolore! Sit repudiandae quo error est commodi mollitia sequi autem, sed dignissimos. Pariatur, ab suscipit!
+                Exploring AI and Full-stack Development Blogs, Plus Your Ticket to Free Personalized Coding Assistance!. We're not just solving errors – we're building a collaborative community
             </Typography>
             <Box
                 sx={{
@@ -42,7 +43,14 @@ const ContentCopy: FunctionComponent<ContentCopyProps> = () => {
             >
                 <List>
                     {
-                        ['Lorem ipsum, dolor sit amet consectetur', 'consectetur adipisicing elit. Ratione optio', 'mollitia sequi autem, sed dignissimos.', 'Sit repudiandae quo error est commodidfggf', 'sequi autem, sed dignissimos. Pariaturxccz!'].map(lst => (
+                        [
+                            'Free Personalized Assistance',
+                            'Blogs on Artificial Intelligence',
+                            'Consulting Services',
+                            'Website Development Services',
+                            'AI Development Services',
+                            'Blogs on Full-stack Development.'
+                        ].map(lst => (
                             <ListItem
                                 key={lst}
                                 sx={{
@@ -103,6 +111,8 @@ const ContentCopy: FunctionComponent<ContentCopyProps> = () => {
             >
                 <Button
                     variant="contained"
+                    component={Link}
+                    href={"/company/about-us"}
                 >
                     More About Us
                 </Button>

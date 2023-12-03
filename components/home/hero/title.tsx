@@ -6,6 +6,8 @@ import { FunctionComponent } from "react";
 import GroupAvatars from "./avatars";
 import { useEmailSubscribe } from "@/hooks/subscribecta";
 import { LoadingButton } from "@mui/lab";
+import { TypeAnimation } from 'react-type-animation';
+import Link from "next/link";
 
 interface HeroTitleProps {
 
@@ -21,11 +23,9 @@ const HeroTitle: FunctionComponent<HeroTitleProps> = () => {
     return (
         <>
             <Chip
-                label="Trahsport Your Goods Around"
+                label="Navigate The Tech Frontier"
                 color="primary"
                 variant="outlined"
-                deleteIcon={<ArrowForwardOutlined />}
-                onDelete={() => { }}
                 size="small"
                 sx={{
                     position: "relative",
@@ -52,10 +52,34 @@ const HeroTitle: FunctionComponent<HeroTitleProps> = () => {
                     textAlign: {
                         xs: "center",
                         md: "left"
+                    },
+                    "& .anim": {
+                        color: "primary.dark"
                     }
                 }}
             >
-                Trahsport Your Goods Around the World.
+                Empower Your Code Journey:
+                <TypeAnimation
+                    sequence={[
+                        // Same substring at the start will only be typed out once, initially
+                        'Code Support.',
+                        1000, // wait 1s before replacing "Mice" with "Hamsters"
+                        'AI Insights.',
+                        1000,
+                        'Blog on React.',
+                        1000,
+                        'Blog on Laravel.',
+                        1000,
+                        'Blog on Python.',
+                        1000
+                    ]}
+                    wrapper="span"
+                    className="anim"
+                    speed={50}
+                    deletionSpeed={75}
+                    style={{ marginLeft: "10px", display: 'inline' }}
+                    repeat={Infinity}
+                />
             </Typography>
             <Typography color={"GrayText"}
                 sx={{
@@ -65,7 +89,7 @@ const HeroTitle: FunctionComponent<HeroTitleProps> = () => {
                     }
                 }}
             >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea est reiciendis placeat amet ad iste pariatur, qui voluptas possimus alias earum provident.
+                Elevate your projects with personalized code support, expert web development, and insightful blogs on React, Laravel, Python, AI, and more.
             </Typography>
             <Stack direction={"row"} spacing={2} alignItems={"center"} sx={{ mt: 2 }}>
                 <div style={{ width: "100%" }}>
@@ -102,7 +126,9 @@ const HeroTitle: FunctionComponent<HeroTitleProps> = () => {
                                 md: "left"
                             }
                         }}
-                    >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cupiditate, facilis? Facere eveniet.</FormHelperText>
+                    >
+                        Your inbox deserves a dose of brilliance! Subscribe now and early access to groundbreaking content.
+                    </FormHelperText>
                 </div>
                 {/* <Button endIcon={<ArrowForwardOutlined />} variant="contained" disableElevation>Join</Button> */}
             </Stack>
@@ -115,6 +141,8 @@ const HeroTitle: FunctionComponent<HeroTitleProps> = () => {
                     mt: 2,
                     textTransform: "none"
                 }}
+                component={Link}
+                href={"/dashboard"}
             >
                 Get Started
             </Button>
@@ -128,8 +156,10 @@ const HeroTitle: FunctionComponent<HeroTitleProps> = () => {
                     ml: 2,
                     textTransform: "none"
                 }}
+                component={Link}
+                href={"/#contact"}
             >
-                Secondary
+                Contact
             </Button>
             {/* <Stack direction="row" justifyContent={"space-between"} sx={{
                 pt: 4,
