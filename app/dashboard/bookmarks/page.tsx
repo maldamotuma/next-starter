@@ -19,8 +19,8 @@ const Bookmarks: FunctionComponent<BookmarksProps> = () => {
 
     return (
         <Container maxWidth="xl">
-            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script>
+            <Script id="bookmarks-dash-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script id="bookmarks-dash">
         {
           `
           window.dataLayer = window.dataLayer || [];

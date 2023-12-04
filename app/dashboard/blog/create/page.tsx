@@ -7,7 +7,7 @@ import { FunctionComponent } from "react";
 interface CreateBlogProps {
 
 }
-export const metada: Metadata = {
+export const metadata: Metadata = {
     title: "Craft Your Tech Story: Create a Blog at Tech-Scan",
     description: "Share your insights and expertise with the tech community. Create a blog at Tech-Scan and contribute to discussions on AI, full-stack development, React, Next.js, Laravel, Python, Machine Learning, and Deep Learning. Your voice, your story.",
     keywords: [
@@ -28,8 +28,8 @@ export const metada: Metadata = {
 const CreateBlog: FunctionComponent<CreateBlogProps> = () => {
     return (
         <>
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script>
+        <Script id="create-blog-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script id="create-block">
         {
           `
           window.dataLayer = window.dataLayer || [];

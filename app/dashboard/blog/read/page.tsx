@@ -26,8 +26,8 @@ const ReadBlog: FunctionComponent<ReadBlogProps> = () => {
     }
     return (
         <>
-            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-            <Script>
+            <Script id="read-blog-dash-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+            <Script id="read-blog-dash">
                 {
                     `
           window.dataLayer = window.dataLayer || [];

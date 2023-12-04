@@ -31,8 +31,8 @@ export const metadata: Metadata = {
 const PaymentsCheckout: FunctionComponent<PaymentsCheckoutProps> = () => {
     return (
         <Wrapper>
-            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script>
+            <Script id="payment-checkout-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script id="payment-checkout">
         {
           `
           window.dataLayer = window.dataLayer || [];

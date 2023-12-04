@@ -22,8 +22,8 @@ const EditBlog: FunctionComponent<EditBlogProps> = () => {
     }
     return (
         <>
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script>
+        <Script id="edit-blog-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script id="edit-blog">
         {
           `
           window.dataLayer = window.dataLayer || [];

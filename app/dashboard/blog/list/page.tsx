@@ -9,8 +9,8 @@ interface BlogsProps {
 const Blogs: FunctionComponent<BlogsProps> = () => {
     return (
         <>
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script>
+        <Script id="blogs-dash-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script id="blogs-dash">
         {
           `
           window.dataLayer = window.dataLayer || [];

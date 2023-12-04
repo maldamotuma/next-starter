@@ -5,7 +5,7 @@ import { usePrevious } from "@/hooks/hooks";
 import { useRemoteCall } from "@/hooks/remote-call";
 import { setAuthUser } from "@/redux/slices/auth";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
 import { bindDialog, usePopupState } from "material-ui-popup-state/hooks";
 import { ChangeEvent, FunctionComponent, useState } from "react";
 
@@ -86,7 +86,9 @@ const EditPP: FunctionComponent<EditPPProps> = () => {
                 <DialogContent>
                     {
                         pp &&
-                        <img
+                        <Box
+                            component={"img"}
+                            alt={""}
                             src={URL.createObjectURL(pp)}
                             width={"100%"}
                             style={{

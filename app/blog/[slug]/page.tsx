@@ -65,8 +65,8 @@ const Blg: FunctionComponent<BlgProps> = async ({ params: { slug } }) => {
 
     return (
         <Wrapper>
-            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script>
+            <Script id="blog-page-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script id="blog-page">
         {
           `
           window.dataLayer = window.dataLayer || [];

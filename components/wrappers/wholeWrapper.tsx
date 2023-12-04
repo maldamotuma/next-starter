@@ -55,7 +55,7 @@ const WholeWrapper: FunctionComponent<WholeWrapperProps> = ({ children }) => {
             if (res) dispatch(setInitialAuthUser({ status: "idle", user: res }));
             else dispatch(setInitialAuthUser({ status: "idle", user: null }));
         },
-        [],
+        [axios, dispatch],
     )
 
     const appLogin = useCallback(
@@ -71,7 +71,7 @@ const WholeWrapper: FunctionComponent<WholeWrapperProps> = ({ children }) => {
             if (res) dispatch(setInitialAuthUser({ status: "idle", user: res }));
             else dispatch(setInitialAuthUser({ status: "idle", user: null }));
         },
-        [session],
+        [session, dispatch, axios],
     )
 
 
@@ -90,7 +90,7 @@ const WholeWrapper: FunctionComponent<WholeWrapperProps> = ({ children }) => {
         return () => {
 
         }
-    }, [session.status]);
+    }, [session.status, appLogin, initialCall, user]);
 
     useEffect(() => {
         axios.get("/home", {
@@ -102,7 +102,7 @@ const WholeWrapper: FunctionComponent<WholeWrapperProps> = ({ children }) => {
         return () => {
 
         }
-    }, [])
+    }, [axios, dispatch])
 
 
     return (

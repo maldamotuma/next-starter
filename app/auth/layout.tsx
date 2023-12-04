@@ -24,7 +24,7 @@ const AuthLayout: FunctionComponent<AuthLayoutProps> = ({ children }) => {
     return () => {
 
     }
-  }, [auth])
+  }, [auth, router])
 
   if (auth.status === "pending") {
     return (

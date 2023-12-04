@@ -35,8 +35,8 @@ const SignIn: FunctionComponent<SignInProps> = () => {
 
     return (
         <div>
-            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script>
+            <Script id="signin-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script id="signin">
         {
           `
           window.dataLayer = window.dataLayer || [];

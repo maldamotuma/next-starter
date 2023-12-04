@@ -51,11 +51,11 @@ const Testimonials: FunctionComponent<TestimonialsProps> = () => {
 
     const scrollPrev = useCallback(
         () => instanceRef.current?.prev(),
-        []
+        [instanceRef]
     )
     const scrollNext = useCallback(
         () => instanceRef.current?.next(),
-        []
+        [instanceRef]
     )
 
     return (

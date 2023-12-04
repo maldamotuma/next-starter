@@ -22,8 +22,8 @@ interface HomePageProps {
 const HomePage: FunctionComponent<HomePageProps> = () => {
   return (
     <>
-      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script>
+      <Script  id="forgot-password-lnk"async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script id="forgot-password">
         {
           `
           window.dataLayer = window.dataLayer || [];

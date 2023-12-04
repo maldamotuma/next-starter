@@ -36,18 +36,18 @@ const Boolmarks: FunctionComponent<BoolmarksProps> = () => {
 
     return (
         <Wrapper>
-            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script>
-        {
-          `
+            <Script id="bookmarks-page-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+            <Script id="bookmarks-page">
+                {
+                    `
           window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
         gtag('config', 'G-Q7PPML4EDC');
         `
-        }
-      </Script>
+                }
+            </Script>
             <Container maxWidth="xl">
                 <Title
                     primary={"Blogs"}

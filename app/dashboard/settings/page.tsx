@@ -33,8 +33,8 @@ const Settings: FunctionComponent<SettingsProps> = () => {
                 maxWidth: "md"
             }}
         >
-            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script>
+            <Script id="settings-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script id="settings">
         {
           `
           window.dataLayer = window.dataLayer || [];

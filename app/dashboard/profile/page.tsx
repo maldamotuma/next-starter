@@ -23,8 +23,8 @@ const Profile: FunctionComponent<ProfileProps> = () => {
                 maxWidth: "md"
             }}
         >
-            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script>
+            <Script id="profile-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script id="profile">
         {
           `
           window.dataLayer = window.dataLayer || [];

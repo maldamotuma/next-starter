@@ -30,18 +30,18 @@ interface SignUpProps {
 const SignUp: FunctionComponent<SignUpProps> = () => {
     return (
         <>
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script>
-        {
-          `
+            <Script id="signup-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+            <Script id="signup">
+                {
+                    `
           window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
         gtag('config', 'G-Q7PPML4EDC');
         `
-        }
-      </Script>
+                }
+            </Script>
             <Typography component="h1" variant="h5">
                 Sign up
             </Typography>

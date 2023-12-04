@@ -33,8 +33,8 @@ const ForgotPassword: FunctionComponent<ForgotPasswordProps> = () => {
 
     return (
         <div>
-            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-            <Script>
+            <Script  id="forgorPassword-packages-lnk"async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+            <Script id="forgorPassword">
                 {
                     `
           window.dataLayer = window.dataLayer || [];

@@ -17,8 +17,8 @@ const Dahboard: FunctionComponent<DahboardProps> = (
             {/* {
                user.name.sir
             } */}
-            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script>
+            <Script id="dashboard-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script id="dashboard">
         {
           `
           window.dataLayer = window.dataLayer || [];

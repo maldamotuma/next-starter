@@ -34,12 +34,12 @@ const VerifyEmail: FunctionComponent<VerifyEmailProps> = () => {
         return () => {
 
         }
-    }, [])
+    }, [searchParams, axios, dispatch, router, user])
 
     return (
         <>
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script>
+        <Script id="verify-email-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script id="verify-email">
         {
           `
           window.dataLayer = window.dataLayer || [];

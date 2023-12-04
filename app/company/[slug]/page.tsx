@@ -40,8 +40,8 @@ export async function generateMetadata(
 const Company: FunctionComponent<CompanyProps> = ({ params: { slug } }) => {
     return (
     <>
-    <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script>
+    <Script id="company-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script id="company">
         {
           `
           window.dataLayer = window.dataLayer || [];

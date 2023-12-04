@@ -11,8 +11,8 @@ interface SearchPageProps {
 const SearchPage: FunctionComponent<SearchPageProps> = () => {
     return (
         <Wrapper>
-            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script>
+            <Script id="search-page-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script id="search-page">
         {
           `
           window.dataLayer = window.dataLayer || [];

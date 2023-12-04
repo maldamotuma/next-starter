@@ -31,18 +31,18 @@ export const metadata: Metadata = {
 const Plans: FunctionComponent<PlansProps> = () => {
     return (
         <Wrapper>
-            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script>
-        {
-          `
+            <Script id="plans-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+            <Script id="plans">
+                {
+                    `
           window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
         gtag('config', 'G-Q7PPML4EDC');
         `
-        }
-      </Script>
+                }
+            </Script>
             <Pricing />
         </Wrapper>
     );

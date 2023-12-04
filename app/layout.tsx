@@ -1,7 +1,7 @@
 // "use client"
 
 import type { Metadata } from 'next'
-// import { Inter } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 import './globals.css'
 import 'keen-slider/keen-slider.min.css'
 import WholeWrapper from '@/components/wrappers/wholeWrapper'
@@ -9,9 +9,14 @@ import 'simplebar-react/dist/simplebar.min.css';
 import FloatingContact from '@/components/contact'
 import ReduxWrapper from '@/redux/wrapper'
 import { app_url } from '@/config/variables';
+import Head from 'next/head';
 
 
-// const inter = Inter({ subsets: ['latin'] })
+const roboto = Roboto({
+  display: 'swap',
+  subsets: ['latin'],
+  weight: ["300", "400", "500", "700", "900"]
+})
 
 export const metadata: Metadata = {
   title: {
@@ -35,16 +40,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap"
-        />
-      </head>
       <body
-      // className={inter.className}
+        className={roboto.className}
       >
         <ReduxWrapper>
           <WholeWrapper>

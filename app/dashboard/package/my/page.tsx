@@ -9,8 +9,8 @@ interface MyPackagesProps {
 const MyPackages: FunctionComponent<MyPackagesProps> = () => {
     return (
         <>
-            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-            <Script>
+            <Script id="my-packages-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+            <Script id="my-packages">
                 {
                     `
           window.dataLayer = window.dataLayer || [];
