@@ -4,6 +4,7 @@ import BasicProfile from "@/components/profile/basic";
 import { server_url } from "@/config/variables";
 import { useAppSelector } from "@/redux/store";
 import { Avatar, Button, Card, CardContent, CardHeader, CardMedia, Stack } from "@mui/material";
+import Script from "next/script";
 import { FunctionComponent } from "react";
 
 interface ProfileProps {
@@ -22,6 +23,18 @@ const Profile: FunctionComponent<ProfileProps> = () => {
                 maxWidth: "md"
             }}
         >
+            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script>
+        {
+          `
+          window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Q7PPML4EDC');
+        `
+        }
+      </Script>
             <CardMedia
                 component={"img"}
                 src={"/profile-cover.jpg"}

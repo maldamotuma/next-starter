@@ -7,6 +7,7 @@ import { Alert, Container, Grid, Skeleton } from "@mui/material";
 import { FunctionComponent } from "react";
 import { Metadata } from "next";
 import BlogBookmarks from "@/components/blog/bookmarks";
+import Script from "next/script";
 
 export const metadata: Metadata = {
     title: "Your Bookmarked Blogs at Tech-Scan: Personalized Insights Always at Your Fingertips",
@@ -35,6 +36,18 @@ const Boolmarks: FunctionComponent<BoolmarksProps> = () => {
 
     return (
         <Wrapper>
+            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script>
+        {
+          `
+          window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Q7PPML4EDC');
+        `
+        }
+      </Script>
             <Container maxWidth="xl">
                 <Title
                     primary={"Blogs"}

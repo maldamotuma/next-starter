@@ -1,6 +1,7 @@
 import ForgotPasswordForm from "@/components/auth/fotgotPassword/form";
 import { Typography } from "@mui/material";
 import { Metadata } from "next";
+import Script from "next/script";
 import { FunctionComponent } from "react";
 
 export const metadata: Metadata = {
@@ -32,6 +33,18 @@ const ForgotPassword: FunctionComponent<ForgotPasswordProps> = () => {
 
     return (
         <div>
+            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+            <Script>
+                {
+                    `
+          window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Q7PPML4EDC');
+        `
+                }
+            </Script>
             <Typography component="h1" variant="h5" align="center">
                 Forgot Password
             </Typography>

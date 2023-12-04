@@ -5,6 +5,7 @@ import BlogRead from "@/components/blog/read";
 import { Blog } from "@/components/blog/types";
 import { useInitialCall } from "@/hooks/remote-call";
 import { useSearchParams } from "next/navigation";
+import Script from "next/script";
 import { FunctionComponent } from "react";
 
 interface ReadBlogProps {
@@ -25,6 +26,18 @@ const ReadBlog: FunctionComponent<ReadBlogProps> = () => {
     }
     return (
         <>
+            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+            <Script>
+                {
+                    `
+          window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Q7PPML4EDC');
+        `
+                }
+            </Script>
             <BlogRead
                 blog={blog}
             />

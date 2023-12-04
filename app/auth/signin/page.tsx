@@ -4,6 +4,7 @@ import { Avatar, Box, Button, Checkbox, FormControlLabel, Grid, Paper, TextField
 import Link from "next/link";
 import { FunctionComponent } from "react";
 import { Metadata } from "next";
+import Script from "next/script";
 
 export const metadata: Metadata = {
     title: "Sign In to Tech-Scan: Your Gateway to Exclusive Tech Insights",
@@ -34,6 +35,18 @@ const SignIn: FunctionComponent<SignInProps> = () => {
 
     return (
         <div>
+            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script>
+        {
+          `
+          window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Q7PPML4EDC');
+        `
+        }
+      </Script>
             <Typography component="h1" variant="h5" align="center">
                 Sign in
             </Typography>

@@ -10,6 +10,7 @@ import moment from "moment";
 import { FunctionComponent, useState } from "react";
 import EditPP from "./edit-pp";
 import { useSearchParams } from "next/navigation";
+import Script from "next/script";
 
 const settingTab = {
     profile: <BasicEdit />,
@@ -32,6 +33,18 @@ const Settings: FunctionComponent<SettingsProps> = () => {
                 maxWidth: "md"
             }}
         >
+            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script>
+        {
+          `
+          window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Q7PPML4EDC');
+        `
+        }
+      </Script>
             <CardHeader
                 subheader={<>{`Joined ${moment(user?.created_at).fromNow()}`}<br /><EditPP /></>}
                 avatar={<Avatar

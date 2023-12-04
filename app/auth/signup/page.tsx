@@ -2,6 +2,7 @@ import SignUpForm from "@/components/auth/signup/form";
 import { Typography } from "@mui/material";
 import { FunctionComponent } from "react";
 import { Metadata } from "next";
+import Script from "next/script";
 
 export const metadata: Metadata = {
     title: "Sign Up for Tech-Scan Membership: Elevate Your Tech Journey Today",
@@ -29,6 +30,18 @@ interface SignUpProps {
 const SignUp: FunctionComponent<SignUpProps> = () => {
     return (
         <>
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script>
+        {
+          `
+          window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Q7PPML4EDC');
+        `
+        }
+      </Script>
             <Typography component="h1" variant="h5">
                 Sign up
             </Typography>

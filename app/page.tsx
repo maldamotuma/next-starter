@@ -12,6 +12,7 @@ import ScrollPage from "@/components/home/scroll-page";
 import Services from "@/components/home/services";
 import Testimonials from "@/components/testimonials";
 import { Stack } from "@mui/material";
+import Script from "next/script";
 import { FunctionComponent } from "react";
 
 interface HomePageProps {
@@ -21,6 +22,18 @@ interface HomePageProps {
 const HomePage: FunctionComponent<HomePageProps> = () => {
   return (
     <>
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script>
+        {
+          `
+          window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Q7PPML4EDC');
+        `
+        }
+      </Script>
       <ScrollPage />
       <Header />
       <ResponsiveAppBar />

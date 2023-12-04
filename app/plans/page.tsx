@@ -1,6 +1,7 @@
 import Pricing from "@/components/home/priving";
 import Wrapper from "@/components/wrapper";
 import { Metadata } from "next";
+import Script from "next/script";
 import { FunctionComponent } from "react";
 
 interface PlansProps {
@@ -30,6 +31,18 @@ export const metadata: Metadata = {
 const Plans: FunctionComponent<PlansProps> = () => {
     return (
         <Wrapper>
+            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script>
+        {
+          `
+          window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Q7PPML4EDC');
+        `
+        }
+      </Script>
             <Pricing />
         </Wrapper>
     );

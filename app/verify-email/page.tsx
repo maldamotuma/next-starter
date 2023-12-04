@@ -5,6 +5,7 @@ import { setAuthUser } from "@/redux/slices/auth";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import moment from "moment";
 import { useRouter, useSearchParams } from "next/navigation";
+import Script from "next/script";
 import { FunctionComponent, useEffect } from "react";
 
 interface VerifyEmailProps {
@@ -37,6 +38,18 @@ const VerifyEmail: FunctionComponent<VerifyEmailProps> = () => {
 
     return (
         <>
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script>
+        {
+          `
+          window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Q7PPML4EDC');
+        `
+        }
+      </Script>
             verifying your Email...
         </>
     );

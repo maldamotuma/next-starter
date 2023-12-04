@@ -2,6 +2,7 @@ import CompanyCopy from "@/components/company";
 import axios from "@/config/axios";
 import { server_url } from "@/config/variables";
 import { Metadata, ResolvingMetadata } from "next";
+import Script from "next/script";
 import { FunctionComponent } from "react";
 
 interface CompanyProps {
@@ -37,7 +38,23 @@ export async function generateMetadata(
 }
 
 const Company: FunctionComponent<CompanyProps> = ({ params: { slug } }) => {
-    return (<CompanyCopy slug={slug} />);
+    return (
+    <>
+    <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script>
+        {
+          `
+          window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Q7PPML4EDC');
+        `
+        }
+      </Script>
+    <CompanyCopy slug={slug} />
+    </>
+    );
 }
 
 export default Company;

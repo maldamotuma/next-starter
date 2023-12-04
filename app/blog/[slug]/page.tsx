@@ -14,6 +14,7 @@ import Link from "next/link";
 import { FunctionComponent } from "react";
 import type { Metadata, ResolvingMetadata } from 'next'
 import { server_url } from "@/config/variables";
+import Script from "next/script";
 
 type Props = {
     params: { slug: string }
@@ -64,6 +65,18 @@ const Blg: FunctionComponent<BlgProps> = async ({ params: { slug } }) => {
 
     return (
         <Wrapper>
+            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script>
+        {
+          `
+          window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Q7PPML4EDC');
+        `
+        }
+      </Script>
             {
                 res.data.success === 1 ?
                     <BlogRead

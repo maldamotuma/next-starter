@@ -3,6 +3,7 @@ import PaymetProcess from "@/components/plans/payment";
 import Wrapper from "@/components/wrapper";
 import { Container } from "@mui/material";
 import { Metadata } from "next";
+import Script from "next/script";
 import { FunctionComponent } from "react";
 
 interface PaymentsCheckoutProps {
@@ -30,6 +31,18 @@ export const metadata: Metadata = {
 const PaymentsCheckout: FunctionComponent<PaymentsCheckoutProps> = () => {
     return (
         <Wrapper>
+            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+      <Script>
+        {
+          `
+          window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Q7PPML4EDC');
+        `
+        }
+      </Script>
             <Container maxWidth="sm">
                 <Title
                     primary={"Payment"}
