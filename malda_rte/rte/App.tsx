@@ -31,6 +31,7 @@ import PlaygroundEditorTheme from './themes/PlaygroundEditorTheme';
 
 import './setupEnv';
 import './index.css';
+import { Alert } from '@mui/material';
 // Handle runtime errors
 const showErrorOverlay = (err: Event) => {
   const ErrorOverlay = customElements.get('vite-error-overlay');
@@ -209,7 +210,7 @@ export default function PlaygroundApp(props: AppProps): JSX.Element {
   }, [])
 
   if (!isClient) {
-    return <div>Loading...</div>
+    return <Alert severity='info' sx={{my: 1}}>Loading...</Alert>
   }
   return (
     <SettingsContext>

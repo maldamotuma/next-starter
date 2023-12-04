@@ -1,6 +1,6 @@
 "use client"
 
-import { Box, CardContent, Chip, Container, List, ListItem, ListItemIcon, ListItemText, Paper, Stack, Typography, SxProps, Theme, ListItemButton } from "@mui/material";
+import { Box, CardContent, Chip, Container, List, ListItem, ListItemIcon, ListItemText, Paper, Stack, Typography, SxProps, Theme, ListItemButton, useTheme } from "@mui/material";
 import { FunctionComponent } from "react";
 import Title from "../title";
 import { Email, GitHub, LinkedIn, Twitter } from "@mui/icons-material";
@@ -41,6 +41,8 @@ const contacts = [
     }
 ];
 const Contact: FunctionComponent<ContactProps> = () => {
+    const theme = useTheme();
+    
     return (
         <Container maxWidth="xl" id={"contact"}>
             <Stack
@@ -82,7 +84,7 @@ const Contact: FunctionComponent<ContactProps> = () => {
                             }}
                         />
                         <Typography sx={{ my: 2 }}>
-                            Have questions, feedback, or a project in mind? We're here to listen. Contact Tech-Scan for personalized assistance, collaboration opportunities, or just to say hello. Your journey in technology starts with a conversation.
+                            Have questions, feedback, or a project in mind? We&apos;re here to listen. Contact Tech-Scan for personalized assistance, collaboration opportunities, or just to say hello. Your journey in technology starts with a conversation.
                         </Typography>
                         <List>
                             {
@@ -106,7 +108,7 @@ const Contact: FunctionComponent<ContactProps> = () => {
                                             }}
                                         >
                                             {
-                                                ct.icon({ color: (theme: Theme) => theme.palette.mode === "light" ? "#ffffff" : "#000000", width: 50, height: 50 })
+                                                ct.icon({ color: theme.palette.mode === "light" ? "#ffffff" : "#000000", width: 50, height: 50 })
                                             }
                                         </ListItemIcon>
                                         <ListItemText

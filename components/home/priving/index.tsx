@@ -46,7 +46,7 @@ export const tiers = [
     chip: "Tech Partner",
     summary: "Unlock the full potential of Tech-Scan with premium access to hire us for web and AI development projects.",
     title: 'Pro+',
-    price: 'Agreement',
+    price: '##',
     description: [
       'Customized Development Solutions',
       'Dedicated Project Manager',

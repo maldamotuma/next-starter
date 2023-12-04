@@ -132,6 +132,7 @@ const SigninForm: FunctionComponent<SigninFormProps> = ({ modal, noRedirect }) =
           startIcon={<GitHub />}
           variant={"outlined"}
           fullWidth
+          onClick={() => signIn("github")}
         >
           SignIN With Github
         </Button>

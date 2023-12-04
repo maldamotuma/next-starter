@@ -127,7 +127,7 @@ const Footers: FunctionComponent<FootersProps> = () => {
                 }}
               />
               <Typography color={"text.secondary"}>
-                Our curated collection of resources, personalized assistance, and professional services are designed to empower your journey in AI and full-stack development. Whether you're a coding enthusiast or a company seeking expert solutions, find your path to excellence here at Tech-Scan.
+                Our curated collection of resources, personalized assistance, and professional services are designed to empower your journey in AI and full-stack development. Whether you&apos;re a coding enthusiast or a company seeking expert solutions, find your path to excellence here at Tech-Scan.
               </Typography>
             </Grid>
             <Grid

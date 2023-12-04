@@ -18,7 +18,7 @@ export const StyledBadge = styled(Badge)(({ theme }) => ({
             height: '100%',
             borderRadius: '50%',
             animation: 'ripple 1.2s infinite ease-in-out',
-            border: '1px solid currentColor',
+            border: "1px solid currentColor",
             content: '""',
         },
     },
@@ -80,7 +80,7 @@ export default function GroupAvatars() {
                     }
                     {
                         [3, 4, 5, 6, 7].map(dv => (
-                            <Avatar alt="Tech Scan" src={`/dev-pp/dev${dv}.jpg`} />
+                            <Avatar key={"dev-avatars-" + dv} alt="Tech Scan" src={`/dev-pp/dev${dv}.jpg`} />
                         ))
                     }
                 </AvatarGroup>

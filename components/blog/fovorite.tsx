@@ -1,20 +1,22 @@
 "use client"
-import { useRemoteCall } from "@/hooks/remote-call";
+import { useInitialCall, useRemoteCall } from "@/hooks/remote-call";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import { Checkbox, FormControlLabel } from "@mui/material";
-import { ChangeEvent, Dispatch, FunctionComponent, SetStateAction } from "react";
+import { ChangeEvent, FunctionComponent } from "react";
 import { Blog } from "./types";
 import { useAppSelector } from "@/redux/store";
 
 interface FavoriteProps {
     blog: Blog;
-    setIs_favorite: Dispatch<SetStateAction<boolean>>;
-    is_favorite: boolean;
 }
 
-const Favorite: FunctionComponent<FavoriteProps> = ({ blog, setIs_favorite, is_favorite }) => {
+const Favorite: FunctionComponent<FavoriteProps> = ({ blog }) => {
     const { axios, status } = useRemoteCall();
     const user = useAppSelector(state => state.auth.user);
+    const { data: is_favorite, setData: setIs_favorite } = useInitialCall<boolean>(`/is-favorite?blog=${blog.id}`, false, {
+        ky: "status"
+    });
+
 
     const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
         if (user) {

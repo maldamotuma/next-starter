@@ -1,5 +1,3 @@
-"use client"
-
 import BlogCard from "@/components/blog/blog-card";
 import { Blog } from "@/components/blog/types";
 import Title from "@/components/home/title";
@@ -7,15 +5,33 @@ import Wrapper from "@/components/wrapper";
 import { useInitialCall } from "@/hooks/remote-call";
 import { Alert, Container, Grid, Skeleton } from "@mui/material";
 import { FunctionComponent } from "react";
+import { Metadata } from "next";
+import BlogBookmarks from "@/components/blog/bookmarks";
+
+export const metadata: Metadata = {
+    title: "Your Bookmarked Blogs at Tech-Scan: Personalized Insights Always at Your Fingertips",
+    description: "Explore your curated list of bookmarked blogs at Tech-Scan. Access personalized insights on AI, full-stack development, React, Next.js, Laravel, Python, Machine Learning, and Deep Learning. Your tailored tech journey, always within reach.",
+    keywords: [
+        "Tech-Scan",
+        "Bookmarked Blogs",
+        "Saved Articles",
+        "AI",
+        "Full-stack Development",
+        "React",
+        "Next.js",
+        "Laravel",
+        "Python",
+        "Machine Learning",
+        "Deep Learning",
+        "Tech Community"
+    ]
+}
 
 interface BoolmarksProps {
 
 }
 
 const Boolmarks: FunctionComponent<BoolmarksProps> = () => {
-    const { data: blogs, status } = useInitialCall<Blog[]>("/blogs?favorites=true", [], {
-        ky: "blogs"
-    });
 
     return (
         <Wrapper>
@@ -24,71 +40,7 @@ const Boolmarks: FunctionComponent<BoolmarksProps> = () => {
                     primary={"Blogs"}
                     secondary={"Bookmarked Blogs"}
                 />
-                <Grid container spacing={3}>
-                    {
-                        status !== "pending" ? blogs?.map(blog => (
-                            <Grid
-                                item
-                                xs={12}
-                                sm={6}
-                                md={4}
-                                lg={3}
-                                key={"blog-" + blog.id}
-                            >
-                                <BlogCard
-                                    blog={blog}
-                                />
-                            </Grid>
-                        ))
-                            :
-                            [1, 2, 3, 4, 5, 6].map(skltn => (
-                                <Grid
-                                    item
-                                    xs={12}
-                                    sm={6}
-                                    md={4}
-                                    key={"skeleton-" + skltn}
-                                >
-                                    <Skeleton
-                                        variant="rounded"
-                                        height={250}
-                                        sx={{
-                                            aspectRatio: "5/3",
-                                            mb: 2,
-                                            width: "100%",
-                                            display: "block"
-                                        }}
-                                    />
-
-                                    <Skeleton
-                                        variant="rounded"
-                                        sx={{
-                                            mb: 2
-                                        }}
-                                        height={50}
-                                    />
-                                    <Skeleton
-                                        variant="rounded"
-                                        sx={{
-                                            mb: 1
-                                        }}
-                                        height={20}
-                                    />
-                                    <Skeleton
-                                        variant="rounded"
-                                        sx={{
-                                            mb: 1
-                                        }}
-                                        height={20}
-                                    />
-                                </Grid>
-                            ))
-                    }
-                </Grid>
-                {
-                    status !== "pending" && blogs.length === 0 &&
-                    <Alert severity={"info"}>No Blog Bookmarked</Alert>
-                }
+                <BlogBookmarks />
             </Container>
         </Wrapper>
     );

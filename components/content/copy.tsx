@@ -31,7 +31,7 @@ const ContentCopy: FunctionComponent<ContentCopyProps> = () => {
                 />
             </Box>
             <Typography color="text.secondary" sx={{ my: 1 }}>
-                Exploring AI and Full-stack Development Blogs, Plus Your Ticket to Free Personalized Coding Assistance!. We're not just solving errors – we're building a collaborative community
+                Exploring AI and Full-stack Development Blogs, Plus Your Ticket to Free Personalized Coding Assistance!. We&apos;re not just solving errors – we&apos;re building a collaborative community
             </Typography>
             <Box
                 sx={{
@@ -44,12 +44,12 @@ const ContentCopy: FunctionComponent<ContentCopyProps> = () => {
                 <List>
                     {
                         [
-                            'Free Personalized Assistance',
-                            'Blogs on Artificial Intelligence',
-                            'Consulting Services',
-                            'Website Development Services',
-                            'AI Development Services',
-                            'Blogs on Full-stack Development.'
+                            "Free Personalized Assistance",
+                            "Blogs on Artificial Intelligence",
+                            "Consulting Services",
+                            "Website Development Services",
+                            "AI Development Services",
+                            "Blogs on Full-stack Development."
                         ].map(lst => (
                             <ListItem
                                 key={lst}

@@ -132,7 +132,7 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                             }}
                             variant={"outlined"}
                         /><br />
-                        <Favorite blog={blog} setIs_favorite={setIs_favorite} is_favorite={is_favorite} />
+                        <Favorite blog={blog} />
                         {
                             blog.user ?
                                 <CardHeader
@@ -213,13 +213,7 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                                 }}
                             />
                         </Box>
-                        <Divider sx={{ mt: 3, mb: 1 }} />
-                        <Box sx={{ mb: 5 }}>
-                            {
-                                !is_favorite &&
-                                <Favorite blog={blog} setIs_favorite={setIs_favorite} is_favorite={is_favorite} />
-                            }
-                        </Box>
+                        <Divider sx={{ mt: 3, mb: 5 }} />
                         <Box sx={{ mb: { xs: 2, md: 10 } }}>
                             <SubscribeCta />
                         </Box>

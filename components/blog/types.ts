@@ -1,7 +1,12 @@
 import { userType } from "@/redux/slices/auth";
-import { AdminType } from "../admin/types";
-import { CategoryPrpos } from "@/app/dashboard/categories/types";
-import { UserType } from "../user/types";
+
+export type CategoryPrpos = {
+    id: number;
+    title: string;
+    section_id: number;
+    parent_id?: number;
+    is_active: boolean;
+}
 
 type Comments = {
     id: number;
@@ -10,8 +15,8 @@ type Comments = {
     replay_id?: number;
     is_active: 1 | 0;
     created_at: string;
-    user?: UserType;
-    admin?: AdminType;
+    user?: userType;
+    admin?: userType;
 }
 
 type CommentWithReplay = Comments & { replays: Comments[] };
@@ -29,7 +34,7 @@ export type Blog = {
     meta_keywords: string;
     is_active: 0 | 1;
     user?: userType;
-    admin?: AdminType;
+    admin?: userType;
     cat: CategoryPrpos;
     comments: CommentWithReplay[];
     is_favorite: boolean;
