@@ -15,9 +15,6 @@ const settings = [{
   title: 'Profile',
   href: "/dashboard/profile"
 }, {
-  title: 'Account',
-  href: "/"
-}, {
   title: 'Dashboard',
   href: '/dashboard'
 }];

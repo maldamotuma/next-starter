@@ -34,11 +34,12 @@ const VerifyEmail: FunctionComponent<VerifyEmailProps> = () => {
         return () => {
 
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
         <>
-            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-YRJ9KDZNZ0" />
+            <Script id={"sdf"} async src="https://www.googletagmanager.com/gtag/js?id=G-YRJ9KDZNZ0" />
             <Script id={"google-analytics"}>
                 {`
                 window.dataLayer = window.dataLayer || [];

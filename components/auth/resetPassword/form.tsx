@@ -89,16 +89,6 @@ const ResetPasswordForm: FunctionComponent<ResetPasswordFormProps> = ({ modal })
                         "Create New Password"
                 }
             </Button>
-            <Grid container>
-                {
-                    !modal &&
-                    <Grid item>
-                        <Button component={Link} sx={{ textTransform: "none" }} href="/auth/signup">
-                            {"Don't have an account? Sign Up"}
-                        </Button>
-                    </Grid>
-                }
-            </Grid>
         </Box>
     );
 }

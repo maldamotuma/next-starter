@@ -96,14 +96,6 @@ const SigninForm: FunctionComponent<SigninFormProps> = ({ modal, noRedirect }) =
             Forgot password?
           </Button>
         </Grid>
-        {
-          !modal &&
-          <Grid item>
-            <Button component={Link} sx={{ textTransform: "none" }} href="/auth/signup">
-              {"Don't have an account? Sign Up"}
-            </Button>
-          </Grid>
-        }
       </Grid>
       <Divider sx={{ my: 1 }}>
         <Typography color="text.secondary">Or</Typography>
@@ -123,13 +115,6 @@ const SigninForm: FunctionComponent<SigninFormProps> = ({ modal, noRedirect }) =
           fullWidth
         >
           SignIN With Google
-        </Button>
-        <Button
-          startIcon={<GitHub />}
-          variant={"outlined"}
-          fullWidth
-        >
-          SignIN With Github
         </Button>
       </Box>
     </Box>

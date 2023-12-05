@@ -54,6 +54,7 @@ const WholeWrapper: FunctionComponent<WholeWrapperProps> = ({ children }) => {
             if (res) dispatch(setInitialAuthUser({ status: "idle", user: res }));
             else dispatch(setInitialAuthUser({ status: "idle", user: null }));
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [],
     )
 
@@ -72,6 +73,7 @@ const WholeWrapper: FunctionComponent<WholeWrapperProps> = ({ children }) => {
                 signOut();
             }
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [session],
     )
 
@@ -91,6 +93,7 @@ const WholeWrapper: FunctionComponent<WholeWrapperProps> = ({ children }) => {
         return () => {
 
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [session.status]);
 
     return (

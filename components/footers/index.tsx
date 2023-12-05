@@ -12,7 +12,7 @@ function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Typography component={Link} color="inherit" href="https://mui.com/">
+      <Typography component={Link} color="inherit" href="https://tech-scan.com">
         Tech-Scan
       </Typography>{' '}
       {new Date().getFullYear()}
@@ -77,7 +77,7 @@ const Footers: FunctionComponent<FootersProps> = () => {
                 }}
               />
               <Typography color={"text.secondary"}>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis accusantium excepturi eum quaerat id vero molestiae explicabo veniam nostrum, veritatis autem eaque, laborum eveniet. Tempora asperiores reiciendis ullam culpa.
+                Our curated collection of resources, personalized assistance, and professional services are designed to empower your journey in AI and full-stack development. Whether you&apos;re a coding enthusiast or a company seeking expert solutions, find your path to excellence here at Tech-Scan.
               </Typography>
             </Grid>
             <Grid

@@ -71,11 +71,6 @@ const ForgotPasswordForm: FunctionComponent<ForgotPasswordFormProps> = () => {
             SignIn
           </Button>
         </Grid>
-        <Grid item>
-          <Button component={Link} sx={{ textTransform: "none" }} href="/auth/signup">
-            {"Don't have an account? Sign Up"}
-          </Button>
-        </Grid>
       </Grid>
     </Box>
   );

@@ -1,4 +1,4 @@
-import { CategoryPrpos } from "@/app/categories/types";
+import { CategoryPrpos } from "@/app/dashboard/categories/types";
 
 export type sectionPrpos = {
     id: number;

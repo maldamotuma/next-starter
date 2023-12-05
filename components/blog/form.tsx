@@ -2,7 +2,7 @@
 
 import { useInitialCall, useRemoteCall } from "@/hooks/remote-call";
 import PlaygroundApp from "@/malda_rte/rte/App";
-import { Image } from "@mui/icons-material";
+import { Image as ImageIcon} from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Container, FormControl, InputLabel, ListSubheader, MenuItem, Select, Stack, TextField } from "@mui/material";
 import { ChangeEvent, FormEvent, FunctionComponent, ReactNode, useState } from "react";
@@ -173,7 +173,9 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({
                 </Box>
                 <div id="input-image" style={{ paddingTop: "10px" }}>
                     {
-                        blg.image ? <img
+                        blg.image ? <Box
+                            component={"img"}
+                            alt={""}
                             width="100%"
                             src={URL.createObjectURL(blg.image)}
                             style={{
@@ -182,7 +184,9 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({
                         />
                             :
                             blog?.image ?
-                                <img
+                                <Box
+                                    component={"img"}
+                                    alt={""}
                                     width="100%"
                                     src={`${server_url}/blog/${blog.image}`}
                                     style={{
@@ -196,7 +200,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({
                         variant={"outlined"}
                         // fullWidth
                         component={"label"}
-                        startIcon={<Image />}
+                        startIcon={<ImageIcon />}
                     >
                         <input
                             name="image"

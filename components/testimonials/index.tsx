@@ -51,10 +51,12 @@ const Testimonials: FunctionComponent<TestimonialsProps> = () => {
 
     const scrollPrev = useCallback(
         () => instanceRef.current?.prev(),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         []
     )
     const scrollNext = useCallback(
         () => instanceRef.current?.next(),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         []
     )
 

@@ -58,7 +58,7 @@ const Categories: FunctionComponent<CategoriesProps> = () => {
 
     return (
         <>
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-YRJ9KDZNZ0" />
+        <Script id={"ggl-lnk"} async src="https://www.googletagmanager.com/gtag/js?id=G-YRJ9KDZNZ0" />
             <Script id={"google-analytics"}>
                 {`
                 window.dataLayer = window.dataLayer || [];

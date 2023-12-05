@@ -12,6 +12,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@excalidraw/excalidraw": "^0.17.0",
+    "@fontsource/roboto": "^5.0.8",
     "@lexical/file": "^0.12.4",
     "@lexical/react": "^0.12.4",
     "@malda/react-validator": "^1.1.1",

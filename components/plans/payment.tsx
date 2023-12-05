@@ -84,7 +84,7 @@ const PaymetProcess: FunctionComponent<PaymetProcessProps> = () => {
                         <AccordionSummary
                             expandIcon={<ExpandMoreOutlined />}
                         >
-                            What's Included
+                            What&apos;s Included
                         </AccordionSummary>
                         <AccordionDetails>
                             <List>

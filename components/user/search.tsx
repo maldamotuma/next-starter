@@ -26,6 +26,7 @@ export const useSearch = <T extends EmptyArray>(url: string, options: {
             const res = await axios.get(`${url}?by=${byRef.current?.value || ""}&q=${q}`);
             if (res) setResults(res);
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [],
     )
 

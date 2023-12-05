@@ -1,11 +1,10 @@
 "use client"
 
-import SignUpForm from "@/components/auth/signup/form";
 import BasicEdit from "@/components/profile-edit/basic";
 import ChangePassword from "@/components/profile-edit/change-password";
 import { server_url } from "@/config/variables";
 import { useAppSelector } from "@/redux/store";
-import { Avatar, Box, Button, Card, CardContent, CardHeader, Tab, Tabs } from "@mui/material";
+import { Avatar, Box, CardHeader, Tab, Tabs } from "@mui/material";
 import moment from "moment";
 import { FunctionComponent, useState } from "react";
 import EditPP from "./edit-pp";
@@ -33,7 +32,7 @@ const Settings: FunctionComponent<SettingsProps> = () => {
                 maxWidth: "md"
             }}
         >
-            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-YRJ9KDZNZ0" />
+            <Script id={"ggl-lnk"} async src="https://www.googletagmanager.com/gtag/js?id=G-YRJ9KDZNZ0" />
             <Script id={"google-analytics"}>
                 {`
                 window.dataLayer = window.dataLayer || [];
