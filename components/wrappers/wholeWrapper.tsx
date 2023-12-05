@@ -55,7 +55,7 @@ const WholeWrapper: FunctionComponent<WholeWrapperProps> = ({ children }) => {
             if (res) dispatch(setInitialAuthUser({ status: "idle", user: res }));
             else dispatch(setInitialAuthUser({ status: "idle", user: null }));
         },
-        [axios, dispatch],
+        [], // eslint-disable-line react-hooks/exhaustive-deps
     )
 
     const appLogin = useCallback(
@@ -71,7 +71,7 @@ const WholeWrapper: FunctionComponent<WholeWrapperProps> = ({ children }) => {
             if (res) dispatch(setInitialAuthUser({ status: "idle", user: res }));
             else dispatch(setInitialAuthUser({ status: "idle", user: null }));
         },
-        [session, dispatch, axios],
+        [session], // eslint-disable-line react-hooks/exhaustive-deps
     )
 
 
@@ -90,7 +90,7 @@ const WholeWrapper: FunctionComponent<WholeWrapperProps> = ({ children }) => {
         return () => {
 
         }
-    }, [session.status, appLogin, initialCall, user]);
+    }, [session.status]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         axios.get("/home", {
@@ -102,7 +102,7 @@ const WholeWrapper: FunctionComponent<WholeWrapperProps> = ({ children }) => {
         return () => {
 
         }
-    }, [axios, dispatch])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 
     return (

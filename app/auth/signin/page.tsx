@@ -47,7 +47,7 @@ const SignIn: FunctionComponent<SignInProps> = () => {
         `
         }
       </Script>
-            <Typography component="h1" variant="h5" align="center">
+            <Typography component="h1" variant="h5">
                 Sign in
             </Typography>
             <SigninForm />

@@ -1,7 +1,6 @@
 // "use client"
 
 import type { Metadata } from 'next'
-import { Roboto } from 'next/font/google'
 import './globals.css'
 import 'keen-slider/keen-slider.min.css'
 import WholeWrapper from '@/components/wrappers/wholeWrapper'
@@ -9,14 +8,13 @@ import 'simplebar-react/dist/simplebar.min.css';
 import FloatingContact from '@/components/contact'
 import ReduxWrapper from '@/redux/wrapper'
 import { app_url } from '@/config/variables';
-import Head from 'next/head';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import '@fontsource/roboto/900.css';
 
 
-const roboto = Roboto({
-  display: 'swap',
-  subsets: ['latin'],
-  weight: ["300", "400", "500", "700", "900"]
-})
 
 export const metadata: Metadata = {
   title: {
@@ -40,9 +38,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={roboto.className}
-      >
+      <body>
         <ReduxWrapper>
           <WholeWrapper>
             <FloatingContact />

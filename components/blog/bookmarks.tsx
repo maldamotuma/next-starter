@@ -6,6 +6,7 @@ import BlogCard from "./blog-card";
 import { Blog } from "./types";
 import { statusTypes } from "@/config/types";
 import { useInitialCall } from "@/hooks/remote-call";
+import { useAppSelector } from "@/redux/store";
 
 interface BlogBookmarksProps {
 
@@ -15,12 +16,13 @@ const BlogBookmarks: FunctionComponent<BlogBookmarksProps> = () => {
     const { data: blogs, status } = useInitialCall<Blog[]>("/blogs?favorites=true", [], {
         ky: "blogs"
     });
+    const auth = useAppSelector(state => state.auth);
 
     return (
         <>
             <Grid container spacing={3}>
                 {
-                    status !== "pending" ? blogs.map(blog => (
+                    status !== "pending" ? blogs?.map(blog => (
                         <Grid
                             item
                             xs={12}
@@ -82,6 +84,10 @@ const BlogBookmarks: FunctionComponent<BlogBookmarksProps> = () => {
             {
                 status !== "pending" && blogs?.length === 0 &&
                 <Alert severity={"info"}>No Blog Bookmarked</Alert>
+            }
+            {
+                auth.status === "idle" && !auth.user &&
+                <Alert severity={"info"}>Login to Bookmark Blogs</Alert>
             }
         </>
     );

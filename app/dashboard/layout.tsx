@@ -11,6 +11,11 @@ import { bindDialog, usePopupState } from 'material-ui-popup-state/hooks'
 import Tabform from '@/components/auth/tabForm'
 import Title from '@/components/home/title'
 import { lightBlue } from '@mui/material/colors'
+import CenterLoading from '@/components/loading/center'
+import Footers from '@/components/footers'
+import { server_url } from '@/config/variables'
+import Link from 'next/link'
+import FullBackDrop from '@/components/loading/full-back-drop'
 
 interface DashboardLayoutProps {
     children: ReactNode;
@@ -34,20 +39,48 @@ export default function Home({ children }: DashboardLayoutProps) {
         setWidth(0);
     }
 
-    if (auth.status !== "pending" && !auth.user) {
-        return (
-            <Container maxWidth={"sm"}>
-                <Title
-                    primary="Authentication Required"
-                    secondary='you must authenticate before proceeding'
-                />
-                <Tabform noRedirect />
-            </Container>
-        )
-    } else if (auth.status === "pending") {
+    if (!auth.user) {
         return (
             <>
-                Loading...
+                <FullBackDrop open={auth.status === "pending"}/>
+                <Container maxWidth={"sm"}
+                    sx={{
+                        py: 4,
+                    }}>
+                    <Link
+                        href="/"
+                    >
+                        <Box
+                            component={"img"}
+                            src={`${server_url}/logo/logo-dark.png`}
+                            alt={"Tech-Scan Logo"}
+                            sx={{
+                                display: "block",
+                                height: 50,
+                                boxSizing: "border-box",
+                                px: 5,
+                                mb: 2,
+                                mx: "auto"
+                            }}
+                        />
+                    </Link>
+                    <Box
+                        sx={{
+                            border: 1,
+                            borderColor: "divider",
+                            py: 2,
+                            pb: 2,
+                            borderRadius: 2
+                        }}
+                    >
+                        <Title
+                            primary="Authentication Required"
+                            secondary='you must authenticate before proceeding'
+                        />
+                        <Tabform noRedirect />
+                    </Box>
+                </Container>
+                <Footers />
             </>
         )
     } else if (auth.status === "rejected") {
