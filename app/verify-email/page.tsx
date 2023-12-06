@@ -34,7 +34,8 @@ const VerifyEmail: FunctionComponent<VerifyEmailProps> = () => {
         return () => {
 
         }
-    }, [searchParams, axios, dispatch, router, user])
+        // eslint disable-nextline react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <>

@@ -3,6 +3,7 @@
 import Footers from "@/components/footers";
 import ResponsiveAppBar from "@/components/home/nav/appbar";
 import Title from "@/components/home/title";
+import Wrapper from "@/components/wrapper";
 import { Home, UndoOutlined } from "@mui/icons-material";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
@@ -17,8 +18,7 @@ const NotFound: FunctionComponent<NotFoundProps> = () => {
     const router = useRouter();
 
     return (
-        <>
-            <ResponsiveAppBar />
+        <Wrapper>
             <Container>
                 <Stack sx={{ pt: 1, pb: 3 }}>
                     <Title
@@ -52,8 +52,7 @@ const NotFound: FunctionComponent<NotFoundProps> = () => {
                     </Box>
                 </Stack>
             </Container>
-            <Footers />
-        </>
+        </Wrapper>
     );
 }
 

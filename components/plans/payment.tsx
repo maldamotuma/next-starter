@@ -2,7 +2,7 @@
 
 import { useAppSelector } from "@/redux/store";
 import { Close, DoneAllOutlined, ExpandMoreOutlined } from "@mui/icons-material";
-import { Accordion, AccordionDetails, AccordionSummary, Alert, Avatar, Button, Card, CardContent, CardHeader, Divider, Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, Stack, TextField, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Alert, Avatar, Box, Button, Card, CardContent, CardHeader, Divider, Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, Stack, TextField, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useSnackbar } from "notistack";
@@ -132,16 +132,15 @@ const PaymetProcess: FunctionComponent<PaymetProcessProps> = () => {
                     <Typography fontSize={"1.1em"} fontWeight={600}>
                         Pay with credit or debit card
                     </Typography>
-                    <Image
+                    <Box
+                        component={"img"}
                         src={"/cards.png"}
-                        width={673}
-                        height={120}
                         alt={"membership payment"}
-                        style={{
+                        sx={{
                             height: "30px",
                             width: "auto",
-                            marginTop: "5px",
-                            marginBottom: "10px",
+                            mt: "5px",
+                            mb: "10px",
                         }}
                     />
                     <Grid container spacing={3}>
