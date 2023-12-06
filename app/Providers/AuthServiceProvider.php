@@ -29,14 +29,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        ResetPassword::createUrlUsing(function ($user, string $token) {
-            // if ($user instanceof Admin) {
-            //     return env("ADMIN_URL") . '/auth/reset-password?token=' . $token;
-            // }
-            // return env("USER_URL") . '/en/auth/reset-password?token=' . $token;
-            return 'http://localhost:3000/auth/reset-password?token=' . $token;
-        });
-
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
             $urp = parse_url($url);
             $normalized_url = Str::after($urp['path'], "/email/verify/");
