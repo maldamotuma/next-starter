@@ -4,6 +4,7 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
+use App\Models\Bookmark;
 use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -63,16 +64,21 @@ class BlogsController extends Controller
                 'blogs' => $blogs
             ]);
         } else if ($request->has("favorites")) {
-            $usr = User::select('id')->with(['bookmarks' => function($query){
-                $query->select("blogs.id", "blogs.title", "blogs.slug", "blogs.image", "blogs.category_id", "blogs.article");
-                $query->with("cat:id,title");
-            }])->find(Auth::id())->toArray();
-            $blogs = $usr["bookmarks"];
+            if (Auth::check()) {
+                $usr = User::select('id')->with(['bookmarks' => function ($query) {
+                    $query->select("blogs.id", "blogs.title", "blogs.slug", "blogs.image", "blogs.category_id", "blogs.article");
+                    $query->with("cat:id,title");
+                }])->find(Auth::id())->toArray();
+                $blogs = $usr["bookmarks"];
+                return response()->json([
+                    'success' => 1,
+                    'blogs' => $blogs
+                ]);
+            }
             return response()->json([
-                'success' => 1,
-                'blogs' => $blogs
+                'success' => 0
             ]);
-        }else if ($request->has("mine")) {
+        } else if ($request->has("mine")) {
             return response()->json([
                 'success' => 1,
                 'blogs' => Blog::where("user_id", Auth::id())->with("user", "cat")->latest()->get()
@@ -85,16 +91,21 @@ class BlogsController extends Controller
         $blog = Blog::with("admin", "user", "cat", "comments")
             ->where('slug', $request->b)
             ->first();
-        $blog['is_favorite'] = $blog->is_favorite ? 1 : 0;
-        $blog['related_blogs'] = Blog::where("category_id", $blog->category_id)
-            ->inRandomOrder()
-            ->with("cat")
-            ->limit(5)
-            ->get();
+        if ($blog) {
+            $blog['related_blogs'] = Blog::where("category_id", $blog->category_id)
+                ->inRandomOrder()
+                ->with("cat")
+                ->limit(5)
+                ->get();
 
+            return response()->json([
+                'success' => 1,
+                "blog" => $blog
+            ]);
+        }
         return response()->json([
-            'success' => 1,
-            "blog" => $blog
+            'success' => 0,
+            "message" => "Invalid URL"
         ]);
     }
 
@@ -146,6 +157,18 @@ class BlogsController extends Controller
         $usr->bookmarks()->toggle($blog);
         return response()->json([
             'success' => 1
+        ]);
+    }
+
+    function isFavorite(Request $request): JsonResponse
+    {
+        $exists = Bookmark::where([
+            'user_id' => Auth::id(),
+            'blog_id' => $request->blog
+        ])->exists();
+        return response()->json([
+            'success' => 1,
+            'status' => $exists ? 1 : 0
         ]);
     }
 }

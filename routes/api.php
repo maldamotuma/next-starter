@@ -57,6 +57,7 @@ Route::middleware("api")->group(function () {
         Route::post("/create-blog", "createBlog")->middleware('blog.authorized');
         Route::get("/blogs", "blogs");
         Route::get("/blog", "blog");
+        Route::get("/is-favorite", "isFavorite");
         Route::post("/update-blog/{blog}", "updateBlog")->middleware(['blog.authorized', 'blog.owner']);
         Route::post("/delete-blog/{blog}", "deleteBlog")->middleware(['blog.authorized', 'blog.owner']);
         Route::post("/toggle-bookmark/{blog}", "toggleBookmark");
