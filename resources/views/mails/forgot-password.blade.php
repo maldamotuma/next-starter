@@ -144,7 +144,7 @@
 <body>
     <div class="body">
         <div class="container">
-            <img src="{{env('APP_URL')}}/logo-dark.png" class="logo" />
+            <img src="{{env('APP_URL')}}/logo/logo-dark.png" class="logo" />
             <p class="caption">Tech-Scan.com</p>
             <div class="card">
                 <div class="card-content pt">

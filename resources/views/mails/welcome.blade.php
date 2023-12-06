@@ -1,6 +1,6 @@
 <div class="body" style="background-color:#bbdefb; padding:5px" bgcolor="#bbdefb">
         <div class="container" style="display:block; margin:100px auto; max-width:600px">
-            <img src="{{env('APP_URL')}}/logo-dark.png" class="logo" style="display:block; height:50px; margin:auto" height="50">
+            <img src="{{env('APP_URL')}}/logo/logo-dark.png" class="logo" style="display:block; height:50px; margin:auto" height="50">
             <p class="caption" style="font-size:18px; line-height:24px; color:#403c3c; margin:0; padding:10px; text-align:center" align="center">Tech-Scan.com</p>
             <div class="card" style="background-color:#fff; border-radius:10px; color:#222; padding-bottom:30px" bgcolor="#ffffff">
                 <div class="card-media" style="border-radius:10px 10px 0 0">
