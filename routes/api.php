@@ -97,7 +97,7 @@ Route::middleware("api")->prefix("admin")->group(function () {
         Route::post("/update-profile-picture", "update_profile_picture");
         Route::post("/update-profile", "update_profile");
         Route::post("/change-password", "changePassword");
-        Route::get("/email/verify/{id}/{hash}", "verifyEmail")->middleware(['auth:admin', 'signed']);
+        Route::get("/email/verify/{id}/{hash}", "verifyEmail")->middleware(['auth:admin', 'signed'])->name('verification.admin.verify');
         Route::post("/email/verification-notification", "resendEmailVerification");
     });
 

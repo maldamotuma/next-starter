@@ -19,7 +19,6 @@ class AuthController extends Controller
 {
     function auth_user(Request $request): JsonResponse
     {
-        $user = Auth::guard('admin')->user();
         return response()->json([
             'success' => 1,
             'user' => $request->user('admin')

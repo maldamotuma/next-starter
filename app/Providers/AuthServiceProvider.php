@@ -6,10 +6,13 @@ namespace App\Providers;
 
 use App\Models\Admin;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
 
@@ -29,7 +32,20 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        VerifyEmail::toMailUsing(function ($notifiable, $url) {
+        VerifyEmail::toMailUsing(function ($notifiable, $full_url) {
+            $url = "";
+            if ($notifiable instanceof Admin) {
+                $url = URL::temporarySignedRoute(
+                    'verification.admin.verify',
+                    Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+                    [
+                        'id' => $notifiable->getKey(),
+                        'hash' => sha1($notifiable->getEmailForVerification()),
+                    ]
+                );
+            } else {
+                $url = $full_url;
+            }
             $urp = parse_url($url);
             $normalized_url = Str::after($urp['path'], "/email/verify/");
             $id = Str::before($normalized_url, '/');
