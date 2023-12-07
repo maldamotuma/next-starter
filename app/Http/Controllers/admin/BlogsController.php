@@ -28,7 +28,7 @@ class BlogsController extends Controller
 
 
         $data['slug'] = unique_random("blogs", "slug", 4, Str::slug($data['title']));
-        $data['admin_id'] = Auth::guard('id')->id();
+        $data['admin_id'] = Auth::guard('admin')->id();
         if ($request->hasFile('image')) {
             $image = $request->file("image");
             // get image extension
