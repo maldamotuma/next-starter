@@ -143,6 +143,7 @@ Route::middleware("api")->prefix("admin")->group(function () {
         Route::get("/blogs", "blogs");
         Route::get("/blog", "blog");
         Route::post("/update-blog/{blog}", "updateBlog");
+        Route::post("/save-blog-changes/{blog}", "saveBlogChanges");
         Route::post("/delete-blog/{blog}", "deleteBlog");
         Route::post("/toggle-bookmark/{blog}", "toggleBookmark");
     });

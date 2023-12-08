@@ -150,4 +150,19 @@ class BlogsController extends Controller
             'success' => 1
         ]);
     }
+
+    function saveBlogChanges(Request $request, Blog $blog): JsonResponse
+    {
+        $data = $request->validate([
+            'blog' => ['required']
+        ]);
+
+        $blog->update([
+            'body' => $data['blog']
+        ]);
+
+        return response()->json([
+            'success' => 1
+        ]);
+    }
 }
