@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Image;
-
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Imagick\Driver;
 
 class CompanyController extends Controller
 {
@@ -35,12 +35,13 @@ class CompanyController extends Controller
         $data['slug'] = Str::slug($data['title']);
         if ($request->hasFile('image')) {
             $image = $request->file("image");
-            // get image extension
-            $extension = $image->getClientOriginalExtension();
             //generate new image name
-            $image_name =   "blog-usr-" . now() . Auth::guard('admin')->id() . '.' . $extension;
-            $image_path = Storage::disk("blog")->path('') . "/" . $image_name;
-            Image::make($image)->save($image_path);
+            $image_name =   "company-" . $data['slug'] . '.' . "webp";
+
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($image);
+            $img_encoded = $img->toWebp();
+            Storage::disk("blog")->put($image_name, $img_encoded);
 
             $data['image'] = $image_name;
         }
@@ -61,17 +62,12 @@ class CompanyController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            Storage::disk('blog')->delete($copy->image);
-
             $image = $request->file("image");
-            // get image extension
-            $extension = $image->getClientOriginalExtension();
-            //generate new image name
-            $image_name =   "blog-usr-" . now() . Auth::guard('admin')->id() . '.' . $extension;
-            $image_path = Storage::disk("blog")->path('') . "/" . $image_name;
-            Image::make($image)->save($image_path);
 
-            $data['image'] = $image_name;
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($image);
+            $img_encoded = $img->toWebp();
+            Storage::disk("blog")->put($copy->image, $img_encoded);
         }
 
         $copy->update($data);

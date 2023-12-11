@@ -169,8 +169,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        // Custom
-        Intervention\Image\ImageServiceProvider::class
     ])->toArray(),
 
     /*
@@ -186,10 +184,6 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-
-        // Custom
-        'Image' => Intervention\Image\Facades\Image::class
-
 
     ])->toArray(),
 

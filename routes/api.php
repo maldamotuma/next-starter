@@ -56,12 +56,14 @@ Route::middleware("api")->group(function () {
     Route::controller(BlogsController::class)->group(function () {
         Route::post("/create-blog", "createBlog")->middleware('blog.authorized');
         Route::get("/blogs", "blogs");
+        Route::get("/sections", "sections");
         Route::get("/blog", "blog");
         Route::get("/is-favorite", "isFavorite");
         Route::post("/update-blog/{blog}", "updateBlog")->middleware(['blog.authorized', 'blog.owner']);
         Route::post("/delete-blog/{blog}", "deleteBlog")->middleware(['blog.authorized', 'blog.owner']);
         Route::post("/toggle-bookmark/{blog}", "toggleBookmark");
     });
+    Route::post("/save-blog-changes/{blog}", [AdminBlogsController::class, "saveBlogChanges"])->middleware(['blog.authorized', 'blog.owner']);
 
     Route::controller(CommentsController::class)->group(function () {
         Route::post("/write-comment/{blog_id}", "writeComment");

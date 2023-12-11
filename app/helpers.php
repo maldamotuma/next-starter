@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Imagick\Driver;
 
 
 function upload_image($image, $disk, $prefix, $path = "")
@@ -10,32 +12,29 @@ function upload_image($image, $disk, $prefix, $path = "")
     // get image extension
     $extension = $image->getClientOriginalExtension();
     //generate new image name
-    $image_name =   $prefix . time() . '.' . $extension;
-    $img_path = Storage::disk($disk)->path('') . ($path ? $path . "/" : "");
+    $image_name =   $prefix . time() . '.' . "webp";
 
-    // Uploading small size Images
-    $image_path = $img_path . "small/" . $image_name;
-    //upload the image
-    Image::make($image)->resize(250, 250, function ($constraint) {
-        $constraint->aspectRatio();
-        $constraint->upsize();
-    })->save($image_path);
+    $manager = new ImageManager(new Driver());
 
-    // Uploading medium size Images
-    $image_path = $img_path . "medium/" . $image_name;
-    //upload the image
-    Image::make($image)->resize(600, 600, function ($constraint) {
-        $constraint->aspectRatio();
-        $constraint->upsize();
-    })->save($image_path);
+    $small_image = $manager->read($image);
+    $small_image->scale(width: 250);
+    $small_image_encoded = $small_image->toWebp();
 
-    // Uploading large size Images
-    $image_path = $img_path . "large/" . $image_name;
-    //upload the image
-    Image::make($image)->resize(600, 600, function ($constraint) {
-        $constraint->aspectRatio();
-        $constraint->upsize();
-    })->save($image_path);
+    Storage::disk($disk)->put(($path ? $path . "/" : "") . "small/" . $image_name, $small_image_encoded);
+
+
+    $medium_image = $manager->read($image);
+    $medium_image->scale(width: 500);
+    $medium_image_encoded = $medium_image->toWebp();
+
+    Storage::disk($disk)->put(($path ? $path . "/" : "") . "medium/" . $image_name, $medium_image_encoded);
+
+
+    $large_image = $manager->read($image);
+    $large_image->scale(width: 1000);
+    $large_image_encoded = $large_image->toWebp();
+
+    Storage::disk($disk)->put(($path ? $path . "/" : "") . "large/" . $image_name, $large_image_encoded);
 
     return [
         'success' => true,

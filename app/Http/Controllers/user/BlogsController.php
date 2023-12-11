@@ -6,16 +6,25 @@ use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\Bookmark;
 use App\Models\Comment;
+use App\Models\Section;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Image;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Imagick\Driver;
 use Illuminate\Support\Str;
 
 class BlogsController extends Controller
 {
+    function sections(): JsonResponse
+    {
+        return response()->json([
+            'success' => 1,
+            'sections' => Section::with("categories:id,section_id,title")->get()
+        ]);
+    }
     function createBlog(Request $request): JsonResponse
     {
         $data = $request->validate([
@@ -32,12 +41,13 @@ class BlogsController extends Controller
         $data['user_id'] = Auth::id();
         if ($request->hasFile('image')) {
             $image = $request->file("image");
-            // get image extension
-            $extension = $image->getClientOriginalExtension();
             //generate new image name
-            $image_name =   "blog-usr-" . now() . Auth::id() . '.' . $extension;
-            $image_path = Storage::disk("blog")->path('') . "/" . $image_name;
-            Image::make($image)->save($image_path);
+            $image_name =   "blog-" . $data['slug'] . '.' . "webp";
+
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($image);
+            $img_encoded = $img->toWebp();
+            Storage::disk("blog")->put($image_name, $img_encoded);
 
             $data['image'] = $image_name;
         }
@@ -120,18 +130,12 @@ class BlogsController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            if ($blog->image) {
-                Storage::disk('blog')->delete($blog->image);
-            }
             $image = $request->file("image");
-            // get image extension
-            $extension = $image->getClientOriginalExtension();
-            //generate new image name
-            $image_name =   "blog-usr-" . now() . Auth::id() . '.' . $extension;
-            $image_path = Storage::disk("blog")->path('') . "/" . $image_name;
-            Image::make($image)->save($image_path);
 
-            $data['image'] = $image_name;
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($image);
+            $img_encoded = $img->toWebp();
+            Storage::disk("blog")->put($blog->image, $img_encoded);
         }
 
         $blog->update($data);

@@ -10,8 +10,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Image;
 use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Imagick\Driver;
 
 class BlogsController extends Controller
 {
@@ -31,12 +32,13 @@ class BlogsController extends Controller
         $data['admin_id'] = Auth::guard('admin')->id();
         if ($request->hasFile('image')) {
             $image = $request->file("image");
-            // get image extension
-            $extension = $image->getClientOriginalExtension();
             //generate new image name
-            $image_name =   "blog-usr-" . now() . Auth::id() . '.' . $extension;
-            $image_path = Storage::disk("blog")->path('') . "/" . $image_name;
-            Image::make($image)->save($image_path);
+            $image_name =   $data['slug'] . '.' . "webp";
+
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($image);
+            $img_encoded = $img->toWebp();
+            Storage::disk("blog")->put($image_name, $img_encoded);
 
             $data['image'] = $image_name;
         }
@@ -111,18 +113,12 @@ class BlogsController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            if ($blog->image) {
-                Storage::disk('blog')->delete($blog->image);
-            }
             $image = $request->file("image");
-            // get image extension
-            $extension = $image->getClientOriginalExtension();
-            //generate new image name
-            $image_name =   "blog-usr-" . now() . Auth::id() . '.' . $extension;
-            $image_path = Storage::disk("blog")->path('') . "/" . $image_name;
-            Image::make($image)->save($image_path);
 
-            $data['image'] = $image_name;
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($image);
+            $img_encoded = $img->toWebp();
+            Storage::disk("blog")->put($blog->image, $img_encoded);
         }
 
         $blog->update($data);
