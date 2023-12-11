@@ -15,4 +15,8 @@ class Section extends Model
     {
         return $this->hasMany(Category::class);
     }
+
+    protected $casts = [
+        'is_active' => 'integer'
+    ];
 }

@@ -9,4 +9,10 @@ class Category extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    protected $casts = [
+        'section_id' => 'integer',
+        'parent_id' => 'integer',
+        'is_active' => 'integer'
+    ];
 }

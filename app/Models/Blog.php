@@ -13,7 +13,10 @@ class Blog extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'is_active' => 'integer'
+        'is_active' => 'integer',
+        'admin_id' => 'integer',
+        'user_id' => 'integer',
+        'category_id' => 'integer'
     ];
 
     function user()

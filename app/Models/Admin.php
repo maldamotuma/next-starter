@@ -47,6 +47,8 @@ class Admin extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_active' => 'integer',
+        'is_super' => 'integer'
     ];
 
     public function sendPasswordResetNotification($token): void

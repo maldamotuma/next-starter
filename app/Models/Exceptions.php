@@ -10,4 +10,9 @@ class Exceptions extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    protected $casts = [
+        'user_id' => 'integer',
+        'admin_id' => 'integer'
+    ];
 }

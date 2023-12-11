@@ -12,4 +12,8 @@ class Company extends Model
     protected $table = "company";
 
     protected $guarded = [];
+
+    protected $casts = [
+        'is_active' => 'integer'
+    ];
 }
