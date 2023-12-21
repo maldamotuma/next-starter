@@ -36,10 +36,12 @@ const CompanyCopy: FunctionComponent<CompanyCopyProps> = ({ slug }) => {
                                 />
                                 <CardMedia
                                     component={"img"}
-                                    src={`${server_url}/blog/${copy.image}`}
+                                    src={`${server_url}/blog/${copy.image}?width=750`}
                                     sx={{
                                         aspectRatio: "5/3",
-                                        borderRadius: 3
+                                        borderRadius: 4,
+                                        display: "block",
+                                        bgcolor: "divider"
                                     }}
                                 />
                                 <Box

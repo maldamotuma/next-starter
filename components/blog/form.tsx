@@ -2,9 +2,9 @@
 
 import { useInitialCall, useRemoteCall } from "@/hooks/remote-call";
 import PlaygroundApp from "@/malda_rte/rte/App";
-import { Image as ImageIcon } from "@mui/icons-material";
+import { Close, Image as ImageIcon, SaveOutlined } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Container, FormControl, InputLabel, ListSubheader, MenuItem, Select, Stack, TextField } from "@mui/material";
+import { Box, Button, Container, FormControl, IconButton, InputLabel, ListSubheader, MenuItem, Select, Stack, TextField } from "@mui/material";
 import { ChangeEvent, FormEvent, FunctionComponent, ReactNode, useState } from "react";
 import { Section } from "../sections/types";
 import { rulesAndMessagedType, useValidator } from "@malda/react-validator";
@@ -12,6 +12,7 @@ import { Blog } from "./types";
 import { useRouter } from "next/navigation";
 import { server_url } from "@/config/variables";
 import Confirm from "../confirmation";
+import { useSnackbar } from "notistack";
 
 
 interface BlogFormProps {
@@ -49,6 +50,33 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({
         ky: "sections"
     });
     const router = useRouter();
+    const [saved, setSaved] = useState(true);
+    const { closeSnackbar, enqueueSnackbar } = useSnackbar();
+
+
+    const handleSave = async () => {
+        if (!blg.body) {
+            enqueueSnackbar("Blog box must be a minimum of 400 chars.", {
+                variant: "info",
+                anchorOrigin: {
+                    vertical: "top",
+                    horizontal: "center"
+                },
+                action: <IconButton onClick={() => closeSnackbar()}><Close /></IconButton>
+            });
+            return;
+        }
+        if (!saved && blog) {
+            const formdata = new FormData();
+            formdata.append('blog', blg.body || "");
+            await axios.post(`/save-blog-changes/${blog.id}`, {
+                formdata,
+                successCallBack() {
+                    setSaved(true);
+                },
+            })
+        }
+    }
 
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -58,13 +86,25 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({
         }
     }
 
-    const handleBodyChange = (bdy: string) => {
+    const handleBodyChange = (bdy: string | null) => {
         setBlg(prev => ({ ...prev, body: bdy }));
+        setSaved(false);
     }
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         validate(async () => {
+            if (!blg.body) {
+                enqueueSnackbar("Blog box must be a minimum of 400 chars.", {
+                    variant: "info",
+                    anchorOrigin: {
+                        vertical: "top",
+                        horizontal: "center"
+                    },
+                    action: <IconButton onClick={() => closeSnackbar()}><Close /></IconButton>
+                });
+                return;
+            }
             const formdata = new FormData(e.currentTarget);
             formdata.append("body", blg.body || "");
             const res = await axios.post(blog ? `/update-blog/${blog.id}` : "/create-blog", {
@@ -77,7 +117,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({
 
     const parseSection = () => {
         let sctn: ReactNode[] = [];
-        sections.forEach(stn => {
+        sections?.forEach(stn => {
             sctn.push(<ListSubheader>{stn.title}</ListSubheader>)
             stn.categories.map(cat => {
                 sctn.push(<MenuItem value={cat.id} key={`cat-${cat.id}`} component="option">{cat.title}</MenuItem>)
@@ -168,6 +208,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({
                                 value: blog.body
                             })
                             }
+                            minChars={400}
                         />
                     </Box>
                 </Box>
@@ -188,7 +229,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({
                                     component={"img"}
                                     alt={""}
                                     width="100%"
-                                    src={`${server_url}/blog/${blog.image}`}
+                                    src={`${server_url}/blog/${blog.image}?width=1000`}
                                     style={{
                                         borderRadius: "10px"
                                     }}
@@ -226,14 +267,35 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({
                 </div>
                 <Box
                     sx={{
-                        pt: 2
+                        p: 2,
+                        position: "sticky",
+                        bottom: 0,
+                        bgcolor: "background.paper",
+                        zIndex: 9
                     }}
                 >
+                    {
+                        blog &&
+                        <LoadingButton
+                            variant={"contained"}
+                            // fullWidth
+                            type={"button"}
+                            loading={status === "pending"}
+                            startIcon={<SaveOutlined />}
+                            disabled={saved}
+                            onClick={handleSave}
+                        >
+                            Save
+                        </LoadingButton>
+                    }
                     <LoadingButton
                         variant={"contained"}
                         // fullWidth
                         type={"submit"}
                         loading={status === "pending"}
+                        sx={{
+                            mx: 3
+                        }}
                     >
                         {
                             status === "pending" ?

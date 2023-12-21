@@ -17,7 +17,11 @@ const DashboardBanner: FunctionComponent<DashboardBannerProps> = () => {
             severity="info"
             sx={{
                 alignItems: "center",
-                gap: 3
+                gap: 3,
+                flexDirection: {
+                    xs: "column",
+                    sm: "row"
+                }
             }}
             icon={<Avatar
                 sx={{
@@ -33,7 +37,7 @@ const DashboardBanner: FunctionComponent<DashboardBannerProps> = () => {
                 }}
             >Welcome Back <strong>{user?.first_name} {user?.last_name[0]}.</strong></AlertTitle>
             <Typography sx={{ maxWidth: "sm" }}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi vitae adipisci iusto perferendis odio. Quas quasi, dolore numquam consequuntur repudiandae explicabo itaque, quam natus ipsum corrupti iste amet placeat quos.
+                Need assistance or just curious about something? Feel free to reach out. We&apos;re here to make your tech journey awesome!
             </Typography>
         </Alert>
     );

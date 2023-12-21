@@ -205,7 +205,7 @@ const PaymetProcess: FunctionComponent<PaymetProcessProps> = () => {
                         variant={"caption"}
                         color={"text.secondary"}
                     >
-                        By subscribing to Tech-Scan membership, you agree to our Membership <Link href="/company/terms-and-regulations">Terms of Service</Link>. Your payment method will be charged a recurring $250 USD monthly fee, unless you decide to cancel. No refunds for memberships canceled between billing cycles.                    </Typography>
+                        By subscribing to Tech-Scan membership, you agree to our Membership <Link href="/company/terms-and-conditions">Terms of Service</Link>. Your payment method will be charged a recurring $250 USD monthly fee, unless you decide to cancel. No refunds for memberships canceled between billing cycles.                    </Typography>
                 </CardContent>
             </Card>
         </Stack>

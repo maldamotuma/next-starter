@@ -38,8 +38,8 @@ const footers = [
         href: "/#contact"
       },
       {
-        title: "Terms and Regulations",
-        href: "/company/terms-and-regulations"
+        title: "Terms and Conditions",
+        href: "/company/terms-and-conditions"
       }
     ],
   },

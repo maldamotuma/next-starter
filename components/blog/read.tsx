@@ -1,6 +1,6 @@
 "use client"
 
-import { Alert, AlertTitle, Avatar, Box, Button, CardHeader, CardMedia, Chip, Container, Divider, InputLabel, Stack } from "@mui/material";
+import { Alert, AlertTitle, Avatar, Box, Button, CardHeader, CardMedia, Chip, Container, Divider, IconButton, InputLabel, Stack } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { Blog } from "./types";
 import { server_url } from "@/config/variables";
@@ -16,6 +16,11 @@ import RelatedBlogs from "./relatedSlide";
 import SimpleBar from 'simplebar-react';
 import Favorite from "./fovorite";
 import SubscribeCta from "../home/call-to-actions/SubscribeCard";
+import { useSnackbar } from "notistack";
+import { Close } from "@mui/icons-material";
+import { motion, useScroll } from "framer-motion";
+import { blue } from "@mui/material/colors";
+
 
 interface BlogReadProps {
     blog: Blog & {
@@ -28,9 +33,21 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
     const [editorState, seteditorState] = useState<string>("");
     const { axios, status } = useRemoteCall();
     const [comments, setComments] = useState<Blog['comments']>(blog.comments);
-    const [is_favorite, setIs_favorite] = useState<boolean>(blog.is_favorite);
+    const { closeSnackbar, enqueueSnackbar } = useSnackbar();
+    const { scrollYProgress } = useScroll();
 
     const writeComment = async () => {
+        if (!editorState) {
+            enqueueSnackbar("Comment box must be a minimum of 25 chars.", {
+                variant: "info",
+                anchorOrigin: {
+                    vertical: "top",
+                    horizontal: "center"
+                },
+                action: <IconButton onClick={() => closeSnackbar()}><Close /></IconButton>
+            });
+            return;
+        }
         const formdata = new FormData();
         formdata.append("comment", editorState);
         const res = await axios.post(`/write-comment/${blog.id}`, {
@@ -45,6 +62,25 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
 
     return (
         <>
+            <Box
+                sx={{
+                    "& .progress-bar": {
+                        position: "fixed",
+                        top: 68,
+                        left: 0,
+                        right: 0,
+                        height: "6px",
+                        background: theme => blue[theme.palette.mode === "light" ? 900 : 100],
+                        transformOrigin: "0%",
+                        zIndex: theme => theme.zIndex.appBar + 1
+                    }
+                }}
+            >
+                <motion.div
+                    className="progress-bar"
+                    style={{ scaleX: scrollYProgress }}
+                />
+            </Box >
             <Box
                 sx={{
                     display: "flex",
@@ -164,14 +200,15 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                         }
                         <CardMedia
                             component={"img"}
-                            src={`${server_url}/blog/${blog.image}`}
+                            src={`${server_url}/blog/${blog.image}?width=750`}
                             alt={blog.title}
                             sx={{
-                                background: `url(${server_url}/blog/blog.jpg)`,
                                 display: "block",
                                 aspectRatio: "5/3",
                                 backgroundSize: "cover",
-                                borderRadius: 4
+                                borderRadius: 4,
+                                mt: 2,
+                                bgcolor: "divider"
                             }}
                         />
                         <Box
@@ -201,6 +238,9 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                                     // width: "100%",
                                     height: "100%",
                                     right: "100%"
+                                },
+                                "& img": {
+                                    maxWidth: "100%"
                                 }
                             }}
                         >
@@ -239,7 +279,7 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                                                     }}
                                                     onChange={nv => seteditorState(nv)}
                                                     value={editorState}
-                                                    noAutoFocus
+                                                    minChars={25}
                                                 />
                                             </Box>
                                             <LoadingButton

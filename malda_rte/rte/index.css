@@ -16,6 +16,15 @@
   display: block;
 }
 
+.comment .ContentEditable__root {
+  padding: 0 !important;
+  font-size: 12px;
+}
+
+.comment .editor-shell {
+  margin: 0 !important;
+}
+
 .malda-rte header {
   max-width: 580px;
   margin: auto;
@@ -49,7 +58,6 @@
   max-width: 1100px;
   /* color: #000; */
   position: relative;
-  line-height: 1.7;
   font-weight: 400;
 }
 
@@ -184,7 +192,7 @@
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-.test-recorder-button + .test-recorder-button {
+.test-recorder-button+.test-recorder-button {
   margin-left: 4px;
 }
 
@@ -1433,9 +1441,9 @@ i.chevron-down {
   border-top-right-radius: 10px;
   vertical-align: middle;
   overflow: auto;
-  height: 36px;
+  height: 65px;
   position: sticky;
-  top: 0;
+  top: 65px;
   z-index: 2;
 }
 
@@ -1583,24 +1591,20 @@ i.chevron-down {
 
 .sticky-note.yellow {
   border-top: 1px solid #fdfd86;
-  background: linear-gradient(
-    135deg,
-    #ffff88 81%,
-    #ffff88 82%,
-    #ffff88 82%,
-    #ffffc6 100%
-  );
+  background: linear-gradient(135deg,
+      #ffff88 81%,
+      #ffff88 82%,
+      #ffff88 82%,
+      #ffffc6 100%);
 }
 
 .sticky-note.pink {
   border-top: 1px solid #e7d1e4;
-  background: linear-gradient(
-    135deg,
-    #f7cbe8 81%,
-    #f7cbe8 82%,
-    #f7cbe8 82%,
-    #e7bfe1 100%
-  );
+  background: linear-gradient(135deg,
+      #f7cbe8 81%,
+      #f7cbe8 82%,
+      #f7cbe8 82%,
+      #e7bfe1 100%);
 }
 
 .sticky-note-container.dragging {
@@ -1665,6 +1669,7 @@ i.chevron-down {
 }
 
 @keyframes octocat-wave {
+
   0%,
   100% {
     transform: rotate(0);

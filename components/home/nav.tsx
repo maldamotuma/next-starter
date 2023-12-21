@@ -21,7 +21,16 @@ function ResponsiveAppBar({ handleOpen, open }: ResponsiveAppBar) {
   const theme = useTheme();
 
   return (
-    <AppBar position="sticky" sx={{ top: 0, bgcolor: "background.paper", color: "primary.dark", borderBottom: 1, borderColor: "divider" }} elevation={0}>
+    <AppBar
+      position="sticky"
+      sx={{
+        top: 0,
+        bgcolor: "background.paper",
+        color: "primary.dark",
+        borderBottom: 1,
+        borderColor: "divider",
+        zIndex: theme => theme.zIndex.fab - 1
+      }} elevation={0}>
       <Container maxWidth="xl" sx={{
         maxWidth: "9000px !important"
       }}>

@@ -9,6 +9,7 @@ import { bindDialog, bindTrigger, usePopupState } from "material-ui-popup-state/
 import { useAppSelector } from "@/redux/store";
 import { useRemoteCall } from "@/hooks/remote-call";
 import { LoadingButton } from "@mui/lab";
+import { useSnackbar } from "notistack";
 
 interface CommentProps {
     comment: Blog["comments"][number]["replays"][number];
@@ -20,40 +21,42 @@ const Comment: FunctionComponent<CommentProps> = ({ comment, setComments }) => {
         <Box>
             <CardHeader
                 sx={{
-                    pl: 0
+                    pl: 0,
+                    alignItems: "flex-start",
+                    pb: 0
                 }}
-                avatar={<Avatar src={`${server_url}/avatar/${comment.admin?.profile_picture || comment.user?.profile_picture}`} />}
+                avatar={<Avatar
+                    src={`${server_url}/avatar/${comment.admin?.profile_picture || comment.user?.profile_picture}`} />}
                 title={`${comment.admin?.first_name || comment.user?.first_name} ${comment.admin?.last_name || comment.user?.last_name}`}
+                subheader={
+                    <Box className="malda-rte comment"
+                        sx={{
+                            p: 0,
+                            m: 0,
+                            "& .editor div": {
+                                p: 0,
+                            },
+                            "& .ContentEditable__root": {
+                                minHeight: "unset"
+                            }
+                        }}
+                    >
+                        <PlaygroundApp
+                            notEditable
+                            value={comment.comment}
+                            settings={{
+                                showTreeView: false,
+                                isRichText: false
+                            }}
+                        />
+                    </Box>
+                }
             />
 
-            <Box className="malda-react"
-                sx={{
-                    border: 1,
-                    borderColor: "divider",
-                    borderRadius: 2,
-                    p: 0,
-                    bgcolor: "divider",
-                    "& .editor div": {
-                        p: 0,
-                    },
-                    "& .ContentEditable__root": {
-                        minHeight: "unset"
-                    }
-                }}
-            >
-                <PlaygroundApp
-                    notEditable
-                    value={comment.comment}
-                    settings={{
-                        showTreeView: false,
-                        isRichText: false
-                    }}
-                />
-            </Box>
             <Box sx={{
                 mt: .5,
                 display: "flex",
-                justifyContent: "flex-end",
+                justifyContent: "flex-start",
                 gap: 1
             }}>
                 <WriteComment
@@ -63,6 +66,7 @@ const Comment: FunctionComponent<CommentProps> = ({ comment, setComments }) => {
                         label={"Replay"}
                         size={"small"}
                         color="primary"
+                        variant="outlined"
                         icon={<ReplyRounded />}
                         clickable
                     />)}
@@ -93,8 +97,20 @@ export const WriteComment = ({
     const [editorState, setEditorState] = useState<string>("");
     const user = useAppSelector(state => state.auth.user);
     const { axios, status } = useRemoteCall();
+    const { closeSnackbar, enqueueSnackbar } = useSnackbar();
 
     const writeComment = async () => {
+        if (!editorState) {
+            enqueueSnackbar("Comment box must be a minimum of 25 chars.", {
+                variant: "info",
+                anchorOrigin: {
+                    vertical: "top",
+                    horizontal: "center"
+                },
+                action: <IconButton onClick={() => closeSnackbar()}><Close /></IconButton>
+            });
+            return;
+        }
         const formdata = new FormData();
         formdata.append("comment", editorState);
         formdata.append("replay_id", `${comment.replay_id ?? comment.id}`);
@@ -105,7 +121,7 @@ export const WriteComment = ({
         if (res) {
             setEditorState("");
             pps.close();
-            setComments(prev => prev.map(cmnt => cmnt.id === (comment.replay_id ?? comment.id) ? { ...cmnt, replays: [{...res, user}, ...cmnt.replays] } : cmnt));
+            setComments(prev => prev.map(cmnt => cmnt.id === (comment.replay_id ?? comment.id) ? { ...cmnt, replays: [{ ...res, user }, ...cmnt.replays] } : cmnt));
         }
     }
 
@@ -127,32 +143,35 @@ export const WriteComment = ({
                 <DialogContent>
                     <CardHeader
                         sx={{
-                            pl: 0
+                            pl: 0,
+                            justifyContent: "flex-start"
                         }}
                         avatar={<Avatar src={`${server_url}/avatar/${comment.admin?.profile_picture || comment.user?.profile_picture}`} />}
                         title={`${comment.admin?.first_name || comment.user?.first_name} ${comment.admin?.last_name || comment.user?.last_name}`}
+                        subheader={
+                            <Box className="malda-rte comment"
+                                sx={{
+                                    p: 0,
+                                    m: 0,
+                                    "& .editor div": {
+                                        p: 0,
+                                    },
+                                    "& .ContentEditable__root": {
+                                        minHeight: "unset"
+                                    }
+                                }}
+                            >
+                                <PlaygroundApp
+                                    notEditable
+                                    value={comment.comment}
+                                    settings={{
+                                        showTreeView: false,
+                                        isRichText: false
+                                    }}
+                                />
+                            </Box>
+                        }
                     />
-                    <Box className="malda-react"
-                        sx={{
-                            border: 1,
-                            borderColor: "divider",
-                            borderRadius: 2,
-                            p: 0,
-                            bgcolor: "divider",
-                            "& .editor div": {
-                                p: 0,
-                            }
-                        }}
-                    >
-                        <PlaygroundApp
-                            notEditable
-                            value={comment.comment}
-                            settings={{
-                                showTreeView: false,
-                                isRichText: false
-                            }}
-                        />
-                    </Box>
                     {
                         user ?
                             <Box
@@ -180,6 +199,7 @@ export const WriteComment = ({
                                         }}
                                         onChange={nv => setEditorState(nv)}
                                         value={editorState}
+                                        minChars={25}
                                     />
                                 </Box>
                                 <LoadingButton

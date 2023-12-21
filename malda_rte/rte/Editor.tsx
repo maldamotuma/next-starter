@@ -75,7 +75,7 @@ import Placeholder from './ui/Placeholder';
 import { CAN_USE_DOM } from '../packages/shared/canUseDOM';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { EditorState } from 'lexical';
-
+import { $rootTextContent } from '@lexical/text';
 
 
 const skipCollaborationInit =
@@ -87,14 +87,14 @@ export default function Editor({
   onChange,
   value,
   notEditable,
-  noAutoFocus
+  minChars
 }:
   {
     settings: SettingsContextShape["settings"];
     onChange?: (ev: string) => void;
     value?: string;
     notEditable?: boolean;
-    noAutoFocus?: boolean;
+    minChars?: number;
   }
 ): JSX.Element {
   const { historyState } = useSharedHistoryContext();
@@ -157,6 +157,10 @@ export default function Editor({
   }, [isSmallWidthViewport]);
 
   const handleChange = (editorState: EditorState) => {
+    if (minChars && (editorState.read($rootTextContent).trim().length < minChars)) {
+      if (onChange) onChange("");
+      return false;
+    }
     if (onChange) {
       const es = JSON.stringify(editorState);
       onChange(es);
