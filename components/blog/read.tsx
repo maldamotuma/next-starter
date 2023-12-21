@@ -72,7 +72,7 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                         height: "6px",
                         background: theme => blue[theme.palette.mode === "light" ? 900 : 100],
                         transformOrigin: "0%",
-                        zIndex: theme => theme.zIndex.appBar + 1
+                        zIndex: theme => theme.zIndex.fab - 1
                     }
                 }}
             >
