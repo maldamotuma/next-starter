@@ -66,7 +66,10 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                 sx={{
                     "& .progress-bar": {
                         position: "fixed",
-                        top: 68,
+                        top: {
+                            xs: 56,
+                            md: 70
+                        },
                         left: 0,
                         right: 0,
                         height: "6px",
@@ -169,24 +172,32 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                             variant={"outlined"}
                         /><br />
                         <Favorite blog={blog} />
-                        {
-                            blog.user ?
-                                <CardHeader
-                                    sx={{
-                                        pl: 0
-                                    }}
-                                    avatar={<Avatar src={`${server_url}/avatar/${blog.user.profile_picture}`} />}
-                                    title={`${blog.user.first_name} ${blog.user.last_name}`}
-                                />
-                                :
-                                <CardHeader
-                                    sx={{
-                                        pl: 0
-                                    }}
-                                    avatar={<Avatar src={`${server_url}/avatar/${blog.admin?.profile_picture}`} />}
-                                    title={`${blog.admin?.first_name} ${blog.admin?.last_name}`}
-                                />
-                        }
+                        <Link href={"/company/about-us"}
+                            style={{
+                                textDecoration: "none"
+                            }}
+                        >
+                            {
+                                blog.user ?
+                                    <CardHeader
+                                        sx={{
+                                            pl: 0,
+                                            color: "text.primary"
+                                        }}
+                                        avatar={<Avatar src={`${server_url}/avatar/${blog.user.profile_picture}`} />}
+                                        title={`${blog.user.first_name} ${blog.user.last_name}`}
+                                    />
+                                    :
+                                    <CardHeader
+                                        sx={{
+                                            pl: 0,
+                                            color: "text.primary"
+                                        }}
+                                        avatar={<Avatar src={`${server_url}/avatar/${blog.admin?.profile_picture}`} />}
+                                        title={`${blog.admin?.first_name} ${blog.admin?.last_name}`}
+                                    />
+                            }
+                        </Link>
                         {
                             user && (user.id === blog.user_id) &&
                             <Box sx={{ py: 1 }}>
@@ -241,6 +252,9 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                                 },
                                 "& img": {
                                     maxWidth: "100%"
+                                },
+                                "& .editor-scroller": {
+                                    overflowY: "clip"
                                 }
                             }}
                         >

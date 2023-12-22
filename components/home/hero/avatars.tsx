@@ -4,6 +4,7 @@ import AvatarGroup from '@mui/material/AvatarGroup';
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
+import { shuffle } from '@/utils/array';
 
 export const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -36,6 +37,17 @@ export const StyledBadge = styled(Badge)(({ theme }) => ({
 
 
 export default function GroupAvatars() {
+    const [avatars, setavatars] = React.useState<number[]>([...shuffle<number>([1, 2, 3, 4, 5, 6, 7])]);
+
+    React.useEffect(() => {
+        setInterval(() => {
+            setavatars([...shuffle<number>([1, 2, 3, 4, 5, 6, 7])])
+        }, 1800);
+        return () => {
+
+        }
+    }, [])
+
     return (
         <Box
             sx={{
@@ -67,7 +79,7 @@ export default function GroupAvatars() {
                     max={5}
                 >
                     {
-                        [1, 2].map(dv => (
+                        avatars.slice(0, 2).map(dv => (
                             <StyledBadge
                                 key={"dev-avatar-" + dv}
                                 overlap="circular"
@@ -79,7 +91,7 @@ export default function GroupAvatars() {
                         ))
                     }
                     {
-                        [3, 4, 5, 6, 7].map(dv => (
+                        avatars.slice(2).map(dv => (
                             <Avatar key={"dev-avatars-" + dv} alt="Tech Scan" src={`/dev-pp/dev${dv}.jpg`} />
                         ))
                     }

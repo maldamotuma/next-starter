@@ -37,6 +37,7 @@ export default function ComboBox() {
                 width: {
                     xs: "100%",
                     sm: 300,
+                    md: 260,
                     lg: 450
                 },
             }}

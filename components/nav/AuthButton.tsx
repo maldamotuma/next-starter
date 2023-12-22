@@ -57,9 +57,10 @@ const AuthButton: FunctionComponent<AuthButtonProps> = () => {
                                         display: {
                                             xs: "none",
                                             md: "flex"
-                                        }
+                                        },
+                                        textTransform: "unset"
                                     }}
-                                    variant='contained'>SignIn / SignUp</LoadingButton>
+                                    variant='contained'>Profile</LoadingButton>
                                 <BottomNavigationAction
                                     sx={{
                                         display: {
