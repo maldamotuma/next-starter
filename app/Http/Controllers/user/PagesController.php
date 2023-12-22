@@ -11,7 +11,7 @@ class PagesController extends Controller
 {
     function home(): JsonResponse
     {
-        $home['blogs'] = Blog::limit(8)->with("cat")->get();
+        $home['blogs'] = Blog::limit(8)->inRandomOrder()->with("cat")->get();
         return response()->json([
             'success' => 1,
             'page' => [
