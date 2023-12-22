@@ -153,7 +153,8 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                         <Title
                             primary={blog.title}
                             primaryProps={{
-                                align: "left"
+                                align: "left",
+                                component: "h1"
                             }}
                             secondaryProps={{
                                 sx: {
