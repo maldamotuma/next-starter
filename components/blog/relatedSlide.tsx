@@ -1,3 +1,5 @@
+"use client"
+
 import { Box } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import Title from "../home/title";
@@ -15,10 +17,13 @@ const RelatedBlogs: FunctionComponent<RelatedBlogsProps> = ({ blogs }) => {
         {
             breakpoints: {
                 "(min-width: 600px)": {
-                    slides: { perView: 1.8, spacing: 5, origin: "center", },
+                    slides: { perView: 1.8, spacing: 5 },
                 },
                 "(min-width: 900px)": {
-                    slides: { perView: 3.1, spacing: 10, origin: "center", },
+                    slides: { perView: 3.1, spacing: 10 },
+                },
+                "(min-width: 1200px)": {
+                    slides: { perView: 3.8, spacing: 10 },
                 }
             },
             slides: {
@@ -34,15 +39,10 @@ const RelatedBlogs: FunctionComponent<RelatedBlogsProps> = ({ blogs }) => {
         ]
     )
     return (
-        <Box
-            sx={{
-                display: {
-                    lg: "none"
-                }
-            }}
-        >
+        <Box>
             <Title
                 primary={"Related Blogs"}
+                secondary="Some Blogs from same Category"
             />
             <Box
                 ref={sliderRef}

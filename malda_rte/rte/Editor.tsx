@@ -74,8 +74,11 @@ import ContentEditable from './ui/ContentEditable';
 import Placeholder from './ui/Placeholder';
 import { CAN_USE_DOM } from '../packages/shared/canUseDOM';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
-import { EditorState } from 'lexical';
+import { EditorState, createEditor } from 'lexical';
 import { $rootTextContent } from '@lexical/text';
+import { $generateHtmlFromNodes } from '@lexical/html';
+import { Button } from '@mui/material';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
 
 const skipCollaborationInit =
@@ -166,9 +169,20 @@ export default function Editor({
       onChange(es);
     }
   }
+  const [editor] = useLexicalComposerContext();
+
+  const checkHtml = () => {
+    console.log("JSON", value);
+    
+    editor.getEditorState().read(() => {
+      const raw = $generateHtmlFromNodes(editor, null);
+      console.log("HTML", raw);
+    });
+  }
 
   return (
     <>
+      <Button onClick={checkHtml}>CHeck Html</Button>
       <OnChangePlugin onChange={handleChange} />
       {isRichText && !notEditable && <ToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} />}
       <div

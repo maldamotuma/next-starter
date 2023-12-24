@@ -1,0 +1,24 @@
+.container {
+    display: block;
+    margin: auto;
+}
+
+.mw-sm {
+    width: 100%;
+    max-width: 600px;
+}
+
+.mw-lg {
+    width: 100%;
+    max-width: 1000px;
+}
+
+.mw-md {
+    width: 100%;
+    max-width: 700px;
+}
+
+.px-4 {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}

@@ -1,8 +1,8 @@
 "use client"
 import { useInitialCall, useRemoteCall } from "@/hooks/remote-call";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
-import { Checkbox, FormControlLabel } from "@mui/material";
-import { ChangeEvent, FunctionComponent } from "react";
+import { Checkbox, FormControlLabel, IconButton, Tooltip } from "@mui/material";
+import { ChangeEvent, FunctionComponent, SyntheticEvent } from "react";
 import { Blog } from "./types";
 import { useAppSelector } from "@/redux/store";
 
@@ -18,7 +18,7 @@ const Favorite: FunctionComponent<FavoriteProps> = ({ blog }) => {
     });
 
 
-    const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const toggleFavorite = async (e: SyntheticEvent) => {
         if (user) {
             await axios.post(`/toggle-bookmark/${blog.id}`, {
                 successCallBack() {
@@ -29,24 +29,22 @@ const Favorite: FunctionComponent<FavoriteProps> = ({ blog }) => {
     }
 
     return (
-        <>
-
-            <FormControlLabel
+        <Tooltip
+            disableInteractive
+            title={user ? is_favorite ? "Remove from Favorite" : "Add to favorite" : "Login to add to favorite"}
+        >
+            <IconButton
                 disabled={status === "pending"}
-                checked={is_favorite}
-                control={<Checkbox
-                    onChange={handleChange}
-                    sx={{
-                        "& .MuiSvgIcon-root": {
-                            fontSize: "30px !important"
-                        }
-                    }}
-                    icon={<BookmarkBorder />}
-                    checkedIcon={<Bookmark />}
-                    checked={is_favorite} />}
-                label={user ? is_favorite ? "Remove from Favorite" : "Add to favorite" : "Login to add to favorite"}
-            />
-        </>
+                onClick={toggleFavorite}
+            >
+                {
+                    is_favorite ?
+                        <Bookmark />
+                        :
+                        <BookmarkBorder />
+                }
+            </IconButton>
+        </Tooltip>
     );
 }
 

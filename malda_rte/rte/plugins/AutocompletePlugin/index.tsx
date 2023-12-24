@@ -13,9 +13,9 @@ import type {
   RangeSelection,
 } from 'lexical';
 
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {$isAtNodeEnd} from '@lexical/selection';
-import {mergeRegister} from '@lexical/utils';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { $isAtNodeEnd } from '@lexical/selection';
+import { mergeRegister } from '@lexical/utils';
 import {
   $createTextNode,
   $getNodeByKey,
@@ -27,14 +27,14 @@ import {
   KEY_ARROW_RIGHT_COMMAND,
   KEY_TAB_COMMAND,
 } from 'lexical';
-import {useCallback, useEffect} from 'react';
+import { useCallback, useEffect } from 'react';
 
-import {useSharedAutocompleteContext} from '../../context/SharedAutocompleteContext';
+import { useSharedAutocompleteContext } from '../../context/SharedAutocompleteContext';
 import {
   $createAutocompleteNode,
   AutocompleteNode,
 } from '../../nodes/AutocompleteNode';
-import {addSwipeRightListener} from '../../utils/swipe';
+import { addSwipeRightListener } from '../../utils/swipe';
 
 type SearchPromise = {
   dismiss: () => void;
@@ -121,6 +121,7 @@ export default function AutocompletePlugin(): JSX.Element | null {
       editor.update(
         () => {
           const selection = $getSelection();
+          // @ts-ignore
           const [hasMatch, match] = $search(selection);
           if (
             !hasMatch ||
@@ -138,7 +139,7 @@ export default function AutocompletePlugin(): JSX.Element | null {
           lastSuggestion = newSuggestion;
           setSuggestion(newSuggestion);
         },
-        {tag: 'history-merge'},
+        { tag: 'history-merge' },
       );
     }
 
@@ -152,6 +153,7 @@ export default function AutocompletePlugin(): JSX.Element | null {
     function handleUpdate() {
       editor.update(() => {
         const selection = $getSelection();
+        // @ts-ignore
         const [hasMatch, match] = $search(selection);
         if (!hasMatch) {
           $clearSuggestion();

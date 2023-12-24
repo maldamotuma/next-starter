@@ -15,6 +15,7 @@ import { FunctionComponent } from "react";
 import type { Metadata, ResolvingMetadata } from 'next'
 import { server_url } from "@/config/variables";
 import Script from "next/script";
+import ServerRead from "@/components/blog/server-read";
 
 type Props = {
     params: { slug: string }
@@ -79,7 +80,7 @@ const Blg: FunctionComponent<BlgProps> = async ({ params: { slug } }) => {
       </Script>
             {
                 res.data.success === 1 ?
-                    <BlogRead
+                    <ServerRead
                         blog={res.data.blog}
                     />
                     :
