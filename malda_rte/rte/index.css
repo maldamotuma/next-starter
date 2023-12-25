@@ -1433,9 +1433,9 @@ i.chevron-down {
   border-top-right-radius: 10px;
   vertical-align: middle;
   overflow: auto;
-  height: 36px;
+  height: 65px;
   position: sticky;
-  top: 0;
+  top: 65px;
   z-index: 2;
 }
 

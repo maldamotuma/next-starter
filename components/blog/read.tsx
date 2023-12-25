@@ -1,6 +1,6 @@
 "use client"
 
-import { Avatar, Box, Button, CardHeader, CardMedia, Chip, Container, Divider, InputLabel } from "@mui/material";
+import { Avatar, Box, Button, CardHeader, CardMedia, Chip, Container, Divider, IconButton, InputLabel } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { Blog } from "./types";
 import { server_url } from "@/config/variables";
@@ -12,6 +12,8 @@ import { useRemoteCall } from "@/hooks/remote-call";
 import { LoadingButton } from "@mui/lab";
 import Comment from "./comment";
 import Favorite from "./fovorite";
+import { Close } from "@mui/icons-material";
+import { useSnackbar } from "notistack";
 
 interface BlogReadProps {
     blog: Blog & {
@@ -25,8 +27,20 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
     const { axios, status } = useRemoteCall();
     const [comments, setComments] = useState<Blog['comments']>(blog.comments);
     const [is_favorite, setIs_favorite] = useState<boolean>(blog.is_favorite);
+    const { closeSnackbar, enqueueSnackbar } = useSnackbar();
 
     const writeComment = async () => {
+        if (!editorState) {
+            enqueueSnackbar("Comment box must be a minimum of 25 chars.", {
+                variant: "info",
+                anchorOrigin: {
+                    vertical: "top",
+                    horizontal: "center"
+                },
+                action: <IconButton onClick={() => closeSnackbar()}><Close /></IconButton>
+            });
+            return;
+        }
         const formdata = new FormData();
         formdata.append("comment", editorState);
         const res = await axios.post(`/write-comment/${blog.id}`, {
@@ -106,14 +120,14 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                         </Box>
                         <CardMedia
                             component={"img"}
-                            src={`${server_url}/blog/${blog.image}`}
+                            src={`${server_url}/blog/${blog.image}?width=1000`}
                             alt={blog.title}
                             sx={{
-                                background: `url(${server_url}/blog/blog.jpg)`,
                                 display: "block",
                                 aspectRatio: "5/3",
                                 backgroundSize: "cover",
-                                borderRadius: 4
+                                borderRadius: 4,
+                                bgcolor: "divider"
                             }}
                         />
                         <Box
@@ -143,6 +157,9 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                                     // width: "100%",
                                     height: "100%",
                                     right: "100%"
+                                },
+                                "& img": {
+                                    maxWidth: "100%"
                                 }
                             }}
                         >
@@ -178,7 +195,7 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                                         }}
                                         onChange={nv => seteditorState(nv)}
                                         value={editorState}
-                                        noAutoFocus
+                                        minChars={25}
                                     />
                                 </Box>
                                 <LoadingButton

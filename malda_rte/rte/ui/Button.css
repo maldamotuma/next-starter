@@ -17,6 +17,8 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
+  color: #0d47a1 !important;
+  font-weight: 700;
 }
 .Button__root:hover {
   background-color: #ddd;

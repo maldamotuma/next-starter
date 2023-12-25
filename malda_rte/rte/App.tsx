@@ -7,23 +7,23 @@
  *
  */
 
-import {$createLinkNode} from '@lexical/link';
-import {$createListItemNode, $createListNode} from '@lexical/list';
-import {LexicalComposer} from '@lexical/react/LexicalComposer';
-import {$createHeadingNode, $createQuoteNode} from '@lexical/rich-text';
-import {$createParagraphNode, $createTextNode, $getRoot} from 'lexical';
+import { $createLinkNode } from '@lexical/link';
+import { $createListItemNode, $createListNode } from '@lexical/list';
+import { LexicalComposer } from '@lexical/react/LexicalComposer';
+import { $createHeadingNode, $createQuoteNode } from '@lexical/rich-text';
+import { $createParagraphNode, $createTextNode, $getRoot } from 'lexical';
 import * as React from 'react';
 
-import {DEFAULT_SETTINGS, isDevPlayground, SettingName} from './appSettings';
-import {SettingsContext, useSettings} from './context/SettingsContext';
-import {SharedAutocompleteContext} from './context/SharedAutocompleteContext';
-import {SharedHistoryContext} from './context/SharedHistoryContext';
+import { DEFAULT_SETTINGS, isDevPlayground, SettingName } from './appSettings';
+import { SettingsContext, useSettings } from './context/SettingsContext';
+import { SharedAutocompleteContext } from './context/SharedAutocompleteContext';
+import { SharedHistoryContext } from './context/SharedHistoryContext';
 import Editor from './Editor';
 import logo from './images/logo.svg';
 import PlaygroundNodes from './nodes/PlaygroundNodes';
 import DocsPlugin from './plugins/DocsPlugin';
 import PasteLogPlugin from './plugins/PasteLogPlugin';
-import {TableContext} from './plugins/TablePlugin';
+import { TableContext } from './plugins/TablePlugin';
 import TestRecorderPlugin from './plugins/TestRecorderPlugin';
 import TypingPerfPlugin from './plugins/TypingPerfPlugin';
 import Settings from './Settings';
@@ -31,6 +31,8 @@ import PlaygroundEditorTheme from './themes/PlaygroundEditorTheme';
 
 import './setupEnv';
 import './index.css';
+import { alpha, Box } from '@mui/material';
+import { blue } from '@mui/material/colors';
 // Handle runtime errors
 const showErrorOverlay = (err: Event) => {
   const ErrorOverlay = customElements.get('vite-error-overlay');
@@ -44,9 +46,9 @@ const showErrorOverlay = (err: Event) => {
   }
 };
 
-if(typeof window !== "undefined") {
+if (typeof window !== "undefined") {
   window.addEventListener('error', showErrorOverlay);
-  window.addEventListener('unhandledrejection', ({reason}) =>
+  window.addEventListener('unhandledrejection', ({ reason }) =>
     showErrorOverlay(reason),
   );
 }
@@ -75,7 +77,7 @@ function prepopulatedRichText() {
     quote.append(
       $createTextNode(
         `In case you were wondering what the black box at the bottom is – it's the debug view, showing the current state of the editor. ` +
-          `You can disable it by pressing on the settings control in the bottom-left of your screen and toggling the debug view setting.`,
+        `You can disable it by pressing on the settings control in the bottom-left of your screen and toggling the debug view setting.`,
       ),
     );
     root.append(quote);
@@ -146,25 +148,25 @@ function prepopulatedRichText() {
 }
 
 interface AppProps {
-  settings?:{[key in SettingName]?: boolean};
+  settings?: { [key in SettingName]?: boolean };
   onChange?: (ev: string) => void;
   value?: string;
   notEditable?: boolean;
-  noAutoFocus?: boolean;
+  minChars?: number;
 }
 
 function App(props: AppProps): JSX.Element {
-  const { settings: userSS, value, onChange, notEditable, noAutoFocus } = props;
+  const { settings: userSS, value, onChange, notEditable, minChars } = props;
   const {
-    settings: {isCollab, emptyEditor, measureTypingPerf},
+    settings: { isCollab, emptyEditor, measureTypingPerf },
   } = useSettings();
 
   const initialConfig = {
     editorState: value ? value : isCollab
       ? null
       : emptyEditor
-      ? undefined
-      : prepopulatedRichText,
+        ? undefined
+        : prepopulatedRichText,
     namespace: 'Playground',
     nodes: [...PlaygroundNodes],
     onError: (error: Error) => {
@@ -181,11 +183,12 @@ function App(props: AppProps): JSX.Element {
           <SharedAutocompleteContext>
             <div className="editor-shell">
               <Editor
-              settings={{
-                ...(DEFAULT_SETTINGS),
-                ...(userSS)
-              }}
-              {...({value, onChange, notEditable})}
+                settings={{
+                  ...(DEFAULT_SETTINGS),
+                  ...(userSS)
+                }}
+                {...({ value, onChange, notEditable })}
+                minChars={minChars}
               />
             </div>
             <Settings />
@@ -203,7 +206,7 @@ function App(props: AppProps): JSX.Element {
 
 export default function PlaygroundApp(props: AppProps): JSX.Element {
   const [isClient, setIsClient] = React.useState(false)
- 
+
   React.useEffect(() => {
     setIsClient(true)
   }, [])
@@ -212,8 +215,65 @@ export default function PlaygroundApp(props: AppProps): JSX.Element {
     return <div>Loading...</div>
   }
   return (
-    <SettingsContext>
-      <App {...props}/>
-    </SettingsContext>
+    <Box
+      sx={{
+        "& .PlaygroundEditorTheme__code": {
+          bgcolor: theme => alpha(theme.palette.primary.dark, .075),
+          borderRadius: 3
+        },
+        "& .PlaygroundEditorTheme__code::before": {
+          bgcolor: "divider",
+          display: "none"
+        },
+        "& .PlaygroundEditorTheme__textCode": {
+          bgcolor: "divider"
+        },
+        "& .PlaygroundEditorTheme__quote": {
+          color: "text.secondary",
+          borderLeftColor: "divider"
+        },
+        "& .table-of-contents .first-heading": {
+          color: "text.primary"
+        },
+        "& .table-of-contents .normal-heading-wrapper": {
+          color: "text.secondary",
+          mb: 1,
+          pb: 1,
+          ml: 1
+        },
+        "& .table-of-contents .headings::before": {
+          bgcolor: theme => `${alpha(theme.palette.primary.dark, .2)} !important`,
+        },
+        "& .table-of-contents .headings": {
+          width: "100%",
+          pr: 2
+        },
+        "& .selected-heading-wrapper::before": {
+          bgcolor: theme => alpha(theme.palette.primary.dark, 1),
+          borderColor: theme => alpha(theme.palette.primary.dark, 1),
+        },
+        "& .Collapsible__container": {
+          bgcolor: theme => alpha(theme.palette.primary.dark, .075),
+          borderColor: "divider"
+        },
+        "& .Collapsible__title::before": {
+          borderLeftColor: "primary.dark"
+        },
+        "& .Collapsible__container[open] .Collapsible__title:before": {
+          borderTopColor: "primary.dark"
+        },
+        "& .PlaygroundEditorTheme__tableCellHeader": {
+          bgcolor: "divider"
+        },
+        "& button": {
+          color: `${blue[900]} !important`,
+          fontWeight: 700
+        }
+      }}
+    >
+      <SettingsContext>
+        <App {...props} />
+      </SettingsContext>
+    </Box>
   );
 }

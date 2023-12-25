@@ -12,7 +12,8 @@ import {
     RadioGroup,
     FormControlLabel,
     Radio,
-    Collapse
+    Collapse,
+    IconButton
 } from "@mui/material";
 import {
     Company
@@ -23,6 +24,8 @@ import { rulesAndMessagedType, useValidator } from "@malda/react-validator";
 import { useRemoteCall } from "@/hooks/remote-call";
 import { server_url } from "@/config/variables";
 import Confirm from "../confirmation";
+import { Close } from "@mui/icons-material";
+import { useSnackbar } from "notistack";
 
 interface CompanyFormProps {
     close(): void;
@@ -54,10 +57,22 @@ const CompanyForm: FunctionComponent<CompanyFormProps> = ({
     const { axios, status } = useRemoteCall();
     const [image, setImage] = useState<File | null>(null);
     const [content, setContent] = useState<string>(cpy?.content || "");
+    const { closeSnackbar, enqueueSnackbar } = useSnackbar();
 
     const handleSubmt = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         validate(async () => {
+            if (!content) {
+                enqueueSnackbar("Blog box must be a minimum of 300 chars.", {
+                    variant: "info",
+                    anchorOrigin: {
+                        vertical: "top",
+                        horizontal: "center"
+                    },
+                    action: <IconButton onClick={() => closeSnackbar()}><Close /></IconButton>
+                });
+                return;
+            }
             const formdata = new FormData(e.currentTarget);
             formdata.append('content', content);
             const res = await axios.post(cpy ? `/update-copy/${cpy.id}` : "/create-copy", {
@@ -105,13 +120,18 @@ const CompanyForm: FunctionComponent<CompanyFormProps> = ({
             </div>
             <Box>
                 <InputLabel sx={{ mb: 2 }}>Content</InputLabel>
-                <Box className="malda-rte">
+                <Box className="malda-rte" sx={{
+                    "& .toolbar": {
+                        top: "0 !important"
+                    }
+                }}>
                     <PlaygroundApp
                         settings={{
                             showTreeView: false
                         }}
                         onChange={nv => setContent(nv)}
                         value={cpy?.content}
+                        minChars={300}
                     />
                 </Box>
             </Box>
@@ -121,7 +141,7 @@ const CompanyForm: FunctionComponent<CompanyFormProps> = ({
                 >
                     <Box>
                         {
-                            (image || cpy?.image) && <Box component={"img"} src={image ? URL.createObjectURL(image) : `${server_url}/blog/${cpy?.image}`} sx={{ width: "100%", aspectRatio: "5/3", objectFit: "cover" }} />
+                            (image || cpy?.image) && <Box component={"img"} src={image ? URL.createObjectURL(image) : `${server_url}/blog/${cpy?.image}?width=1000`} sx={{ width: "100%", aspectRatio: "5/3", objectFit: "cover" }} />
                         }
                     </Box>
                 </Collapse>

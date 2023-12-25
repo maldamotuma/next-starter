@@ -9,6 +9,7 @@ import { bindDialog, bindTrigger, usePopupState } from "material-ui-popup-state/
 import { useAppSelector } from "@/redux/store";
 import { useRemoteCall } from "@/hooks/remote-call";
 import { LoadingButton } from "@mui/lab";
+import { useSnackbar } from "notistack";
 
 interface CommentProps {
     comment: Blog["comments"][number]["replays"][number];
@@ -93,8 +94,20 @@ export const WriteComment = ({
     const [editorState, setEditorState] = useState<string>("");
     const user = useAppSelector(state => state.auth.user);
     const { axios, status } = useRemoteCall();
+    const { closeSnackbar, enqueueSnackbar } = useSnackbar();
 
     const writeComment = async () => {
+        if (!editorState) {
+            enqueueSnackbar("Comment box must be a minimum of 25 chars.", {
+                variant: "info",
+                anchorOrigin: {
+                    vertical: "top",
+                    horizontal: "center"
+                },
+                action: <IconButton onClick={() => closeSnackbar()}><Close /></IconButton>
+            });
+            return;
+        }
         const formdata = new FormData();
         formdata.append("comment", editorState);
         formdata.append("replay_id", `${comment.replay_id ?? comment.id}`);

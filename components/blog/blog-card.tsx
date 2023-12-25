@@ -21,12 +21,13 @@ const BlogCard: FunctionComponent<BlogCardProps> = ({
                 src={`${server_url}/blog/${blog.image}`}
                 alt={blog.title}
                 sx={{
-                    background: `url(${server_url}/blog/blog.jpg)`,
                     display: "block",
                     aspectRatio: "5/3",
                     backgroundSize: "cover",
-                    borderRadius: 4
+                    borderRadius: 4,
+                    bgcolor: "divider"
                 }}
+                loading="lazy"
             />
             <CardContent sx={{ pb: 0 }}>
                 <Chip
