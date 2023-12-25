@@ -132,7 +132,7 @@ export default function Editor({
     useState<boolean>(false);
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
   const [editor] = useLexicalComposerContext();
-  const rendered = React.useRef<boolean>(false);
+  const rendered = React.useRef<boolean>(true);
 
   const stopPropagation = React.useCallback(
     (e: Event) => {
@@ -165,7 +165,7 @@ export default function Editor({
         })
       }
     } else {
-      rendered.current = true
+      rendered.current = false;
     }
 
     return () => {

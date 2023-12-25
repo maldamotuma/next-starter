@@ -1,4 +1,4 @@
-import { Dispatch, FunctionComponent, ReactNode, SetStateAction, useState } from "react";
+import { Dispatch, FunctionComponent, ReactNode, SetStateAction, useRef, useState } from "react";
 import { Blog } from "./types";
 import { Box, CardHeader, Avatar, Chip, ButtonProps, Dialog, IconButton, DialogContent, Button, Alert, ChipProps } from "@mui/material";
 import { server_url } from "@/config/variables";
@@ -10,6 +10,8 @@ import { useAppSelector } from "@/redux/store";
 import { useRemoteCall } from "@/hooks/remote-call";
 import { LoadingButton } from "@mui/lab";
 import { useSnackbar } from "notistack";
+import { EditorStateRef } from "@/config/types";
+import { useEditor } from "@/malda_rte/rte/Editor";
 
 interface CommentProps {
     comment: Blog["comments"][number]["replays"][number];
@@ -41,14 +43,11 @@ const Comment: FunctionComponent<CommentProps> = ({ comment, setComments }) => {
                             }
                         }}
                     >
-                        <PlaygroundApp
-                            notEditable
-                            value={comment.comment}
-                            settings={{
-                                showTreeView: false,
-                                isRichText: false
-                            }}
-                        />
+                        <div
+                            dangerouslySetInnerHTML={{ __html: comment.comment }}
+                        >
+
+                        </div>
                     </Box>
                 }
             />
@@ -98,6 +97,11 @@ export const WriteComment = ({
     const user = useAppSelector(state => state.auth.user);
     const { axios, status } = useRemoteCall();
     const { closeSnackbar, enqueueSnackbar } = useSnackbar();
+    const editorRef = useRef<EditorStateRef>({
+        editor: null,
+        editorState: null
+    });
+    const { toHTML } = useEditor(editorRef.current);
 
     const writeComment = async () => {
         if (!editorState) {
@@ -112,7 +116,7 @@ export const WriteComment = ({
             return;
         }
         const formdata = new FormData();
-        formdata.append("comment", editorState);
+        formdata.append("comment", toHTML());
         formdata.append("replay_id", `${comment.replay_id ?? comment.id}`);
         const res = await axios.post(`/write-comment/${comment.blog_id}`, {
             formdata,
@@ -123,6 +127,17 @@ export const WriteComment = ({
             pps.close();
             setComments(prev => prev.map(cmnt => cmnt.id === (comment.replay_id ?? comment.id) ? { ...cmnt, replays: [{ ...res, user }, ...cmnt.replays] } : cmnt));
         }
+    }
+
+    const handleSetEditableRef = ({
+        state,
+        editor
+    }: {
+        state?: EditorStateRef['editorState'],
+        editor?: EditorStateRef['editor']
+    }) => {
+        if (state) editorRef.current.editorState = state;
+        if (editor) editorRef.current.editor = editor;
     }
 
     return (
@@ -144,7 +159,7 @@ export const WriteComment = ({
                     <CardHeader
                         sx={{
                             pl: 0,
-                            justifyContent: "flex-start"
+                            alignItems: "flex-start"
                         }}
                         avatar={<Avatar src={`${server_url}/avatar/${comment.admin?.profile_picture || comment.user?.profile_picture}`} />}
                         title={`${comment.admin?.first_name || comment.user?.first_name} ${comment.admin?.last_name || comment.user?.last_name}`}
@@ -161,14 +176,11 @@ export const WriteComment = ({
                                     }
                                 }}
                             >
-                                <PlaygroundApp
-                                    notEditable
-                                    value={comment.comment}
-                                    settings={{
-                                        showTreeView: false,
-                                        isRichText: false
-                                    }}
-                                />
+                                <div
+                                    dangerouslySetInnerHTML={{ __html: comment.comment }}
+                                >
+
+                                </div>
                             </Box>
                         }
                     />
@@ -186,7 +198,7 @@ export const WriteComment = ({
                                     avatar={<Avatar src={`${server_url}/avatar/${user?.profile_picture}`} />}
                                     title={`${user?.first_name} ${user?.last_name}`}
                                 />
-                                <Box className="malda-react" sx={{
+                                <Box className="malda-rte" sx={{
                                     border: 1,
                                     borderColor: "divider",
                                     borderRadius: 2,
@@ -200,6 +212,7 @@ export const WriteComment = ({
                                         onChange={nv => setEditorState(nv)}
                                         value={editorState}
                                         minChars={25}
+                                        setEditorRef={handleSetEditableRef}
                                     />
                                 </Box>
                                 <LoadingButton
