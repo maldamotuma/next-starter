@@ -70,6 +70,7 @@ $breakpoints: (
 
 .blog-header-title {
     font-size: 25px;
+    font-weight: 800 !important;
 }
 
 .blog-content {
@@ -81,6 +82,22 @@ $breakpoints: (
     .outline {
         display: none;
     }
+
+    // .content {
+    //     img {
+    //         max-width: 100% !important;
+    //         display: block !important;
+    //     }
+    // }
+
+    .PlaygroundEditorTheme__paragraph {
+        img {
+            max-width: 100% !important;
+            display: block !important;
+        }
+    }
+
+
 }
 
 @media screen and (min-width: $lg) {
@@ -124,7 +141,7 @@ $breakpoints: (
         .outline {
             display: block;
             position: sticky;
-            top: 70px;
+            top: 80px;
         }
     }
 }

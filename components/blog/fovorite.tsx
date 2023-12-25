@@ -36,6 +36,11 @@ const Favorite: FunctionComponent<FavoriteProps> = ({ blog }) => {
             <IconButton
                 disabled={status === "pending"}
                 onClick={toggleFavorite}
+                {
+                ...(is_favorite && {
+                    color: "primary"
+                })
+                }
             >
                 {
                     is_favorite ?

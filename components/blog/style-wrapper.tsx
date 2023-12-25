@@ -1,16 +1,69 @@
 "use client"
 
-import { Box, Chip } from "@mui/material";
+import { Box, Chip, alpha } from "@mui/material";
 import { FunctionComponent, ReactNode } from "react";
 import { Blog } from "./types";
+import { blue } from "@mui/material/colors";
+import { Fira_Sans } from "next/font/google"
 
 interface BlogStyleWrapperProps {
     children: ReactNode
 }
 
+const fira = Fira_Sans({
+    subsets: ['latin'],
+    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
+});
+
 const BlogStyleWrapper: FunctionComponent<BlogStyleWrapperProps> = ({ children }) => {
     return (
-        <Box>
+        <Box
+            className={fira.className}
+            sx={{
+                "& .editor div": {
+                    p: 0
+                },
+                "& img": {
+                    maxWidth: "100%"
+                },
+                "& .editor-scroller": {
+                    overflowY: "clip"
+                },
+                "& pre": {
+                    bgcolor: theme => alpha(theme.palette.primary.dark, .075),
+                    borderRadius: 3,
+                    p: "20px"
+                },
+                "& pre::before": {
+                    bgcolor: "divider",
+                    display: "none"
+                },
+                "& .PlaygroundEditorTheme__textCode": {
+                    bgcolor: "divider"
+                },
+                "& .PlaygroundEditorTheme__quote": {
+                    color: "text.secondary",
+                    borderLeftColor: "divider"
+                },
+                "& .Collapsible__container": {
+                    bgcolor: theme => alpha(theme.palette.primary.dark, .075),
+                    borderColor: "divider"
+                },
+                "& .Collapsible__title::before": {
+                    borderLeftColor: "primary.dark"
+                },
+                "& .Collapsible__container[open] .Collapsible__title:before": {
+                    borderTopColor: "primary.dark"
+                },
+                "& .PlaygroundEditorTheme__tableCellHeader": {
+                    bgcolor: "divider"
+                },
+                "& button": {
+                    color: `${blue[900]} !important`,
+                    fontWeight: 700
+                }
+            }}
+        >
             {
                 children
             }

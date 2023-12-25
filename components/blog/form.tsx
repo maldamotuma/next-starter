@@ -5,7 +5,7 @@ import PlaygroundApp from "@/malda_rte/rte/App";
 import { Close, Image as ImageIcon, SaveOutlined } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Container, FormControl, IconButton, InputLabel, ListSubheader, MenuItem, Select, Stack, TextField } from "@mui/material";
-import { ChangeEvent, FormEvent, FunctionComponent, ReactNode, useState } from "react";
+import { ChangeEvent, FormEvent, FunctionComponent, ReactNode, useRef, useState } from "react";
 import { Section } from "../sections/types";
 import { rulesAndMessagedType, useValidator } from "@malda/react-validator";
 import { Blog } from "./types";
@@ -13,6 +13,8 @@ import { useRouter } from "next/navigation";
 import { server_url } from "@/config/variables";
 import Confirm from "../confirmation";
 import { useSnackbar } from "notistack";
+import { useEditor } from "@/malda_rte/rte/Editor";
+import { EditorState, LexicalEditor } from "lexical";
 
 
 interface BlogFormProps {
@@ -52,6 +54,15 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({
     const router = useRouter();
     const [saved, setSaved] = useState(true);
     const { closeSnackbar, enqueueSnackbar } = useSnackbar();
+    const editorRef = useRef<{
+        editor: LexicalEditor | null;
+        editorState: EditorState | null;
+    }>({
+        editor: null,
+        editorState: null
+    });
+    const { toHTML } = useEditor(editorRef.current);
+
 
 
     const handleSave = async () => {
@@ -68,7 +79,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({
         }
         if (!saved && blog) {
             const formdata = new FormData();
-            formdata.append('blog', blg.body || "");
+            formdata.append('blog', toHTML());
             await axios.post(`/save-blog-changes/${blog.id}`, {
                 formdata,
                 successCallBack() {
@@ -106,7 +117,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({
                 return;
             }
             const formdata = new FormData(e.currentTarget);
-            formdata.append("body", blg.body || "");
+            formdata.append("body", toHTML() || "");
             const res = await axios.post(blog ? `/update-blog/${blog.id}` : "/create-blog", {
                 formdata,
                 ky: "slug"
@@ -135,6 +146,13 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({
         })
     }
 
+    const setEditorRef = (edtr: {
+        editor?: LexicalEditor;
+        state?: EditorState;
+    }) => {
+        if (edtr.editor) editorRef.current.editor = edtr.editor;
+        if (edtr.state) editorRef.current.editorState = edtr.state;
+    }
 
     return (
         <Container maxWidth={"lg"} sx={{
@@ -209,6 +227,7 @@ const BlogForm: FunctionComponent<BlogFormProps> = ({
                             })
                             }
                             minChars={400}
+                            setEditorRef={setEditorRef}
                         />
                     </Box>
                 </Box>

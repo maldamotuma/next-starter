@@ -331,6 +331,12 @@ function BlockFormatDropDown({
         <span className="text">Heading 3</span>
       </DropDownItem>
       <DropDownItem
+        className={'item ' + dropDownActiveClass(blockType === 'h4')}
+        onClick={() => formatHeading('h4')}>
+        <i className="icon h3" />
+        <span className="text">Heading 4</span>
+      </DropDownItem>
+      <DropDownItem
         className={'item ' + dropDownActiveClass(blockType === 'bullet')}
         onClick={formatBulletList}>
         <i className="icon bullet-list" />
@@ -485,8 +491,8 @@ function ElementFormatDropdown({
         className="item">
         <i
           className={`icon ${isRTL
-              ? ELEMENT_FORMAT_OPTIONS.start.iconRTL
-              : ELEMENT_FORMAT_OPTIONS.start.icon
+            ? ELEMENT_FORMAT_OPTIONS.start.iconRTL
+            : ELEMENT_FORMAT_OPTIONS.start.icon
             }`}
         />
         <span className="text">Start Align</span>
@@ -498,8 +504,8 @@ function ElementFormatDropdown({
         className="item">
         <i
           className={`icon ${isRTL
-              ? ELEMENT_FORMAT_OPTIONS.end.iconRTL
-              : ELEMENT_FORMAT_OPTIONS.end.icon
+            ? ELEMENT_FORMAT_OPTIONS.end.iconRTL
+            : ELEMENT_FORMAT_OPTIONS.end.icon
             }`}
         />
         <span className="text">End Align</span>

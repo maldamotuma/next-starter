@@ -10,9 +10,9 @@
 
 .malda-rte {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  /* font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale; */
   display: block;
 }
 
@@ -102,14 +102,14 @@
 }
 
 .malda-rte pre {
-  line-height: 1.1;
-  background: #222;
-  color: #fff;
+  /* line-height: 1.1; */
+  /* background: #222;
+  color: #fff; */
   margin: 0;
   padding: 10px;
   font-size: 12px;
   overflow: auto;
-  max-height: 400px;
+  /* max-height: 400px; */
 }
 
 .tree-view-output {
@@ -125,14 +125,14 @@
   border-bottom-right-radius: 10px;
 }
 
-.malda-rte pre::-webkit-scrollbar {
+/* .malda-rte pre::-webkit-scrollbar {
   background: transparent;
   width: 10px;
-}
+} */
 
-.malda-rte pre::-webkit-scrollbar-thumb {
+/* .malda-rte pre::-webkit-scrollbar-thumb {
   background: #999;
-}
+} */
 
 .editor-dev-button {
   position: relative;

@@ -7,6 +7,7 @@ import { maxLine } from "../utils/helpers";
 import AuthorAvatar from "./AutherAvatar";
 import { HeaderChip, ImageWrapper } from "./style-wrapper";
 import blogStyles from "./styles/blog.module.scss";
+import Link from "next/link";
 
 
 interface BlogHeaderProps {

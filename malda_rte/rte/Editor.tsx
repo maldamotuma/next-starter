@@ -74,9 +74,9 @@ import ContentEditable from './ui/ContentEditable';
 import Placeholder from './ui/Placeholder';
 import { CAN_USE_DOM } from '../packages/shared/canUseDOM';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
-import { EditorState, createEditor } from 'lexical';
+import { $getRoot, $insertNodes, EditorState, LexicalEditor, createEditor } from 'lexical';
 import { $rootTextContent } from '@lexical/text';
-import { $generateHtmlFromNodes } from '@lexical/html';
+import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html';
 import { Button } from '@mui/material';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
@@ -90,7 +90,8 @@ export default function Editor({
   onChange,
   value,
   notEditable,
-  minChars
+  minChars,
+  setEditorRef
 }:
   {
     settings: SettingsContextShape["settings"];
@@ -98,6 +99,10 @@ export default function Editor({
     value?: string;
     notEditable?: boolean;
     minChars?: number;
+    setEditorRef?: (myVar: {
+      editor?: LexicalEditor;
+      state?: EditorState;
+    }) => void;
   }
 ): JSX.Element {
   const { historyState } = useSharedHistoryContext();
@@ -126,6 +131,49 @@ export default function Editor({
   const [isSmallWidthViewport, setIsSmallWidthViewport] =
     useState<boolean>(false);
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
+  const [editor] = useLexicalComposerContext();
+  const rendered = React.useRef<boolean>(false);
+
+  const stopPropagation = React.useCallback(
+    (e: Event) => {
+      // e.stopPropagation();
+    }
+    ,
+    [],
+  )
+
+
+  useEffect(() => {
+    const btns = document.querySelectorAll(".malda-rte button");
+    btns.forEach(btn => {
+      btn.addEventListener("click", stopPropagation);
+    });
+    if (setEditorRef) setEditorRef({
+      editor
+    })
+    if (rendered.current) {
+      if (value) {
+        editor.update(() => {
+          const parser = new DOMParser();
+          const dom = parser.parseFromString(value, "text/html");
+
+          const nodes = $generateNodesFromDOM(editor, dom);
+
+          $getRoot().select();
+
+          $insertNodes(nodes);
+        })
+      }
+    } else {
+      rendered.current = true
+    }
+
+    return () => {
+      btns.forEach(btn => {
+        btn.removeEventListener("click", stopPropagation);
+      });
+    }
+  }, [])
 
   const onRef = (_floatingAnchorElem: HTMLDivElement) => {
     if (_floatingAnchorElem !== null) {
@@ -168,21 +216,15 @@ export default function Editor({
       const es = JSON.stringify(editorState);
       onChange(es);
     }
-  }
-  const [editor] = useLexicalComposerContext();
-
-  const checkHtml = () => {
-    console.log("JSON", value);
-    
-    editor.getEditorState().read(() => {
-      const raw = $generateHtmlFromNodes(editor, null);
-      console.log("HTML", raw);
-    });
+    if (setEditorRef) {
+      setEditorRef({
+        state: editorState
+      });
+    }
   }
 
   return (
     <>
-      <Button onClick={checkHtml}>CHeck Html</Button>
       <OnChangePlugin onChange={handleChange} />
       {isRichText && !notEditable && <ToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} />}
       <div
@@ -326,4 +368,26 @@ export default function Editor({
       {showTreeView && <TreeViewPlugin />}
     </>
   );
+}
+
+export const useEditor = ({ editor, editorState }: {
+  editor: LexicalEditor | null;
+  editorState: EditorState | null;
+}) => {
+  const toHTML = () => {
+    let htmlString = "";
+    if (editor) {
+      editorState?.read(() => {
+        const raw = $generateHtmlFromNodes(editor, null);
+        htmlString = raw;
+      });
+    }
+
+
+    return htmlString;
+  }
+
+  return {
+    toHTML
+  };
 }
