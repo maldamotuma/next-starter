@@ -11,7 +11,7 @@ import { $createLinkNode } from '@lexical/link';
 import { $createListItemNode, $createListNode } from '@lexical/list';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { $createHeadingNode, $createQuoteNode } from '@lexical/rich-text';
-import { $createParagraphNode, $createTextNode, $getRoot } from 'lexical';
+import { $createParagraphNode, $createTextNode, $getRoot, EditorState, LexicalEditor } from 'lexical';
 import * as React from 'react';
 
 import { DEFAULT_SETTINGS, isDevPlayground, SettingName } from './appSettings';
@@ -28,11 +28,14 @@ import TestRecorderPlugin from './plugins/TestRecorderPlugin';
 import TypingPerfPlugin from './plugins/TypingPerfPlugin';
 import Settings from './Settings';
 import PlaygroundEditorTheme from './themes/PlaygroundEditorTheme';
+import { CodeNode } from "@lexical/code";
+
 
 import './setupEnv';
 import './index.css';
-import { alpha, Box } from '@mui/material';
+import { Alert, alpha, Box } from '@mui/material';
 import { blue } from '@mui/material/colors';
+import { CustomCodeNode } from './nodes/cusoms/CustomCodeNode';
 // Handle runtime errors
 const showErrorOverlay = (err: Event) => {
   const ErrorOverlay = customElements.get('vite-error-overlay');
@@ -153,22 +156,34 @@ interface AppProps {
   value?: string;
   notEditable?: boolean;
   minChars?: number;
+  setEditorRef?: (edtr: {
+    editor?: LexicalEditor;
+    state?: EditorState;
+  }) => void;
 }
 
 function App(props: AppProps): JSX.Element {
-  const { settings: userSS, value, onChange, notEditable, minChars } = props;
+  const { settings: userSS, value, onChange, notEditable, minChars, setEditorRef } = props;
   const {
     settings: { isCollab, emptyEditor, measureTypingPerf },
   } = useSettings();
 
+  // const getInitialState = () => {
+  //   if(!value) {
+  //     return null;
+  //   }
+  // }
+
   const initialConfig = {
-    editorState: value ? value : isCollab
-      ? null
-      : emptyEditor
-        ? undefined
-        : prepopulatedRichText,
+    // editorState: value ? value : isCollab
+    //   ? null
+    //   : emptyEditor
+    //     ? undefined
+    //     : prepopulatedRichText,
     namespace: 'Playground',
-    nodes: [...PlaygroundNodes],
+    nodes: [
+      ...PlaygroundNodes,
+    ],
     onError: (error: Error) => {
       throw error;
     },
@@ -187,7 +202,7 @@ function App(props: AppProps): JSX.Element {
                   ...(DEFAULT_SETTINGS),
                   ...(userSS)
                 }}
-                {...({ value, onChange, notEditable })}
+                {...({ value, onChange, notEditable, setEditorRef })}
                 minChars={minChars}
               />
             </div>
@@ -212,7 +227,7 @@ export default function PlaygroundApp(props: AppProps): JSX.Element {
   }, [])
 
   if (!isClient) {
-    return <div>Loading...</div>
+    return <Alert severity='info' sx={{ my: 1 }}>Loading...</Alert>
   }
   return (
     <Box

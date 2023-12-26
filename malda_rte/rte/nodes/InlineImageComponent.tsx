@@ -282,6 +282,7 @@ export default function InlineImageComponent({
     const unregister = mergeRegister(
       editor.registerUpdateListener(({editorState}) => {
         if (isMounted) {
+          // @ts-ignore
           setSelection(editorState.read(() => $getSelection()));
         }
       }),

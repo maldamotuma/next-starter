@@ -10,10 +10,19 @@
 
 .malda-rte {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  /* font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale; */
   display: block;
+}
+
+.comment .ContentEditable__root {
+  padding: 0 !important;
+  font-size: 12px;
+}
+
+.comment .editor-shell {
+  margin: 0 !important;
 }
 
 .malda-rte header {
@@ -49,7 +58,6 @@
   max-width: 1100px;
   /* color: #000; */
   position: relative;
-  line-height: 1.7;
   font-weight: 400;
 }
 
@@ -94,14 +102,14 @@
 }
 
 .malda-rte pre {
-  line-height: 1.1;
-  background: #222;
-  color: #fff;
+  /* line-height: 1.1; */
+  /* background: #222;
+  color: #fff; */
   margin: 0;
   padding: 10px;
   font-size: 12px;
   overflow: auto;
-  max-height: 400px;
+  /* max-height: 400px; */
 }
 
 .tree-view-output {
@@ -117,14 +125,14 @@
   border-bottom-right-radius: 10px;
 }
 
-.malda-rte pre::-webkit-scrollbar {
+/* .malda-rte pre::-webkit-scrollbar {
   background: transparent;
   width: 10px;
-}
+} */
 
-.malda-rte pre::-webkit-scrollbar-thumb {
+/* .malda-rte pre::-webkit-scrollbar-thumb {
   background: #999;
-}
+} */
 
 .editor-dev-button {
   position: relative;
@@ -184,7 +192,7 @@
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
-.test-recorder-button + .test-recorder-button {
+.test-recorder-button+.test-recorder-button {
   margin-left: 4px;
 }
 
@@ -716,7 +724,7 @@ i.page-break,
 }
 
 .dropdown {
-  z-index: 1300;
+  z-index: 100;
   display: block;
   position: fixed;
   box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1),
@@ -1583,24 +1591,20 @@ i.chevron-down {
 
 .sticky-note.yellow {
   border-top: 1px solid #fdfd86;
-  background: linear-gradient(
-    135deg,
-    #ffff88 81%,
-    #ffff88 82%,
-    #ffff88 82%,
-    #ffffc6 100%
-  );
+  background: linear-gradient(135deg,
+      #ffff88 81%,
+      #ffff88 82%,
+      #ffff88 82%,
+      #ffffc6 100%);
 }
 
 .sticky-note.pink {
   border-top: 1px solid #e7d1e4;
-  background: linear-gradient(
-    135deg,
-    #f7cbe8 81%,
-    #f7cbe8 82%,
-    #f7cbe8 82%,
-    #e7bfe1 100%
-  );
+  background: linear-gradient(135deg,
+      #f7cbe8 81%,
+      #f7cbe8 82%,
+      #f7cbe8 82%,
+      #e7bfe1 100%);
 }
 
 .sticky-note-container.dragging {
@@ -1665,6 +1669,7 @@ i.chevron-down {
 }
 
 @keyframes octocat-wave {
+
   0%,
   100% {
     transform: rotate(0);

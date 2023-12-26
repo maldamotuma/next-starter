@@ -1,4 +1,4 @@
-import { Dispatch, FunctionComponent, ReactNode, SetStateAction, useState } from "react";
+import { Dispatch, FunctionComponent, ReactNode, SetStateAction, useRef, useState } from "react";
 import { Blog } from "./types";
 import { Box, CardHeader, Avatar, Chip, ButtonProps, Dialog, IconButton, DialogContent, Button, Alert, ChipProps } from "@mui/material";
 import { server_url } from "@/config/variables";
@@ -10,6 +10,9 @@ import { useAppSelector } from "@/redux/store";
 import { useRemoteCall } from "@/hooks/remote-call";
 import { LoadingButton } from "@mui/lab";
 import { useSnackbar } from "notistack";
+import { EditorState, LexicalEditor } from "lexical";
+import { useEditor } from "@/malda_rte/rte/Editor";
+import { EditorStateRef } from "@/config/types";
 
 interface CommentProps {
     comment: Blog["comments"][number]["replays"][number];
@@ -17,6 +20,8 @@ interface CommentProps {
 }
 
 const Comment: FunctionComponent<CommentProps> = ({ comment, setComments }) => {
+    
+    
     return (
         <Box>
             <CardHeader
@@ -95,6 +100,14 @@ export const WriteComment = ({
     const user = useAppSelector(state => state.auth.user);
     const { axios, status } = useRemoteCall();
     const { closeSnackbar, enqueueSnackbar } = useSnackbar();
+    const editorRef = useRef<{
+        editor: LexicalEditor | null;
+        editorState: EditorState | null;
+    }>({
+        editor: null,
+        editorState: null
+    });
+    const { toHTML } = useEditor(editorRef.current);
 
     const writeComment = async () => {
         if (!editorState) {
@@ -109,7 +122,7 @@ export const WriteComment = ({
             return;
         }
         const formdata = new FormData();
-        formdata.append("comment", editorState);
+        formdata.append("comment", toHTML());
         formdata.append("replay_id", `${comment.replay_id ?? comment.id}`);
         const res = await axios.post(`/write-comment/${comment.blog_id}`, {
             formdata,
@@ -120,6 +133,17 @@ export const WriteComment = ({
             pps.close();
             setComments(prev => prev.map(cmnt => cmnt.id === (comment.replay_id ?? comment.id) ? { ...cmnt, replays: [{...res, user}, ...cmnt.replays] } : cmnt));
         }
+    }
+
+    const handleSetEditableRef = ({
+        state,
+        editor
+    }: {
+        state?: EditorStateRef['editorState'],
+        editor?: EditorStateRef['editor']
+    }) => {
+        if (state) editorRef.current.editorState = state;
+        if (editor) editorRef.current.editor = editor;
     }
 
     return (
@@ -193,6 +217,7 @@ export const WriteComment = ({
                                         }}
                                         onChange={nv => setEditorState(nv)}
                                         value={editorState}
+                                        setEditorRef={handleSetEditableRef}
                                     />
                                 </Box>
                                 <LoadingButton

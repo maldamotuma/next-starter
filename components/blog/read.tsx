@@ -1,7 +1,7 @@
 "use client"
 
 import { Avatar, Box, Button, CardHeader, CardMedia, Chip, Container, Divider, IconButton, InputLabel } from "@mui/material";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useRef, useState } from "react";
 import { Blog } from "./types";
 import { server_url } from "@/config/variables";
 import Title from "../home/title";
@@ -14,6 +14,8 @@ import Comment from "./comment";
 import Favorite from "./fovorite";
 import { Close } from "@mui/icons-material";
 import { useSnackbar } from "notistack";
+import { EditorState, LexicalEditor } from "lexical";
+import { useEditor } from "@/malda_rte/rte/Editor";
 
 interface BlogReadProps {
     blog: Blog & {
@@ -28,6 +30,22 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
     const [comments, setComments] = useState<Blog['comments']>(blog.comments);
     const [is_favorite, setIs_favorite] = useState<boolean>(blog.is_favorite);
     const { closeSnackbar, enqueueSnackbar } = useSnackbar();
+    const editorRef = useRef<{
+        editor: LexicalEditor | null;
+        editorState: EditorState | null;
+    }>({
+        editor: null,
+        editorState: null
+    });
+    const { toHTML } = useEditor(editorRef.current);
+
+    const setEditorRef = (edtr: {
+        editor?: LexicalEditor;
+        state?: EditorState;
+    }) => {
+        if (edtr.editor) editorRef.current.editor = edtr.editor;
+        if (edtr.state) editorRef.current.editorState = edtr.state;
+    }
 
     const writeComment = async () => {
         if (!editorState) {
@@ -42,7 +60,7 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
             return;
         }
         const formdata = new FormData();
-        formdata.append("comment", editorState);
+        formdata.append("comment", toHTML());
         const res = await axios.post(`/write-comment/${blog.id}`, {
             formdata,
             ky: "comment"
@@ -196,6 +214,7 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
                                         onChange={nv => seteditorState(nv)}
                                         value={editorState}
                                         minChars={25}
+                                        setEditorRef={setEditorRef}
                                     />
                                 </Box>
                                 <LoadingButton

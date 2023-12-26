@@ -74,9 +74,11 @@ import ContentEditable from './ui/ContentEditable';
 import Placeholder from './ui/Placeholder';
 import { CAN_USE_DOM } from '../packages/shared/canUseDOM';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
-import { EditorState } from 'lexical';
+import { $getRoot, $insertNodes, CLEAR_EDITOR_COMMAND, EditorState, LexicalEditor, createEditor } from 'lexical';
 import { $rootTextContent } from '@lexical/text';
-
+import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html';
+import { Button } from '@mui/material';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
 
 const skipCollaborationInit =
@@ -88,7 +90,8 @@ export default function Editor({
   onChange,
   value,
   notEditable,
-  minChars
+  minChars,
+  setEditorRef
 }:
   {
     settings: SettingsContextShape["settings"];
@@ -96,6 +99,10 @@ export default function Editor({
     value?: string;
     notEditable?: boolean;
     minChars?: number;
+    setEditorRef?: (myVar: {
+      editor?: LexicalEditor;
+      state?: EditorState;
+    }) => void;
   }
 ): JSX.Element {
   const { historyState } = useSharedHistoryContext();
@@ -124,6 +131,29 @@ export default function Editor({
   const [isSmallWidthViewport, setIsSmallWidthViewport] =
     useState<boolean>(false);
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
+  const [editor] = useLexicalComposerContext();
+
+
+  useEffect(() => {
+    if (setEditorRef) setEditorRef({
+      editor
+    })
+    if (value) {
+      editor.dispatchCommand(CLEAR_EDITOR_COMMAND, undefined);
+      editor.update(() => {
+        const parser = new DOMParser();
+        const dom = parser.parseFromString(value, "text/html");
+
+        const nodes = $generateNodesFromDOM(editor, dom);
+
+        $getRoot().select();
+
+        $insertNodes(nodes);
+      })
+    }
+    return () => {
+    }
+  }, [])
 
   const onRef = (_floatingAnchorElem: HTMLDivElement) => {
     if (_floatingAnchorElem !== null) {
@@ -165,6 +195,11 @@ export default function Editor({
     if (onChange) {
       const es = JSON.stringify(editorState);
       onChange(es);
+    }
+    if (setEditorRef) {
+      setEditorRef({
+        state: editorState
+      });
     }
   }
 
@@ -267,7 +302,7 @@ export default function Editor({
             <CollapsiblePlugin />
             <PageBreakPlugin />
             <LayoutPlugin />
-            {floatingAnchorElem && !isSmallWidthViewport && (
+            {!notEditable && floatingAnchorElem && !isSmallWidthViewport && (
               <>
                 <DraggableBlockPlugin anchorElem={floatingAnchorElem} />
                 <CodeActionMenuPlugin anchorElem={floatingAnchorElem} />
@@ -313,4 +348,26 @@ export default function Editor({
       {showTreeView && <TreeViewPlugin />}
     </>
   );
+}
+
+export const useEditor = ({ editor, editorState }: {
+  editor: LexicalEditor | null;
+  editorState: EditorState | null;
+}) => {
+  const toHTML = () => {
+    let htmlString = "";
+    if (editor) {
+      editorState?.read(() => {
+        const raw = $generateHtmlFromNodes(editor, null);
+        htmlString = raw;
+      });
+    }
+
+
+    return htmlString;
+  }
+
+  return {
+    toHTML
+  };
 }
