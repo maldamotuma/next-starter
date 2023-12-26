@@ -18,8 +18,8 @@ class EnsureBlogAuther
     public function handle(Request $request, Closure $next): Response
     {
         $blog_id = $request->route('blog');
-        $auther_id = Blog::select("user_id")->find($blog_id)->user_id;
-        if (Auth::id() !== $auther_id) {
+        // $auther_id = Blog::select("user_id")->find($blog_id)->user_id;
+        if (Auth::id() !== $blog_id->user_id) {
             return response()->json([
                 'success' => 0,
                 'message' => 'You Are Not Authorized to make changes to this blog'

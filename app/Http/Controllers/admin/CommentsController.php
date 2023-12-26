@@ -17,7 +17,7 @@ class CommentsController extends Controller
             'comment' => ['required']
         ]);
 
-        $data['admin_id'] = Auth::guard('user')->id();
+        $data['admin_id'] = Auth::guard('admin')->id();
         $data['blog_id'] = $blog_id;
 
         $comment = Comment::create($data);
