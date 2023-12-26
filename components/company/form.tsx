@@ -1,6 +1,6 @@
 "use client"
 
-import { ChangeEvent, FormEvent, FunctionComponent, useState } from "react";
+import { ChangeEvent, FormEvent, FunctionComponent, useRef, useState } from "react";
 import {
     Button,
     Stack,
@@ -26,6 +26,8 @@ import { server_url } from "@/config/variables";
 import Confirm from "../confirmation";
 import { Close } from "@mui/icons-material";
 import { useSnackbar } from "notistack";
+import { EditorState, LexicalEditor } from "lexical";
+import { useEditor } from "@/malda_rte/rte/Editor";
 
 interface CompanyFormProps {
     close(): void;
@@ -58,6 +60,14 @@ const CompanyForm: FunctionComponent<CompanyFormProps> = ({
     const [image, setImage] = useState<File | null>(null);
     const [content, setContent] = useState<string>(cpy?.content || "");
     const { closeSnackbar, enqueueSnackbar } = useSnackbar();
+    const editorRef = useRef<{
+        editor: LexicalEditor | null;
+        editorState: EditorState | null;
+    }>({
+        editor: null,
+        editorState: null
+    });
+    const { toHTML } = useEditor(editorRef.current);
 
     const handleSubmt = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -74,7 +84,7 @@ const CompanyForm: FunctionComponent<CompanyFormProps> = ({
                 return;
             }
             const formdata = new FormData(e.currentTarget);
-            formdata.append('content', content);
+            formdata.append('content', toHTML());
             const res = await axios.post(cpy ? `/update-copy/${cpy.id}` : "/create-copy", {
                 ky: "copy",
                 formdata
@@ -93,6 +103,14 @@ const CompanyForm: FunctionComponent<CompanyFormProps> = ({
                 close();
             },
         });
+    }
+
+    const setEditorRef = (edtr: {
+        editor?: LexicalEditor;
+        state?: EditorState;
+    }) => {
+        if (edtr.editor) editorRef.current.editor = edtr.editor;
+        if (edtr.state) editorRef.current.editorState = edtr.state;
     }
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -132,6 +150,7 @@ const CompanyForm: FunctionComponent<CompanyFormProps> = ({
                         onChange={nv => setContent(nv)}
                         value={cpy?.content}
                         minChars={300}
+                        setEditorRef={setEditorRef}
                     />
                 </Box>
             </Box>
