@@ -27,7 +27,7 @@ const ShareThought: FunctionComponent<ShareThoughtProps> = ({ blog }) => {
         editor: null,
         editorState: null
     });
-    const { toHTML } = useEditor(editorRef.current);
+    const { toHTML, clearEditor } = useEditor(editorRef.current);
 
     const writeComment = async () => {
         if (!editorState) {
@@ -45,7 +45,10 @@ const ShareThought: FunctionComponent<ShareThoughtProps> = ({ blog }) => {
         formdata.append("comment", toHTML() || "");
         const res = await axios.post(`/write-comment/${blog.id}`, {
             formdata,
-            ky: "comment"
+            ky: "comment",
+            successCallBack() {
+                clearEditor();
+            },
         })
         if (res) {
             seteditorState("");

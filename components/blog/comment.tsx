@@ -101,7 +101,7 @@ export const WriteComment = ({
         editor: null,
         editorState: null
     });
-    const { toHTML } = useEditor(editorRef.current);
+    const { toHTML, clearEditor } = useEditor(editorRef.current);
 
     const writeComment = async () => {
         if (!editorState) {
@@ -120,7 +120,10 @@ export const WriteComment = ({
         formdata.append("replay_id", `${comment.replay_id ?? comment.id}`);
         const res = await axios.post(`/write-comment/${comment.blog_id}`, {
             formdata,
-            ky: "comment"
+            ky: "comment",
+            successCallBack() {
+                clearEditor()
+            },
         })
         if (res) {
             setEditorState("");

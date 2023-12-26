@@ -20,7 +20,7 @@ export async function generateMetadata(
 
     // fetch data
     const res = await axios.get(`/company-copy/${slug}`);
-    const { copy }: {copy: { title: string, image: string }} = res.data;
+    const { copy }: { copy: { title: string, image: string } } = res.data;
 
     if (copy) {
         // optionally access and extend (rather than replace) parent metadata
@@ -37,23 +37,24 @@ export async function generateMetadata(
     }
 }
 
-const Company: FunctionComponent<CompanyProps> = ({ params: { slug } }) => {
+const Company: FunctionComponent<CompanyProps> = async ({ params: { slug } }) => {
+    const res = await axios.get(`/company-copy/${slug}`);
     return (
-    <>
-    <Script id="company-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
-      <Script id="company">
-        {
-          `
+        <>
+            <Script id="company-lnk" async src="https://www.googletagmanager.com/gtag/js?id=G-Q7PPML4EDC" />
+            <Script id="company">
+                {
+                    `
           window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
         gtag('config', 'G-Q7PPML4EDC');
         `
-        }
-      </Script>
-    <CompanyCopy slug={slug} />
-    </>
+                }
+            </Script>
+            <CompanyCopy copy={res.data.copy} />
+        </>
     );
 }
 

@@ -74,7 +74,7 @@ import ContentEditable from './ui/ContentEditable';
 import Placeholder from './ui/Placeholder';
 import { CAN_USE_DOM } from '../packages/shared/canUseDOM';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
-import { $getRoot, $insertNodes, EditorState, LexicalEditor, createEditor } from 'lexical';
+import { $getRoot, $insertNodes, CLEAR_EDITOR_COMMAND, EditorState, LexicalEditor, createEditor } from 'lexical';
 import { $rootTextContent } from '@lexical/text';
 import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html';
 import { Button } from '@mui/material';
@@ -132,46 +132,27 @@ export default function Editor({
     useState<boolean>(false);
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
   const [editor] = useLexicalComposerContext();
-  const rendered = React.useRef<boolean>(true);
-
-  const stopPropagation = React.useCallback(
-    (e: Event) => {
-      // e.stopPropagation();
-    }
-    ,
-    [],
-  )
 
 
   useEffect(() => {
-    const btns = document.querySelectorAll(".malda-rte button");
-    btns.forEach(btn => {
-      btn.addEventListener("click", stopPropagation);
-    });
     if (setEditorRef) setEditorRef({
       editor
     })
-    if (rendered.current) {
-      if (value) {
-        editor.update(() => {
-          const parser = new DOMParser();
-          const dom = parser.parseFromString(value, "text/html");
+    if (value) {
+      editor.dispatchCommand(CLEAR_EDITOR_COMMAND, undefined);
+      editor.update(() => {
+        const parser = new DOMParser();
+        const dom = parser.parseFromString(value, "text/html");
 
-          const nodes = $generateNodesFromDOM(editor, dom);
+        const nodes = $generateNodesFromDOM(editor, dom);
 
-          $getRoot().select();
+        $getRoot().select();
 
-          $insertNodes(nodes);
-        })
-      }
-    } else {
-      rendered.current = false;
+        $insertNodes(nodes);
+      })
     }
 
     return () => {
-      btns.forEach(btn => {
-        btn.removeEventListener("click", stopPropagation);
-      });
     }
   }, [])
 
@@ -387,7 +368,12 @@ export const useEditor = ({ editor, editorState }: {
     return htmlString;
   }
 
+  const clearEditor = () => {
+    editor?.dispatchCommand(CLEAR_EDITOR_COMMAND, undefined);
+  }
+
   return {
-    toHTML
+    toHTML,
+    clearEditor
   };
 }

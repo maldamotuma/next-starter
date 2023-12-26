@@ -9,7 +9,6 @@ import { GitHub, Google } from "@mui/icons-material";
 import { Box, Button, Checkbox, Divider, FormControlLabel, Grid, TextField, Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { FunctionComponent } from "react";
 
 const rules: rulesAndMessagedType = {
@@ -28,7 +27,6 @@ const SigninForm: FunctionComponent<SigninFormProps> = ({ modal, noRedirect }) =
   const { validate } = useValidator("login", rules);
   const { axios, status } = useRemoteCall();
   const dispatch = useAppDispatch();
-  const router = useRouter();
 
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -43,7 +41,6 @@ const SigninForm: FunctionComponent<SigninFormProps> = ({ modal, noRedirect }) =
         failMessage: "SignIn Fail",
       });
       if (res) {
-        if (!noRedirect) router.push("/");
         dispatch(setAuthUser(res));
       }
     });

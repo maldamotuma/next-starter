@@ -9,58 +9,52 @@ import PlaygroundApp from "@/malda_rte/rte/App";
 import Wrapper from "@/components/wrapper";
 import Title from "@/components/home/title";
 import { server_url } from "@/config/variables";
+import NotFound from "../error/notFound";
+import BlogStyleWrapper from "../blog/style-wrapper";
 
 interface CompanyCopyProps {
-    slug: string;
+    copy?: Company;
 }
 
-const CompanyCopy: FunctionComponent<CompanyCopyProps> = ({ slug }) => {
-    const { data: copy, status } = useInitialCall<Company | null>(`/company-copy/${slug}`, null, {
-        ky: "copy"
-    });
-
+const CompanyCopy: FunctionComponent<CompanyCopyProps> = ({ copy }) => {
     return (
         <Wrapper>
             <Container maxWidth={"md"}>
                 {
-                    status === "pending" ?
-                        <>Loading...</>
+                    copy ?
+                        <>
+                            <Title
+                                primary={copy.title}
+                                primaryProps={{
+                                    align: "left"
+                                }}
+                            />
+                            <CardMedia
+                                component={"img"}
+                                src={`${server_url}/blog/${copy.image}?width=750`}
+                                sx={{
+                                    aspectRatio: "5/3",
+                                    borderRadius: 4,
+                                    display: "block",
+                                    bgcolor: "divider"
+                                }}
+                            />
+                            <Box
+                                className={"malda-rte"}
+                                sx={{
+                                    width: "100%"
+                                }}
+                            >
+                                <BlogStyleWrapper>
+                                    <div
+                                        dangerouslySetInnerHTML={{ __html: copy.content }}
+                                    >
+                                    </div>
+                                </BlogStyleWrapper>
+                            </Box>
+                        </>
                         :
-                        copy ?
-                            <>
-                                <Title
-                                    primary={copy.title}
-                                    primaryProps={{
-                                        align: "left"
-                                    }}
-                                />
-                                <CardMedia
-                                    component={"img"}
-                                    src={`${server_url}/blog/${copy.image}?width=750`}
-                                    sx={{
-                                        aspectRatio: "5/3",
-                                        borderRadius: 4,
-                                        display: "block",
-                                        bgcolor: "divider"
-                                    }}
-                                />
-                                <Box
-                                    className={"malda-rte"}
-                                    sx={{
-                                        width: "100%"
-                                    }}
-                                >
-                                    <PlaygroundApp
-                                        settings={{
-                                            showTreeView: false
-                                        }}
-                                        notEditable
-                                        value={copy.content}
-                                    />
-                                </Box>
-                            </>
-                            :
-                            <Error statusCode={404} title="Page Not Found" />
+                        <NotFound />
                 }
             </Container>
         </Wrapper>
