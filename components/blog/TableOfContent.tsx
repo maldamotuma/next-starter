@@ -1,13 +1,11 @@
 "use client";
-import { FunctionComponent, useCallback, useEffect } from "react";
+import { FunctionComponent, useEffect } from "react";
 import * as tocbot from 'tocbot';
 import "./styles/table-of-content.css";
 import { Box } from "@mui/material";
-import { maxLine } from "../utils/helpers";
-// @import 'tocbot/src/scss/tocbot';
 import "@/styles/tocbot.css"
 import SimpleBar from "simplebar-react";
-
+import slugify from "slugify";
 
 interface TableOfContentProps {
 
@@ -15,57 +13,30 @@ interface TableOfContentProps {
 
 const TableOfContent: FunctionComponent<TableOfContentProps> = () => {
 
-    // const bindListeners = useCallback(
-    //     (lnks: NodeListOf<Element>, hdngs: NodeListOf<Element>) => {
-    //         lnks.forEach((lnk, i) => {
-    //             lnk.addEventListener("click", () => {
-    //                 alert("clicking!!");
-    //                 hdngs[i].scrollIntoView();
-    //             })
-    //         })
-    //     },
-    //     [],
-    // )
-
-
     useEffect(() => {
-        let container = document.querySelector("#tc-container");
         tocbot.init({
             tocSelector: "#tc-container",
             contentSelector: "#entire-blog",
             headingSelector: "h1, h2, h3, h4",
-            activeListItemClass: "active-list",
-            activeLinkClass: "active-link",
-            // onClick(e) {
-            //     e.stopPropagation();
-            //     // e.preventDefault();
-            // },
             hasInnerContainers: true,
+            headingsOffset: 85,
+            scrollSmoothOffset: -85,
             headingObjectCallback(objM, node) {
-                const obj = objM as {
-                    headingLevel: number; textContent: string;
+                const obj = { ...objM } as {
+                    headingLevel: number;
+                    textContent: string;
+                    id: string;
                 };
-                let div = document.createElement("div");
-                div.className = "hl-" + obj.headingLevel + " hdgs"
-                div.append(obj.textContent);
-                div.addEventListener("click", () => {
-                    node.scrollIntoView({
-                        behavior: "smooth",
-                        block: "center"
-                    });
-                })
-                container?.append(div);
+
+                const hId = slugify(obj.textContent);
+                obj.id = hId;
+                node.setAttribute("id", hId);
+                return obj;
             },
         });
 
-        // const headings = document.querySelectorAll("h2, h3, h4");
-        // const outlineLinks = document.querySelectorAll("a.node-name--H2, a.node-name--H3, a.node-name--H4");
-        // console.log(headings, outlineLinks);
-
-        // bindListeners(outlineLinks, headings);
 
         return () => {
-            // bindListeners(outlineLinks, headings);
         }
     }, [])
 
@@ -82,38 +53,20 @@ const TableOfContent: FunctionComponent<TableOfContentProps> = () => {
                 sx={{
                     borderRight: 1,
                     borderColor: "divider",
-                    "& .hdgs": {
-                        cursor: "pointer",
-                        ...(maxLine(2)),
+                    pr: "10px",
+                    "& a.toc-link": {
                         py: .5,
-                        pr: 1,
-                        overflow: "hidden",
-                        "&:hover": {
-                            bgcolor: "divider"
-                        }
+                        display: "block",
+                        textDecoration: "none",
+                        color: "inherit",
+                        borderLeft: 0,
+                        borderColor: "primary.main",
+                        transition: ".2s all linear"
                     },
-                    "& .hl-1, & .hl-2": {
-                        fontWeight: 600,
-                        color: "text.primary",
-                        my: 1,
+                    "& a.is-active-link": {
+                        color: "primary.main",
+                        borderLeft: 3,
                         pl: 1
-                    },
-                    "& .hl-3": {
-                        pl: 2,
-                        ml: 3,
-                        color: "text.primary",
-                        borderLeft: 1,
-                        borderColor: "divider"
-                    },
-                    "& .hl-4": {
-                        pl: 2,
-                        ml: 3,
-                        color: "text.secondary",
-                        borderLeft: 1,
-                        borderColor: "divider"
-                    },
-                    "& .active-list, & .active-link": {
-                        color: "primary.main"
                     }
                 }}
             >
