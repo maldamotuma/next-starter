@@ -32,7 +32,7 @@ const AuthorAvatar: FunctionComponent<AuthorAvatarProps> = ({ blog }) => {
                         subheaderTypographyProps={{
                             color: blue[100]
                         }}
-                        avatar={<Avatar src={`${server_url}/avatar/${blog.user.profile_picture}`} />}
+                        avatar={<Avatar src={`${server_url}/avatar/small/${blog.user.profile_picture}`} />}
                         title={`${blog.user.first_name} ${blog.user.last_name}`}
                     />
                     :
@@ -46,7 +46,7 @@ const AuthorAvatar: FunctionComponent<AuthorAvatarProps> = ({ blog }) => {
                         subheaderTypographyProps={{
                             color: blue[100]
                         }}
-                        avatar={<Avatar src={`${server_url}/avatar/${blog.admin?.profile_picture}`} />}
+                        avatar={<Avatar src={`${server_url}/avatar/small/${blog.admin?.profile_picture}`} />}
                         title={`${blog.admin?.first_name} ${blog.admin?.last_name}`}
                     />
             }

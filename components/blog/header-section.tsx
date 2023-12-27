@@ -70,7 +70,7 @@ const BlogHeader: FunctionComponent<BlogHeaderProps> = ({ blog }) => {
                         objectFit: "cover",
                         position: "relative",
                         zIndex: 1,
-                        borderRadius: "20px",
+                        borderRadius: "10px",
                     }}
                 />
             </div>

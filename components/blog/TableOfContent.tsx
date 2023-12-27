@@ -72,7 +72,7 @@ const TableOfContent: FunctionComponent<TableOfContentProps> = () => {
     return (
         <SimpleBar
             style={{
-                // height: "calc(100vh - 80px)",
+                height: "calc(100vh - 80px)",
                 width: "300px",
             }}
         >

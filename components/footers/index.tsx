@@ -137,7 +137,7 @@ const Footers: FunctionComponent<FootersProps> = () => {
               md={8}
             >
               {footers.map((footer) => (
-                <Grid item xs={6} sm={3} lg={3} key={footer.title}>
+                <Grid item xs={6} sm={6} lg={3} key={footer.title}>
                   <Typography variant="h6" color="text.primary" gutterBottom>
                     {footer.title}
                   </Typography>

@@ -3,9 +3,7 @@ import { Blog } from "./types";
 import TableOfContent from "./TableOfContent";
 import styles from "./styles.module.css";
 import Progresss from "@/utils/progresss";
-import ShareButtons from "./share-icons";
 import BlogHeader from "./header-section";
-// import  from "./related-blogs";
 import SubscribeCta from "../home/call-to-actions/SubscribeCard";
 import { blue } from "@mui/material/colors";
 import RelatedBlogs from "./relatedSlide";
@@ -15,6 +13,10 @@ import blogStyle from "./styles/blog.module.scss";
 import "./styles/blog.css";
 import BlogStyleWrapper from "./style-wrapper";
 import "@/malda_rte/rte/themes/PlaygroundEditorTheme.css";
+import dynamic from "next/dynamic";
+
+const ShareButtons = dynamic(() => import('./share-icons'), { ssr: false });
+
 
 interface ServerReadProps {
     blog: Blog & {
@@ -42,10 +44,19 @@ const ServerRead: FunctionComponent<ServerReadProps> = ({ blog }) => {
                     <div style={{
                         display: "flex",
                         alignItems: "flex-start",
-                        gap: 2
+                        gap: 2,
+                        width: "100%",
+                        justifyContent: "space-between",
+                        maxWidth: "100vw"
                     }}>
                         <div
                             className={`malda-rte ${styles['px-4']} + ${styles['mw-md']}`}
+                            style={{
+                                boxSizing: "border-box",
+                                flexGrow: 1,
+                                width: "100%",
+                                overflow: "clip"
+                            }}
                         >
                             <BlogStyleWrapper>
                                 <div

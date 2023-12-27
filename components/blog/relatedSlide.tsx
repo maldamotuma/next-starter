@@ -49,19 +49,24 @@ const RelatedBlogs: FunctionComponent<RelatedBlogsProps> = ({ blogs }) => {
                 className="keen-slider"
             >
                 {
-                    loaded ?
-                        blogs.map(blog => (
-                            <Box
-                                key={`blg-itm-${blog.id}`}
-                                className="keen-slider__slide"
-                            >
-                                <BlogCard
-                                    blog={blog}
-                                />
-                            </Box>
-                        ))
-                        :
-                        <Box>Loading...</Box>
+                    blogs.map(blog => (
+                        <Box
+                            key={`blg-itm-${blog.id}`}
+                            className="keen-slider__slide"
+                        >
+                            {
+                                loaded ?
+                                    <BlogCard
+                                        blog={blog}
+                                    />
+                                    :
+
+                                    <Box
+                                        className="keen-slider__slide"
+                                    >Loading...</Box>
+                            }
+                        </Box>
+                    ))
                 }
 
             </Box>

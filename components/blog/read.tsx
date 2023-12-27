@@ -18,7 +18,6 @@ import Favorite from "./fovorite";
 import SubscribeCta from "../home/call-to-actions/SubscribeCard";
 import { useSnackbar } from "notistack";
 import { Close } from "@mui/icons-material";
-import { motion, useScroll } from "framer-motion";
 import { blue } from "@mui/material/colors";
 
 
@@ -34,7 +33,6 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
     const { axios, status } = useRemoteCall();
     const [comments, setComments] = useState<Blog['comments']>(blog.comments);
     const { closeSnackbar, enqueueSnackbar } = useSnackbar();
-    const { scrollYProgress } = useScroll();
 
     const writeComment = async () => {
         if (!editorState) {
@@ -62,28 +60,6 @@ const BlogRead: FunctionComponent<BlogReadProps> = ({ blog }) => {
 
     return (
         <>
-            <Box
-                sx={{
-                    "& .progress-bar": {
-                        position: "fixed",
-                        top: {
-                            xs: 56,
-                            md: 70
-                        },
-                        left: 0,
-                        right: 0,
-                        height: "6px",
-                        background: theme => blue[theme.palette.mode === "light" ? 900 : 100],
-                        transformOrigin: "0%",
-                        zIndex: theme => theme.zIndex.fab - 1
-                    }
-                }}
-            >
-                <motion.div
-                    className="progress-bar"
-                    style={{ scaleX: scrollYProgress }}
-                />
-            </Box >
             <Box
                 sx={{
                     display: "flex",
