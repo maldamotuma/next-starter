@@ -47,15 +47,16 @@ const ServerRead: FunctionComponent<ServerReadProps> = ({ blog }) => {
                         gap: 2,
                         width: "100%",
                         justifyContent: "space-between",
-                        maxWidth: "100vw"
+                        maxWidth: "calc(100vw - 10px)"
                     }}>
                         <div
-                            className={`malda-rte ${styles['px-4']} + ${styles['mw-md']}`}
+                            className={`malda-rte ${blogStyle['inner-container']}`}
                             style={{
                                 boxSizing: "border-box",
                                 flexGrow: 1,
                                 width: "100%",
-                                overflow: "clip"
+                                overflow: "clip",
+                                padding: "10px"
                             }}
                         >
                             <BlogStyleWrapper>
@@ -69,8 +70,7 @@ const ServerRead: FunctionComponent<ServerReadProps> = ({ blog }) => {
                         <div
                             style={{
                                 position: "sticky",
-                                top: 80,
-                                paddingRight: "10px"
+                                top: 80
                             }}
                         >
                             <ShareButtons blog={blog} />

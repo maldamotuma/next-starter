@@ -4,21 +4,15 @@ import { Box, Chip, alpha } from "@mui/material";
 import { FunctionComponent, ReactNode } from "react";
 import { Blog } from "./types";
 import { blue } from "@mui/material/colors";
-import { Fira_Sans } from "next/font/google"
 
 interface BlogStyleWrapperProps {
     children: ReactNode
 }
 
-const fira = Fira_Sans({
-    subsets: ['latin'],
-    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
-});
 
 const BlogStyleWrapper: FunctionComponent<BlogStyleWrapperProps> = ({ children }) => {
     return (
         <Box
-            className={fira.className}
             sx={{
                 "& .editor div": {
                     p: 0

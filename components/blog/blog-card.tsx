@@ -17,6 +17,7 @@ const BlogCard: FunctionComponent<BlogCardProps> = ({
     return (
         <Card
             elevation={0}
+            className={"blog-item"}
         >
             <CardMedia
                 component={"img"}
@@ -28,7 +29,6 @@ const BlogCard: FunctionComponent<BlogCardProps> = ({
                     borderRadius: 4,
                     bgcolor: "divider"
                 }}
-                loading="lazy"
             />
             <CardContent sx={{ pb: 0 }}>
                 <Chip

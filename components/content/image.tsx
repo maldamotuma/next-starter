@@ -10,7 +10,7 @@ const ContentIMage: FunctionComponent<ContentIMageProps> = () => {
         <Box
             component={"img"}
             alt=""
-            src={"/about.png"}
+            src={"/about.webp"}
             width="100%"
         />
     );

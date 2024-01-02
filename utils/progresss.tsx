@@ -17,8 +17,8 @@ const Progresss: FunctionComponent<ProgresssProps> = () => {
                 "& .progress-bar": {
                     position: "fixed",
                     top: {
-                        xs: 56,
-                        md: 70
+                        xs: 54,
+                        md: 69
                     },
                     left: 0,
                     right: 0,

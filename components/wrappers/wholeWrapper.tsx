@@ -94,9 +94,9 @@ const WholeWrapper: FunctionComponent<WholeWrapperProps> = ({ children }) => {
 
     useEffect(() => {
         axios.get("/home", {
-            ky: "page",
-        }).then(page => {
-            if (page) dispatch(setInitialPage({ status: "idle", home: page.home }));
+            ky: "blogs",
+        }).then(blogs => {
+            if (blogs) dispatch(setInitialPage({ status: "idle", home: {blogs: blogs} }));
         })
 
         return () => {

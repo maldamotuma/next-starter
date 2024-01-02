@@ -47,8 +47,8 @@ const HeroImage: FunctionComponent<HeroImageProps> = () => {
             </Box> */}
             <Box
                 component={"img"}
-                src={"/hero.png"}
-                alt={"Tech Scan"}
+                src={"/hero.webp"}
+                alt={"Tech Scan, Malda Motuma"}
                 sx={{
                     width: "100%",
                     pl: {

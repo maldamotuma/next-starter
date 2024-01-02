@@ -98,6 +98,10 @@ $breakpoints: (
         }
     }
 
+    .inner-container {
+        max-width: 600px;
+    }
+
 
 }
 
@@ -144,6 +148,10 @@ $breakpoints: (
             display: block;
             position: sticky;
             top: 80px;
+        }
+
+        .inner-container {
+            max-width: 750px;
         }
     }
 }

@@ -128,7 +128,7 @@ const Contact: FunctionComponent<ContactProps> = () => {
                 <Box
                     component={"img"}
                     alt={""}
-                    src={"/contact.png"}
+                    src={"/contact.webp"}
                     sx={{
                         width: "30%",
                         // height: "calc(100% + 50px)",
